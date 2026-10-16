@@ -15,3 +15,9 @@ export async function POST(request: Request) {
   });
   return res;
 }
+
+export async function DELETE() {
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set("admin", "", { path: "/", maxAge: 0 });
+  return res;
+}

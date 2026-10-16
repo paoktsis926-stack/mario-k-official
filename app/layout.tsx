@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
+import SiteChrome from "@/components/SiteChrome";
 import { g } from "@/lib/content";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin", "greek"] });
@@ -21,10 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="el" className={`${inter.variable} ${comfortaa.variable} ${cormorant.variable} antialiased`}>
       <body className="min-h-screen bg-white text-black">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <FloatingContact />
+        <SiteChrome header={<Header />} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
       </body>
     </html>
   );
