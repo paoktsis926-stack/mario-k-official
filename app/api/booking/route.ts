@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 
+
 const strFields = ["first_name","last_name","phone","email","event_type","event_date","event_time","area","venue"] as const;
 const fail = (message: string, status: number) => NextResponse.json({ success: false, message }, { status });
 
 export async function POST(request: Request) {
   const apiBase = process.env.DJPRO_API_BASE?.replace(/\/+$/, "");
   const apiKey = process.env.DJPRO_API_KEY;
-  if (!apiBase || !apiKey) return fail("Η υπηρεσία κρατήσεων δεν είναι διαθέσιμη αυτή τη στιγμή.", 500);
+  if (!apiBase || !apiKey) { console.error("[booking] Λείπει DJPRO_API_BASE ή DJPRO_API_KEY από το .env.local"); return fail("Η υπηρεσία κρατήσεων δεν είναι διαθέσιμη αυτή τη στιγμή.", 500); }
 
   let body: Record<string, unknown>;
   try { body = await request.json(); } catch { return fail("Μη έγκυρα δεδομένα.", 400); }
@@ -38,11 +39,14 @@ export async function POST(request: Request) {
       body: JSON.stringify(clean),
       cache: "no-store",
     });
+    const raw = await res.text();
+    if (!res.ok) console.error("[booking] DJ PRO HUB απάντησε", res.status, raw.slice(0, 500));
     let data: Record<string, unknown>;
-    try { data = await res.json(); } catch { return fail("Άκυρη απάντηση από το σύστημα κρατήσεων.", 502); }
+    try { data = JSON.parse(raw); } catch { return fail("Άκυρη απάντηση από το σύστημα κρατήσεων.", 502); }
     if (res.status === 401) return fail("Αποτυχία σύνδεσης με το σύστημα κρατήσεων.", 502);
     return NextResponse.json(data, { status: res.status });
-  } catch {
+  } catch (e) {
+    console.error("[booking] Αποτυχία σύνδεσης με", apiBase, e);
     return fail("Δεν ήταν δυνατή η αποστολή. Δοκιμάστε ξανά ή καλέστε μας.", 502);
   }
 }
