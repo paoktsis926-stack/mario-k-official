@@ -258,7 +258,7 @@
  "packages": [
   {
    "name": "Essential",
-   "price": 300,
+   "price": 310,
    "duration": "Έως 5 ώρες",
    "tagline": "Για μικρότερες εκδηλώσεις",
    "best_for": "Πάρτι, βαφτίσεις, μικρές δεξιώσεις",
@@ -529,6 +529,15 @@
    "image_url": null,
    "video_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/7c0b8de23_v24044gl0000d8ea4lnog65i9dsaj7ng.MP4",
    "event_type_id": "6ac5fb9d98941942a43e2a71"
+  }
+ ],
+ "reviews": [
+  {
+   "name": "",
+   "stars": 5,
+   "text": "",
+   "date": "",
+   "visible": false
   }
  ]
 }
