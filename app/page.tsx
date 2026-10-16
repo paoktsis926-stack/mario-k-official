@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { site, eventTypes, packages, photos, faq } from "@/lib/content";
+import { site, eventTypes, packages, photos, faq, reviews, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 
 const h = site.home;
@@ -84,6 +84,26 @@ export default function Home() {
           <Points items={h.why_points} dark />
         </div>
       </section>
+
+      {reviews.length > 0 && (
+        <section className="border-t border-black bg-[#f7f5f0] px-5 py-20 md:px-8 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <p className="label-caps text-gold">Κριτικές</p>
+            <h2 className="mt-4 text-3xl font-bold uppercase md:text-5xl">Τι λένε οι πελάτες μας</h2>
+            <span className="mt-6 block h-[3px] w-16 bg-gold" />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {reviews.map((r) => (
+                <figure key={r.name + r.text.slice(0, 12)} className="flex flex-col border border-black bg-white p-8">
+                  <p className="text-gold">{"★".repeat(Math.max(1, Math.min(5, r.stars)))}</p>
+                  <blockquote className="mt-4 flex-1 text-sm leading-7 text-[#444]">{r.text}</blockquote>
+                  <figcaption className="mt-6 text-xs uppercase tracking-[0.15em]">{r.name}<span className="ml-2 text-black/40">Google{r.date ? ` · ${r.date}` : ""}</span></figcaption>
+                </figure>
+              ))}
+            </div>
+            <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γράψτε κι εσείς κριτική στο Google ↗</a>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-4xl px-5 py-20 md:py-28">
         <p className="label-caps text-gold">FAQ</p>

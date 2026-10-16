@@ -6,7 +6,7 @@ const Ctx = createContext<any[]>([]);
 const IMG = /(image_url|video_url|portrait|logo_url|hero_image)$/;
 const inp = "mt-1 w-full border border-black/30 bg-white p-2 text-sm text-black";
 const btn = "border border-black px-3 py-1 text-xs hover:bg-black hover:text-white";
-const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["site", "Κείμενα σελίδων"]];
+const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["reviews", "Κριτικές Google"], ["site", "Κείμενα σελίδων"]];
 
 const blank = (x: any): any =>
   Array.isArray(x) ? [] : x && typeof x === "object" ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, blank(v)])) : typeof x === "number" ? 0 : typeof x === "boolean" ? false : "";
@@ -74,7 +74,7 @@ export default function Admin() {
 
   async function load() {
     const r = await fetch("/api/admin/content").then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου" }));
-    if (r.ok) { setData(r.data); setSha(r.sha); setLogin(false); setMsg(""); } else { setLogin(true); setMsg(r.message === "Μη εξουσιοδοτημένο." ? "" : r.message); }
+    if (r.ok) { if (!r.data.reviews) r.data.reviews = [{ name: "", stars: 5, text: "", date: "", visible: false }]; setData(r.data); setSha(r.sha); setLogin(false); setMsg(""); } else { setLogin(true); setMsg(r.message === "Μη εξουσιοδοτημένο." ? "" : r.message); }
   }
   useEffect(() => { load(); }, []);
 
