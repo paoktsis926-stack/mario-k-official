@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <PageHero eyebrow="Σχετικά" title={a.title} subtitle={a.subtitle} intro={a.intro} />
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-24">
+      <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-24">
         <img src={a.portrait} alt="MARIO K" className="w-full object-cover grayscale" />
         <div>
           <h2 className="text-2xl font-bold uppercase">{a.bio_title}</h2>
@@ -20,11 +20,11 @@ export default function Page() {
         </div>
       </section>
       <section className="bg-black px-5 py-20 text-white md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
           <div>
             <h2 className="text-2xl font-bold uppercase">{a.philosophy_title}</h2>
             <p className="mt-5 text-sm leading-7 text-white/65">{a.philosophy_text}</p>
-            <h3 className="mt-10 text-lg font-bold uppercase text-gold">{a.set_title}</h3>
+            <h3 className="mt-10 text-base font-semibold uppercase text-gold">{a.set_title}</h3>
             <Points items={a.set_points} dark />
           </div>
           <div>
@@ -38,7 +38,7 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
+      <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
         <div>
           <h2 className="text-2xl font-bold uppercase">{a.values_title}</h2>
           <Points items={a.values_text.split("\n")} />

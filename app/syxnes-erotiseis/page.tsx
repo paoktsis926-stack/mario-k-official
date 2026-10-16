@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <PageHero eyebrow="FAQ" title={f.title} subtitle={f.subtitle} intro={f.intro} />
-      <section className="mx-auto max-w-4xl px-5 py-16 md:py-24">
+      <section className="mx-auto max-w-4xl px-5 py-12 md:py-20">
         {cats.map((c) => (
           <div key={c} className="mb-14">
             <h2 className="mb-4 text-xl font-bold uppercase">{c}</h2>

@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <PageHero eyebrow="Gallery" title={p.title} subtitle={p.subtitle} intro={p.intro} />
-      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <section className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {photos.map((x) => (
             <figure key={x.title} className="border border-black">

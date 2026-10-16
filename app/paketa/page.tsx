@@ -9,14 +9,14 @@ export default function Page() {
   return (
     <>
       <PageHero eyebrow="Πακέτα" title={p.title} subtitle={p.subtitle} intro={p.intro} />
-      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <section className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-20">
         <p className="mb-10 border border-black p-6 text-sm leading-relaxed text-[#555]">{p.note}</p>
         <div className="grid gap-5 lg:grid-cols-3">
           {packages.map((k) => (
             <article key={k.name} className={`flex flex-col border p-8 ${k.highlight ? "border-gold bg-gold/[0.05]" : "border-black"}`}>
               <p className="label-caps text-gold">{k.tagline}</p>
-              <h2 className="mt-3 text-3xl font-bold uppercase">{k.name}</h2>
-              <p className="mt-4 text-4xl font-light">{k.price}€</p>
+              <h2 className="mt-3 text-2xl font-semibold uppercase">{k.name}</h2>
+              <p className="mt-4 text-3xl font-light">{k.price}€</p>
               <p className="mt-1 text-sm text-gold">{k.duration}</p>
               <p className="mt-5 text-sm text-[#555]">Ιδανικό για: {k.best_for}</p>
               <Points items={k.features} />

@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <PageHero eyebrow="Χώροι" title={v.title} subtitle={v.subtitle} intro={v.intro} />
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
+      <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
         <div>
           <h2 className="text-2xl font-bold uppercase">{v.sourcing_title}</h2>
           <p className="mt-5 text-sm leading-7 text-[#444]">{v.sourcing_text}</p>
