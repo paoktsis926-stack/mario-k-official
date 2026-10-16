@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Comfortaa, Cormorant_Garamond } from "next/font/google";
+import { Inter, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,8 +8,7 @@ import SiteChrome from "@/components/SiteChrome";
 import { g } from "@/lib/content";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin", "greek"] });
-const comfortaa = Comfortaa({ variable: "--font-comfortaa", subsets: ["latin", "greek"] });
-const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["latin"], style: ["normal", "italic"], weight: ["400", "500"] });
+const garamond = EB_Garamond({ variable: "--font-garamond", subsets: ["latin", "greek"], style: ["normal", "italic"] });
 
 export const metadata: Metadata = {
   title: "MARIO K — DJ & Entertainment | Γάμοι, Βαπτίσεις, Πάρτι",
@@ -20,8 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="el" className={`${inter.variable} ${comfortaa.variable} ${cormorant.variable} antialiased`}>
-      <body className="min-h-screen bg-white text-black">
+    <html lang="el" className={`${inter.variable} ${garamond.variable} antialiased`}>
+      <body className="min-h-screen bg-[#0a0a0a] text-[#e9e4d8]">
         <SiteChrome header={<Header />} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
       </body>
     </html>
