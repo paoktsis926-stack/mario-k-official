@@ -16,7 +16,7 @@ export default function Page() {
             <Faqs items={faq.filter((x) => x.category === c)} />
           </div>
         ))}
-        <p className="text-sm text-white/60">{f.note}</p>
+        <p className="text-sm text-[#555]">{f.note}</p>
       </section>
       <Cta title="Έχετε άλλη απορία;" text={f.note} button="Επικοινωνία" />
     </>

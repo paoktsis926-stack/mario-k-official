@@ -1,15 +1,20 @@
 @import "tailwindcss";
 @theme inline {
-  --color-gold: #c2a86a;
-  --font-display: var(--font-garamond), Georgia, serif;
+  --color-gold: var(--accent);
+  --font-display: var(--font-cormorant), Georgia, serif;
   --font-script: var(--font-comfortaa), var(--font-inter), sans-serif;
 }
+html { --accent: #8b5cf6; }
+html[data-event="wedding"] { --accent: #c2a86a; }
+html[data-event="baptism"] { --accent: #4aa3df; }
+html[data-event="private-party"] { --accent: #d946ef; }
+html[data-event="bachelorette"] { --accent: #ff4d8d; }
+html[data-event="club"] { --accent: #06b6d4; }
+html[data-event="corporate"] { --accent: #5b8def; }
+html[data-event="karaoke"] { --accent: #f59e0b; }
 html { scroll-behavior: smooth; font-size: 15px; }
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 body { font-family: var(--font-inter), system-ui, sans-serif; }
-h1, h2, h3 { font-family: var(--font-garamond), Georgia, serif; font-weight: 400; letter-spacing: 0; }
-::selection { background: #c2a86a; color: #000; }
-details > summary::-webkit-details-marker { display: none; }
-.label-caps::before { content: ""; display: inline-block; width: 2rem; height: 1px; background: #c2a86a; margin-right: .75rem; vertical-align: middle; }
+h1, h2, h3 { font-family: var(--font-inter), system-ui, sans-serif; }
 .label-caps { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; }
