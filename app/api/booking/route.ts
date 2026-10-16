@@ -44,6 +44,10 @@ export async function POST(request: Request) {
     let data: Record<string, unknown>;
     try { data = JSON.parse(raw); } catch { return fail("Άκυρη απάντηση από το σύστημα κρατήσεων.", 502); }
     if (res.status === 401) return fail("Αποτυχία σύνδεσης με το σύστημα κρατήσεων.", 502);
+    if (!res.ok || data.success !== true) {
+      const m = [data.message, data.error, data.detail].find((x) => typeof x === "string" && x);
+      return fail(`Σφάλμα συστήματος (${res.status}): ${m ?? raw.slice(0, 200)}`, res.status >= 400 ? res.status : 502);
+    }
     return NextResponse.json(data, { status: res.status });
   } catch (e) {
     console.error("[booking] Αποτυχία σύνδεσης με", apiBase, e);
