@@ -11,3 +11,10 @@ export const copy: Record<string, { h: string; t: string }> = {
   corporate: { h: "Εκδηλώσεις με επαγγελματισμό", t: "Μουσική και τεχνική κάλυψη για εταιρικά events, εγκαίνια και ειδικές εκδηλώσεις." },
   karaoke: { h: "Όλοι στο μικρόφωνο", t: "Karaoke, παιχνίδια και διασκέδαση για κάθε παρέα." },
 };
+
+export function applyTheme(s: string) {
+  try {
+    const r = document.documentElement;
+    if (s) { r.dataset.event = s; localStorage.setItem("ev", s); } else { delete r.dataset.event; localStorage.removeItem("ev"); }
+  } catch {}
+}

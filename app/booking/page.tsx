@@ -2,6 +2,8 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
+import { g, telHref, waHref } from "@/lib/content";
+import { applyTheme } from "@/lib/events";
 
 const eventOptions = [
   { value: "wedding", label: "Γάμος", api: "Γάμος" },
@@ -138,44 +140,36 @@ function BookingForm() {
   }
 
   const inputClass =
-    "w-full border border-white/15 bg-[#101010] p-4 text-white outline-none focus:border-[#C7A66A]";
+    "w-full border border-black/20 bg-white p-3.5 text-black outline-none focus:border-gold";
 
-  const labelClass = "mb-2 block text-sm text-white/60";
+  const labelClass = "mb-2 block text-xs font-medium uppercase tracking-wider text-black/60";
 
   return (
-    <main className="min-h-screen bg-[#080808] px-6 py-12 text-[#F5F1E8] md:px-16 md:py-20">
-      <a href="/" className="text-sm tracking-widest text-[#C7A66A]">
-        ← MARIO K OFFICIAL
-      </a>
-
-      <header className="mx-auto max-w-3xl py-16 text-center">
-        <p className="text-xs tracking-[0.35em] text-[#C7A66A]">
-          BOOKING ENQUIRY
-        </p>
-        <h1 className="mt-6 text-4xl font-light md:text-6xl">
-          Ας σχεδιάσουμε{" "}
-          <span className="text-[#C7A66A]">την εκδήλωσή σας.</span>
+    <main className="bg-white text-black">
+      <section className="bg-black px-5 py-14 text-center text-white md:py-20">
+        <p className="label-caps text-gold">Κράτηση</p>
+        <h1 className="mx-auto mt-4 max-w-2xl text-3xl font-bold leading-tight md:text-5xl" style={{ fontFamily: "var(--font-comfortaa), var(--font-inter), sans-serif" }}>
+          Ας σχεδιάσουμε <span className="text-gold">την εκδήλωσή σας.</span>
         </h1>
-        <p className="mt-5 text-sm leading-7 text-white/50">
-          Συμπληρώστε τα στοιχεία σας για να επικοινωνήσουμε μαζί σας.
-        </p>
-      </header>
-
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/70">Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για να επιβεβαιώσουμε τη διαθεσιμότητα.</p>
+      </section>
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 md:py-16 lg:grid-cols-[1fr_320px]">
+        <div>
       {requestCode ? (
-        <section className="mx-auto max-w-2xl border border-white/10 p-8 text-center">
-          <h2 className="text-2xl text-[#C7A66A]">
+        <section className="border border-black/15 p-8 text-center">
+          <h2 className="text-2xl text-gold">
             Το αίτημα καταχωρίστηκε
           </h2>
-          <p className="mt-4 text-sm leading-7 text-white/60">
+          <p className="mt-4 text-sm leading-7 text-black/60">
             Λάβαμε το αίτημά σας και θα επικοινωνήσουμε μαζί σας σύντομα.
           </p>
           <p className="mt-4 text-sm">
             Κωδικός αιτήματος:{" "}
-            <span className="text-[#C7A66A]">{requestCode}</span>
+            <span className="font-semibold text-gold">{requestCode}</span>
           </p>
         </section>
       ) : (
-        <form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className={labelClass}>Τύπος εκδήλωσης *</label>
             <select
@@ -185,6 +179,7 @@ function BookingForm() {
                 const nextEvent = e.target.value;
                 setEvent(nextEvent);
                 updateField("package", "");
+                applyTheme(nextEvent);
                 window.history.replaceState(
                   null,
                   "",
@@ -333,13 +328,13 @@ function BookingForm() {
             />
           </div>
 
-          <label className="flex items-start gap-3 text-xs leading-6 text-white/60">
+          <label className="flex items-start gap-3 text-xs leading-6 text-black/60">
             <input type="checkbox" required className="mt-1" />
-            <span>Συναινώ στην επεξεργασία των στοιχείων μου σύμφωνα με την <a href="/privacy" className="text-[#C7A66A] underline">Πολιτική Απορρήτου</a>. *</span>
+            <span>Συναινώ στην επεξεργασία των στοιχείων μου σύμφωνα με την <a href="/privacy" className="text-gold underline">Πολιτική Απορρήτου</a>. *</span>
           </label>
 
           {error && (
-            <p role="alert" className="border border-red-900/60 p-4 text-sm text-red-300">
+            <p role="alert" className="border border-red-300 bg-red-50 p-4 text-sm text-red-800">
               {error}
             </p>
           )}
@@ -347,27 +342,41 @@ function BookingForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full border border-[#C7A66A]/60 px-6 py-5 text-xs tracking-[0.2em] text-[#C7A66A] transition hover:bg-[#C7A66A] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full bg-gold px-6 py-5 text-xs tracking-[0.2em] text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "ΓΙΝΕΤΑΙ ΚΑΤΑΧΩΡΙΣΗ..." : "ΑΠΟΣΤΟΛΗ ΑΙΤΗΜΑΤΟΣ"}
           </button>
 
-          <p className="text-xs leading-6 text-white/35">
+          <p className="text-xs leading-6 text-black/45">
             Τα πεδία με * είναι υποχρεωτικά.
           </p>
         </form>
       )}
 
-      <footer className="mx-auto mt-20 max-w-6xl border-t border-white/10 pt-6 text-xs text-white/35">
-        MARIO K OFFICIAL
-      </footer>
+        </div>
+        <aside className="h-fit space-y-6 border border-black/15 p-6 lg:sticky lg:top-24">
+          <div>
+            <p className="label-caps text-gold">Προτιμάτε να μιλήσουμε;</p>
+            <a href={telHref} className="mt-4 block text-lg font-semibold">{g.phone}</a>
+            <a href={waHref} className="mt-1 block text-sm underline">Μήνυμα στο WhatsApp</a>
+          </div>
+          <div className="border-t border-black/10 pt-6">
+            <p className="label-caps text-gold">Τι γίνεται μετά</p>
+            <ol className="mt-4 space-y-3 text-sm text-black/65">
+              <li>1. Λαμβάνουμε το αίτημά σας.</li>
+              <li>2. Ελέγχουμε τη διαθεσιμότητα.</li>
+              <li>3. Επικοινωνούμε μαζί σας με την προσφορά.</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
     </main>
   );
 }
 
 export default function BookingPage() {
   return (
-    <Suspense fallback={<main className="min-h-screen bg-[#080808]" />}>
+    <Suspense fallback={<main className="min-h-screen bg-white" />}>
       <BookingForm />
     </Suspense>
   );
