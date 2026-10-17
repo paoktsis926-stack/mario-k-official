@@ -38,6 +38,18 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
+        <img src={site.about.portrait} alt="MARIO K" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
+        <div>
+          <p className="label-caps text-gold">Ο DJ</p>
+          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.about.bio_title}</h2>
+          <span className="mt-6 block h-px w-14 bg-gold" />
+          <p className="mt-6 text-sm leading-7 text-[#555] md:text-base">{site.about.bio_text.split("\n\n")[0]}</p>
+          <Points items={site.about.experience_points.slice(0, 3)} />
+          <Link href="/sxetika" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γνωρίστε με καλύτερα ↗</Link>
+        </div>
+      </section>
+
       <section className="border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Πακέτα</p>
