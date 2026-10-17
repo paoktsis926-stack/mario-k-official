@@ -24,3 +24,5 @@ export const waLink = (num: string, s: string) => `https://wa.me/${num.replace(/
 
 export const lpSlugs: Record<string, string> = { gamos: "wedding", vaptisi: "baptism", party: "private-party", bachelorette: "bachelorette", club: "club", "etairiki-ekdilosi": "corporate", karaoke: "karaoke" };
 export const lpLabel: Record<string, string> = { wedding: "γάμο", baptism: "βάφτιση", "private-party": "πάρτι", bachelorette: "bachelor/bachelorette party", club: "club & bar", corporate: "εταιρική εκδήλωση", karaoke: "karaoke party" };
+
+export const shortLabel: Record<string, string> = { wedding: "Γάμος", baptism: "Βάφτιση", "private-party": "Πάρτι", bachelorette: "Bachelor / Bachelorette", club: "Club / Bar", corporate: "Εταιρική", karaoke: "Karaoke" };
