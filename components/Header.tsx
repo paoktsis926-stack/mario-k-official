@@ -4,7 +4,7 @@ import { g, telHref } from "@/lib/content";
 import { outline } from "./Ui";
 
 export const nav: [string, string][] = [
-  ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"],
+  ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"], ["ΜΙΧΕΣ", "/mixes"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"],
   ["ΧΩΡΟΙ", "/synergazomenoi-xoroi"], ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"], ["ΕΠΙΚΟΙΝΩΝΙΑ", "/booking"],
 ];
 

@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { site, eventTypes, packages, photos, faq, reviews, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages, photos, faq, reviews, mixes, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
+import MixEmbed from "@/components/MixEmbed";
 import EventHero from "@/components/EventHero";
 import { slugOf } from "@/lib/events";
 
@@ -71,6 +72,16 @@ export default function Home() {
         </div>
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
       </section>
+
+      {mixes.length > 0 && (
+        <section className="mx-auto max-w-4xl px-5 py-14 md:py-20">
+          <p className="label-caps text-gold">Mixes</p>
+          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Άκου τον ήχο</h2>
+          <span className="mt-6 block h-px w-14 bg-gold" />
+          <div className="mt-10"><MixEmbed url={mixes[0].url} title={mixes[0].title} /></div>
+          <Link href="/mixes" className="mt-6 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλα τα mixes ↗</Link>
+        </section>
+      )}
 
       <section className="bg-black px-5 py-20 text-white md:px-8 md:py-28">
         <div className="mx-auto max-w-6xl">
