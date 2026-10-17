@@ -18,6 +18,10 @@ const eventOptions = [
 const allPackages = ["Essential — 300€", "Signature — 500€", "Full Production — 900€"];
 const packagesByEvent: Record<string, string[]> = Object.fromEntries(eventOptions.map((o) => [o.value, allPackages]));
 
+const getSrc = () => {
+  try { return [new URLSearchParams(location.search).get("src"), localStorage.getItem("src")].filter(Boolean).join("-").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 60); } catch { return ""; }
+};
+
 type BookingFormData = {
   firstName: string;
   lastName: string;
@@ -98,6 +102,7 @@ function BookingForm() {
         venue: form.venue.trim(),
         guest_count: Number(form.guestCount),
         package: form.package || "",
+        src: getSrc(),
         message: (selectedEvent.api === "Άλλο" ? `[${selectedEvent.label}] ` : "") + form.message.trim(),
         source: "Next.js Website",
         external_id: `web-${crypto.randomUUID()}`,

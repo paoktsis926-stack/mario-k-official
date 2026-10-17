@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
   clean.package = typeof body.package === "string" ? body.package.slice(0, 100) : "";
   clean.message = typeof body.message === "string" ? body.message.slice(0, 2000) : "";
-  clean.source = "Next.js Website";
+  clean.source = "Next.js Website" + (typeof body.src === "string" && /^[\w-]{1,60}$/.test(body.src) ? ` · ${body.src}` : "");
   clean.external_id = typeof body.external_id === "string" ? body.external_id.slice(0, 100) : undefined;
 
   try {

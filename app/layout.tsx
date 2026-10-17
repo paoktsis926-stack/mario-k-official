@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="el" suppressHydrationWarning className={`${inter.variable} ${comfortaa.variable} ${cormorant.variable} antialiased`}>
       <body className="min-h-screen bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script dangerouslySetInnerHTML={{ __html: "try{var e=new URLSearchParams(location.search).get('event')||localStorage.getItem('ev');if(e)document.documentElement.dataset.event=e}catch(e){}" }} />
+        <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));var e=q.get('event')||localStorage.getItem('ev');if(e)document.documentElement.dataset.event=e}catch(e){}" }} />
         <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
         <Analytics />
       </body>
