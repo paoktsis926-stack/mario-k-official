@@ -10,6 +10,7 @@ const items: [string, string, string][] = [
 
 export default function FloatingContact() {
   return (
+    <>
     <div className="fixed bottom-8 right-5 z-40 hidden flex-col gap-3 md:flex">
       {items.map(([h, d, l]) => {
         const icon = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
@@ -17,5 +18,11 @@ export default function FloatingContact() {
         return h.startsWith("/") ? <Link key={l} href={h} aria-label={l} className={cls}>{icon}</Link> : <a key={l} href={h} aria-label={l} className={cls}>{icon}</a>;
       })}
     </div>
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-white/15 bg-black text-center text-[11px] uppercase tracking-[0.15em] text-white md:hidden">
+        <a href={telHref} className="py-4">Κλήση</a>
+        <a href={waHref} className="border-x border-white/15 py-4">WhatsApp</a>
+        <Link href="/booking" className="bg-gold py-4 font-semibold text-black">Κράτηση</Link>
+      </nav>
+    </>
   );
 }

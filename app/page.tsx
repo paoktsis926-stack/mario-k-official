@@ -19,7 +19,7 @@ export default function Home() {
         </p>
       </div>
 
-      <section className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
         <p className="label-caps text-gold">Εκδηλώσεις</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.event_title}</h2>
         <span className="mt-6 block h-[3px] w-16 bg-gold" />
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
+      <section className="reveal mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
         <img src={site.about.portrait} alt="MARIO K" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
         <div>
           <p className="label-caps text-gold">Ο DJ</p>
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Πακέτα</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.packages_title}</h2>
@@ -72,7 +72,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
         <p className="label-caps text-gold">Highlights</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.photos_title}</h2>
         <span className="mt-6 block h-[3px] w-16 bg-gold" />
@@ -86,7 +86,7 @@ export default function Home() {
       </section>
 
       {mixes.length > 0 && (
-        <section className="mx-auto max-w-4xl px-5 py-14 md:py-20">
+        <section className="reveal mx-auto max-w-4xl px-5 py-14 md:py-20">
           <p className="label-caps text-gold">Mixes</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Άκου τον ήχο</h2>
           <span className="mt-6 block h-px w-14 bg-gold" />
@@ -95,7 +95,7 @@ export default function Home() {
         </section>
       )}
 
-      <section className="bg-black px-5 py-20 text-white md:px-8 md:py-28">
+      <section className="reveal bg-black px-5 py-20 text-white md:px-8 md:py-28">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Γιατί MARIO K</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.why_title}</h2>
@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {reviews.length > 0 && (
-        <section className="border-t border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+        <section className="reveal border-t border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <p className="label-caps text-gold">Κριτικές</p>
             <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Τι λένε οι πελάτες μας</h2>
@@ -124,7 +124,7 @@ export default function Home() {
         </section>
       )}
 
-      <section className="mx-auto max-w-4xl px-5 py-14 md:py-20">
+      <section className="reveal mx-auto max-w-4xl px-5 py-14 md:py-20">
         <p className="label-caps text-gold">FAQ</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.faq_title}</h2>
         <p className="mb-10 mt-6 text-sm leading-relaxed text-[#555]">{h.faq_text}</p>
