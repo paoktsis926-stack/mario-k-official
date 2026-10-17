@@ -18,7 +18,7 @@ export function PageHero({ eyebrow, title, subtitle, intro }: { eyebrow: string;
 
 export function Cta({ title, text, button }: { title: string; text: string; button: string }) {
   return (
-    <section className="bg-black px-5 py-20 text-center text-white md:py-28">
+    <section className="reveal bg-black px-5 py-20 text-center text-white md:py-28">
       <h2 className="mx-auto max-w-3xl text-2xl font-semibold uppercase leading-tight tracking-tight md:text-4xl">{title}</h2>
       <span className="mx-auto mt-6 block h-[3px] w-16 bg-gold" />
       <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/60 md:text-base">{text}</p>

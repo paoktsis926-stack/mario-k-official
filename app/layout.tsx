@@ -7,7 +7,9 @@ import FloatingContact from "@/components/FloatingContact";
 import Banner from "@/components/Banner";
 import { Analytics } from "@vercel/analytics/next";
 import SiteChrome from "@/components/SiteChrome";
-import { g, packages } from "@/lib/content";
+import { g, packages, mixes } from "@/lib/content";
+import MiniPlayer from "@/components/MiniPlayer";
+import Assistant from "@/components/Assistant";
 
 const base = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`;
 const prices = packages.map((p) => p.price);
@@ -43,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));var e=q.get('event')||localStorage.getItem('ev');if(e)document.documentElement.dataset.event=e}catch(e){}" }} />
-        <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
+        <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<><FloatingContact /><MiniPlayer tracks={mixes.filter((m) => m.url.includes("soundcloud.com")).map((m) => ({ title: m.title, url: m.url.split("?")[0] }))} />{process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}</>}>{children}</SiteChrome>
         <Analytics />
       </body>
     </html>

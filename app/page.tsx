@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { site, eventTypes, packages, photos, faq, reviews, mixes, g, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages, photos, faq, reviews, mixes, g, media, reels, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import EventHero from "@/components/EventHero";
+import Reels from "@/components/Reels";
 import { slugOf } from "@/lib/events";
 
 const h = site.home;
@@ -11,7 +12,7 @@ const h = site.home;
 export default function Home() {
   return (
     <>
-      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} />
+      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} video={media.hero_video} />
 
       <div className="overflow-x-auto border-y border-black bg-black py-4 text-white">
         <p className="mx-auto flex w-max items-center gap-6 px-6 text-[11px] uppercase tracking-[0.25em] text-white/70">
@@ -97,6 +98,15 @@ export default function Home() {
           </ol>
         </div>
       </section>
+
+      {reels.length > 0 && (
+        <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+          <p className="label-caps text-gold">Reels</p>
+          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Η ατμόσφαιρα σε κίνηση</h2>
+          <span className="mt-6 block h-px w-14 bg-gold" />
+          <div className="mt-10"><Reels items={reels} /></div>
+        </section>
+      )}
 
       {mixes.length > 0 && (
         <section className="reveal mx-auto max-w-4xl px-5 py-14 md:py-20">

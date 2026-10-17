@@ -13,6 +13,12 @@ export const reviews = ((data as unknown as { reviews?: Review[] }).reviews ?? [
 type Mix = { title: string; url: string; description?: string; visible: boolean };
 const defaultMixes: Mix[] = [{ title: "Greek Deep House Mix", url: "https://soundcloud.com/djmario_k-814023128/greek-deep-house-mix-by-dj", description: "", visible: true }];
 export const mixes = ((data as unknown as { mixes?: Mix[] }).mixes ?? defaultMixes).filter((m) => m.visible && m.url);
+type Media = { hero_video: string; reels: { title: string; video_url: string; visible: boolean }[] };
+const rawMedia = (data as unknown as { media?: Media }).media;
+export const media = { hero_video: rawMedia?.hero_video ?? "" };
+export const reels: { title: string; video_url: string }[] = rawMedia
+  ? rawMedia.reels.filter((r) => r.visible && r.video_url)
+  : data.photos.filter((p) => p.video_url).map((p) => ({ title: p.title, video_url: p.video_url as string }));
 export const SOUNDCLOUD_PROFILE = "https://soundcloud.com/djmario_k-814023128";
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CdbV_Zn66vpoEBM/review";
 export const eventName = (id: string | null) => eventTypes.find((e) => e.id === id)?.name ?? "";

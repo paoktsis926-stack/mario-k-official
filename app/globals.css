@@ -24,3 +24,13 @@ h1, h2, h3 { font-family: var(--font-inter), system-ui, sans-serif; }
 @supports (animation-timeline: view()) {
   .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
 }
+
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.page-in { animation: pageIn .4s ease both; }
+@keyframes par { to { transform: translateY(70px) scale(1.06); } }
+@supports (animation-timeline: scroll()) { .hero-par { animation: par linear both; animation-timeline: scroll(root); animation-range: 0 90vh; } }
+@keyframes eq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+.eq { display: inline-flex; height: 14px; align-items: flex-end; gap: 2px; }
+.eq span { display: block; width: 3px; height: 14px; background: currentColor; transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
+.eq span:nth-child(2) { animation-delay: .2s; } .eq span:nth-child(3) { animation-delay: .4s; } .eq span:nth-child(4) { animation-delay: .1s; }
+.eq.paused span { animation-play-state: paused; transform: scaleY(.3); }

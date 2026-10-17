@@ -6,7 +6,7 @@ import { slugOf, copy, waLink, shortLabel } from "@/lib/events";
 
 type Ev = { id: string; name: string; image_url: string | null };
 
-export default function EventHero({ events, headline, text, image, eyebrow, cta, wa }: { wa: string; events: Ev[]; headline: string; text: string; image: string; eyebrow: string; cta: string }) {
+export default function EventHero({ events, headline, text, image, eyebrow, cta, wa, video }: { wa: string; video?: string; events: Ev[]; headline: string; text: string; image: string; eyebrow: string; cta: string }) {
   const [ev, setEv] = useState("");
   useEffect(() => { setEv(document.documentElement.dataset.event || ""); }, []);
 
@@ -28,7 +28,7 @@ export default function EventHero({ events, headline, text, image, eyebrow, cta,
   return (
     <section className="relative flex min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-black text-white">
       <div className="absolute inset-y-0 right-0 w-full md:w-[62%]">
-        <img key={bg} src={bg} alt="" className="h-full w-full object-cover object-[50%_20%] grayscale" />
+        {video ? <video src={video} poster={bg} autoPlay muted loop playsInline className="hero-par h-full w-full object-cover object-[50%_20%] grayscale" /> : <img key={bg} src={bg} alt="" className="hero-par h-full w-full object-cover object-[50%_20%] grayscale" />}
         <div className="absolute inset-0 opacity-70 mix-blend-multiply transition-colors duration-500" style={{ background: "linear-gradient(180deg, var(--accent), #0b0620 90%)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent md:bg-gradient-to-r md:from-black md:via-black/35 md:to-transparent" />
       </div>

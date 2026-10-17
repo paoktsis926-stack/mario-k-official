@@ -5,7 +5,7 @@ import { seedPosts } from "@/lib/content";
 
 const Ctx = createContext<any[]>([]);
 const L: Record<string, string> = {
-  name: "Όνομα", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
+  name: "Όνομα", hero_video: "Βίντεο hero (link αρχείου .mp4)", reels: "Reels (κάθετα βίντεο)", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
   features: "Τι περιλαμβάνει (μία γραμμή ανά στοιχείο)", extras: "Προαιρετικά extras (μία γραμμή το καθένα)",
   highlight: "Προτεινόμενο πακέτο (με έμφαση)", event_types: "Για ποιες εκδηλώσεις ισχύει", question: "Ερώτηση", answer: "Απάντηση",
   category: "Κατηγορία", title: "Τίτλος", image_url: "Φωτογραφία", video_url: "Βίντεο (link)", event_type_id: "Εκδήλωση",
@@ -20,7 +20,7 @@ const P: Record<string, string> = {
   home: "Αρχική σελίδα", global: "Στοιχεία επικοινωνίας & γενικά", services: "Σελίδα Υπηρεσίες", packages: "Σελίδα Πακέτα",
   photos: "Σελίδα Φωτογραφίες", venues: "Σελίδα Χώροι", about: "Σελίδα Σχετικά", faq: "Σελίδα FAQ", contact: "Σελίδα Επικοινωνία",
 };
-const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["banner", "Banner"], ["posts", "Blog"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
+const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["media", "Βίντεο"], ["banner", "Banner"], ["posts", "Blog"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
 const pretty = (k: string) => L[k] ?? k.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
 const IMG = /(image_url|portrait|logo_url|hero_image)$/;
 const inp = "mt-1 w-full rounded border border-black/25 bg-white p-2.5 text-sm text-black focus:border-[#c2a86a] focus:outline-none";
@@ -98,6 +98,10 @@ export default function Admin() {
   async function load() {
     const r = await fetch("/api/admin/content").then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου" }));
     if (r.ok) {
+      if (!r.data.media) {
+        const rv = (r.data.photos || []).filter((p: any) => p.video_url).map((p: any) => ({ title: p.title, video_url: p.video_url, visible: true }));
+        r.data.media = { hero_video: "", reels: rv.length ? rv : [{ title: "", video_url: "", visible: false }] };
+      }
       if (!r.data.banner) r.data.banner = { text: "", link: "", visible: false };
       if (!r.data.posts) r.data.posts = seedPosts;
       if (!r.data.mixes) r.data.mixes = [{ title: "Greek Deep House Mix", url: "https://soundcloud.com/djmario_k-814023128/greek-deep-house-mix-by-dj", description: "", visible: true }];
