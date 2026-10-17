@@ -18,3 +18,6 @@ export function applyTheme(s: string) {
     if (s) { r.dataset.event = s; localStorage.setItem("ev", s); } else { delete r.dataset.event; localStorage.removeItem("ev"); }
   } catch {}
 }
+
+const what: Record<string, string> = { wedding: "τον γάμο μου", baptism: "τη βάφτισή μου", "private-party": "ένα πάρτι", bachelorette: "bachelor/bachelorette party", club: "club/bar", corporate: "εταιρική εκδήλωση", karaoke: "karaoke party" };
+export const waLink = (num: string, s: string) => `https://wa.me/${num.replace(/[^\d]/g, "")}?text=${encodeURIComponent(`Γεια σου, ψάχνω DJ για ${what[s] ?? "την εκδήλωσή μου"}. Μπορούμε να μιλήσουμε;`)}`;

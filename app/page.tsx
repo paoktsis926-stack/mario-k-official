@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { site, eventTypes, packages, photos, faq, reviews, mixes, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages, photos, faq, reviews, mixes, g, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import EventHero from "@/components/EventHero";
@@ -11,7 +11,7 @@ const h = site.home;
 export default function Home() {
   return (
     <>
-      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} />
+      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} />
 
       <div className="overflow-x-auto border-y border-black bg-black py-4 text-white">
         <p className="mx-auto flex w-max items-center gap-6 px-6 text-[11px] uppercase tracking-[0.25em] text-white/70">
@@ -83,6 +83,19 @@ export default function Home() {
           ))}
         </div>
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
+      </section>
+
+      <section className="reveal border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto max-w-6xl">
+          <p className="label-caps text-gold">Πώς δουλεύουμε</p>
+          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.about.process_title}</h2>
+          <span className="mt-6 block h-px w-14 bg-gold" />
+          <ol className="mt-10 grid gap-5 md:grid-cols-4">
+            {site.about.process_steps.slice(0, 4).map((t: string, i: number) => (
+              <li key={t} className="border border-black bg-white p-6"><span className="text-3xl font-light text-gold">0{i + 1}</span><p className="mt-3 text-sm leading-6 text-[#555]">{t}</p></li>
+            ))}
+          </ol>
+        </div>
       </section>
 
       {mixes.length > 0 && (

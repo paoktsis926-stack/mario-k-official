@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
+import Banner from "@/components/Banner";
+import { Analytics } from "@vercel/analytics/next";
 import SiteChrome from "@/components/SiteChrome";
 import { g, packages } from "@/lib/content";
 
@@ -41,7 +43,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <script dangerouslySetInnerHTML={{ __html: "try{var e=new URLSearchParams(location.search).get('event')||localStorage.getItem('ev');if(e)document.documentElement.dataset.event=e}catch(e){}" }} />
-        <SiteChrome header={<Header />} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
+        <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<FloatingContact />}>{children}</SiteChrome>
+        <Analytics />
       </body>
     </html>
   );

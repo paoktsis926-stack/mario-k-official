@@ -2,11 +2,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { slugOf, copy } from "@/lib/events";
+import { slugOf, copy, waLink } from "@/lib/events";
 
 type Ev = { id: string; name: string; image_url: string | null };
 
-export default function EventHero({ events, headline, text, image, eyebrow, cta }: { events: Ev[]; headline: string; text: string; image: string; eyebrow: string; cta: string }) {
+export default function EventHero({ events, headline, text, image, eyebrow, cta, wa }: { wa: string; events: Ev[]; headline: string; text: string; image: string; eyebrow: string; cta: string }) {
   const [ev, setEv] = useState("");
   useEffect(() => { setEv(document.documentElement.dataset.event || ""); }, []);
 
@@ -47,6 +47,7 @@ export default function EventHero({ events, headline, text, image, eyebrow, cta 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Link href={ev ? `/booking?event=${ev}` : "/booking"} className="bg-white px-6 py-3 text-[11px] uppercase tracking-[0.18em] text-black transition hover:opacity-90">{cta}</Link>
             <Link href="/paketa" className="border border-white/70 px-6 py-3 text-[11px] uppercase tracking-[0.18em] transition hover:bg-white hover:text-black">Δείτε τα πακέτα</Link>
+            <a href={waLink(wa, ev)} target="_blank" rel="noopener noreferrer" className="border border-white/70 px-6 py-3 text-[11px] uppercase tracking-[0.18em] transition hover:bg-white hover:text-black">WhatsApp</a>
           </div>
         </div>
       </div>

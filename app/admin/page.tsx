@@ -1,10 +1,11 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any, @next/next/no-img-element */
 import { createContext, useContext, useEffect, useState } from "react";
+import { seedPosts } from "@/lib/content";
 
 const Ctx = createContext<any[]>([]);
 const L: Record<string, string> = {
-  name: "Όνομα", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
+  name: "Όνομα", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
   features: "Τι περιλαμβάνει (μία γραμμή ανά στοιχείο)", extras: "Προαιρετικά extras (μία γραμμή το καθένα)",
   highlight: "Προτεινόμενο πακέτο (με έμφαση)", event_types: "Για ποιες εκδηλώσεις ισχύει", question: "Ερώτηση", answer: "Απάντηση",
   category: "Κατηγορία", title: "Τίτλος", image_url: "Φωτογραφία", video_url: "Βίντεο (link)", event_type_id: "Εκδήλωση",
@@ -19,7 +20,7 @@ const P: Record<string, string> = {
   home: "Αρχική σελίδα", global: "Στοιχεία επικοινωνίας & γενικά", services: "Σελίδα Υπηρεσίες", packages: "Σελίδα Πακέτα",
   photos: "Σελίδα Φωτογραφίες", venues: "Σελίδα Χώροι", about: "Σελίδα Σχετικά", faq: "Σελίδα FAQ", contact: "Σελίδα Επικοινωνία",
 };
-const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
+const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["banner", "Banner"], ["posts", "Blog"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
 const pretty = (k: string) => L[k] ?? k.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
 const IMG = /(image_url|portrait|logo_url|hero_image)$/;
 const inp = "mt-1 w-full rounded border border-black/25 bg-white p-2.5 text-sm text-black focus:border-[#c2a86a] focus:outline-none";
@@ -41,7 +42,7 @@ function Field({ k, v, set }: { k: string; v: any; set: (x: any) => void }) {
   }
   return (
     <label className="block text-sm"><span className="font-medium">{pretty(k)}</span>
-      {s.length > 70 || s.includes("\n") ? <textarea rows={4} className={inp} value={s} onChange={(e) => set(e.target.value)} /> : <input className={inp} value={s} onChange={(e) => set(e.target.value)} />}
+      {s.length > 70 || s.includes("\n") ? <textarea rows={k === "body" ? 14 : 4} className={inp} value={s} onChange={(e) => set(e.target.value)} /> : <input className={inp} value={s} onChange={(e) => set(e.target.value)} />}
       {IMG.test(k) && (
         <span className="mt-2 flex items-center gap-4">
           {(preview || s) && <img src={preview || s} alt="" className="h-20 w-20 rounded object-cover" />}
@@ -97,6 +98,8 @@ export default function Admin() {
   async function load() {
     const r = await fetch("/api/admin/content").then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου" }));
     if (r.ok) {
+      if (!r.data.banner) r.data.banner = { text: "", link: "", visible: false };
+      if (!r.data.posts) r.data.posts = seedPosts;
       if (!r.data.mixes) r.data.mixes = [{ title: "Greek Deep House Mix", url: "https://soundcloud.com/djmario_k-814023128/greek-deep-house-mix-by-dj", description: "", visible: true }];
       if (!r.data.reviews) r.data.reviews = [{ name: "", stars: 5, text: "", date: "", visible: false }];
       setData(r.data); setSaved(JSON.stringify(r.data)); setSha(r.sha); setLogin(false); setMsg(null);

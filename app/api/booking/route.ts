@@ -1,4 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
+
+const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
+async function sendMail(to: string, subject: string, html: string) {
+  const key = process.env.RESEND_API_KEY, from = process.env.MAIL_FROM;
+  if (!key || !from || !to) return;
+  await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to, subject, html }) }).catch(() => {});
+}
 
 
 const strFields = ["first_name","last_name","phone","email","event_type","event_date","event_time","area","venue"] as const;
@@ -48,6 +55,13 @@ export async function POST(request: Request) {
       const m = [data.message, data.error, data.detail].find((x) => typeof x === "string" && x);
       return fail(`Σφάλμα συστήματος (${res.status}): ${m ?? raw.slice(0, 200)}`, res.status >= 400 ? res.status : 502);
     }
+    const code = esc(data.request_code);
+    after(async () => {
+      const rows = Object.entries(clean).map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(v)}</td></tr>`).join("");
+      await sendMail(process.env.NOTIFY_EMAIL || "", `Νέο αίτημα ${code}: ${esc(clean.event_type)} ${esc(clean.event_date)}`, `<h3>Νέο αίτημα κράτησης ${code}</h3><table cellpadding="6">${rows}</table>`);
+      if (process.env.CUSTOMER_MAIL === "on")
+        await sendMail(String(clean.email), "Λάβαμε το αίτημά σας — MARIO K", `<p>Γεια σας ${esc(clean.first_name)},</p><p>Λάβαμε το αίτημά σας (κωδικός <b>${code}</b>) για τις ${esc(clean.event_date)}. Θα επικοινωνήσουμε μαζί σας σύντομα για να επιβεβαιώσουμε τη διαθεσιμότητα.</p><p>MARIO K</p>`);
+    });
     return NextResponse.json(data, { status: res.status });
   } catch (e) {
     console.error("[booking] Αποτυχία σύνδεσης με", apiBase, e);
