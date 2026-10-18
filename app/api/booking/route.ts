@@ -57,6 +57,23 @@ export async function POST(request: Request) {
     }
     const code = esc(data.request_code);
     after(async () => {
+      // Δεύτερο αντίγραφο στο DJ PRO HUB (Railway). Ποτέ δεν επηρεάζει την απάντηση στον πελάτη.
+      const rb = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), rk = process.env.RAILWAY_API_KEY;
+      if (rb && rk) {
+        const pkg = clean.package ? `Πακέτο: ${clean.package}\n` : "";
+        await fetch(`${rb}/publicSiteBooking`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-api-key": rk },
+          body: JSON.stringify({
+            full_name: `${clean.first_name} ${clean.last_name}`.trim(),
+            phone: clean.phone, email: clean.email, preferred_date: clean.event_date, event_type: clean.event_type,
+            location: clean.area, venue: clean.venue, guest_count: clean.guest_count, start_time: clean.event_time,
+            comments: `${pkg}${clean.message ?? ""}`.slice(0, 1000),
+            wants_bachelor: clean.event_type === "Bachelorette" ? "yes" : "no",
+            how_found: String(clean.source),
+          }),
+        }).then(async (x) => { if (!x.ok) console.error("[railway]", x.status, (await x.text()).slice(0, 300)); }).catch((e) => console.error("[railway]", e));
+      }
       const rows = Object.entries(clean).map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(v)}</td></tr>`).join("");
       await sendMail(process.env.NOTIFY_EMAIL || "", `Νέο αίτημα ${code}: ${esc(clean.event_type)} ${esc(clean.event_date)}`, `<h3>Νέο αίτημα κράτησης ${code}</h3><table cellpadding="6">${rows}</table>`);
       if (process.env.CUSTOMER_MAIL === "on")

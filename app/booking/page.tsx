@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, type FormEvent } from "react";
+import { Suspense, useEffect, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { g, telHref, waHref } from "@/lib/content";
 import { applyTheme } from "@/lib/events";
@@ -73,6 +73,14 @@ function BookingForm() {
   const [loading, setLoading] = useState(false);
   const [requestCode, setRequestCode] = useState("");
   const [error, setError] = useState("");
+
+  const [avail, setAvail] = useState("");
+  useEffect(() => {
+    if (!form.date) { setAvail(""); return; }
+    const ac = new AbortController();
+    fetch(`/api/availability?date=${form.date}`, { signal: ac.signal }).then((r) => r.json()).then((j) => setAvail(j.status || "")).catch(() => {});
+    return () => ac.abort();
+  }, [form.date]);
 
   const selectedEvent = eventOptions.find((item) => item.value === event);
 
@@ -260,6 +268,9 @@ function BookingForm() {
                 onChange={(e) => updateField("date", e.target.value)}
                 className={inputClass}
               />
+              {avail === "available" && <p className="mt-2 text-xs text-green-700">✓ Η ημερομηνία φαίνεται διαθέσιμη (θα την επιβεβαιώσουμε).</p>}
+              {avail === "pending" && <p className="mt-2 text-xs text-amber-700">Υπάρχει ήδη αίτημα για αυτή την ημέρα. Μπορείτε να στείλετε το δικό σας και θα σας ενημερώσουμε.</p>}
+              {avail === "unavailable" && <p className="mt-2 text-xs text-red-700">Η ημερομηνία φαίνεται κλεισμένη. Μπορείτε να στείλετε αίτημα για λίστα αναμονής ή να διαλέξετε άλλη.</p>}
             </div>
             <div>
               <label className={labelClass}>Ώρα εκδήλωσης *</label>
