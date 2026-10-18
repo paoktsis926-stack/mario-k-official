@@ -1,11 +1,13 @@
-import { site, packages, eventTypes } from "@/lib/content";
+import { site, eventTypes } from "@/lib/content";
+import { getPackages } from "@/lib/hubCatalog";
 import { PageHero, Cta } from "@/components/Ui";
 import PackagesGrid from "@/components/PackagesGrid";
 
 export const metadata = { title: "Πακέτα Υπηρεσιών — MARIO K" };
 const p = site.packages;
 
-export default function Page() {
+export default async function Page() {
+  const packages = await getPackages();
   return (
     <>
       <PageHero eyebrow="Πακέτα" title={p.title} subtitle={p.subtitle} intro={p.intro} />

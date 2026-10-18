@@ -1,10 +1,12 @@
 import data from "@/data/content.json";
+import { slugOf } from "./events";
 
 export const site = data.site as Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export const g = site.global as Record<string, string>;
 export const eventTypes = data.eventTypes;
 export const services = data.services;
-export const packages = data.packages;
+export type Pkg = { name: string; price: number; price_text: string; duration: string; tagline: string; best_for: string; features: string[]; extras: string[]; highlight: boolean; slugs: string[] };
+export const packages = data.packages.map((p) => ({ ...p, price_text: `${p.price}€`, slugs: p.event_types.map((id) => slugOf(data.eventTypes.find((e) => e.id === id)?.name ?? "")) })) as unknown as Pkg[];
 export const faq = data.faq;
 export const photos = data.photos;
 

@@ -1,15 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { site, eventTypes, packages, photos, faq, reviews, mixes, g, media, reels, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages as staticPackages, photos, faq, reviews, mixes, g, media, reels, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
+import { getPackages } from "@/lib/hubCatalog";
 import EventHero from "@/components/EventHero";
 import Reels from "@/components/Reels";
 import { slugOf } from "@/lib/events";
 
 const h = site.home;
 
-export default function Home() {
+export default async function Home() {
+  const packages = await getPackages().catch(() => staticPackages);
   return (
     <>
       <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} video={media.hero_video} />
@@ -62,7 +64,7 @@ export default function Home() {
               <article key={p.name} className={`flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
                 {p.highlight && <p className="label-caps text-gold">{p.tagline}</p>}
                 <h3 className="mt-2 text-2xl font-bold uppercase">{p.name}</h3>
-                <p className="mt-3 text-3xl font-light">{p.price}€</p>
+                <p className="mt-3 text-3xl font-light">{p.price_text}</p>
                 <p className="mt-1 text-sm text-gold">{p.duration}</p>
                 <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
                 <Link href={`/booking?package=${p.name}`} className="mt-6 block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>

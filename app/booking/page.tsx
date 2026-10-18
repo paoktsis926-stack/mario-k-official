@@ -75,6 +75,8 @@ function BookingForm() {
   const [error, setError] = useState("");
 
   const [avail, setAvail] = useState("");
+  const [pkgs, setPkgs] = useState<{ label: string; slugs: string[] }[]>([]);
+  useEffect(() => { fetch("/api/packages").then((r) => r.json()).then((l) => Array.isArray(l) && setPkgs(l)).catch(() => {}); }, []);
   const [offer, setOffer] = useState(false);
   const wl = useRef(false);
   useEffect(() => {
@@ -333,7 +335,7 @@ function BookingForm() {
               className={inputClass}
             >
               <option value="">Δεν έχω αποφασίσει</option>
-              {(packagesByEvent[event] || []).map((item) => (
+              {(pkgs.length ? pkgs.filter((p) => p.slugs.includes(event)).map((p) => p.label) : packagesByEvent[event] || []).map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>

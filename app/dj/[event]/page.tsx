@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { notFound } from "next/navigation";
-import { site, eventTypes, packages, faq, reviews, g } from "@/lib/content";
+import { site, eventTypes, faq, reviews, g } from "@/lib/content";
+import { getPackages } from "@/lib/hubCatalog";
 import { slugOf, copy, lpSlugs, lpLabel, waLink } from "@/lib/events";
 import { Faqs, Points } from "@/components/Ui";
 import BookLink from "@/components/BookLink";
@@ -20,8 +21,8 @@ export default async function Page({ params }: { params: Promise<{ event: string
   const slug = lpSlugs[lp];
   if (!slug) notFound();
   const ev = eventTypes.find((e) => slugOf(e.name) === slug);
-  const ids = eventTypes.filter((e) => slugOf(e.name) === slug).map((e) => e.id);
-  const pk = packages.filter((p) => p.event_types.some((i) => ids.includes(i)));
+  const packages = await getPackages();
+  const pk = packages.filter((p) => p.slugs.includes(slug));
   const list = pk.length ? pk : packages;
   const btn = "px-7 py-4 text-[11px] uppercase tracking-[0.18em] transition";
   return (
@@ -57,7 +58,7 @@ export default async function Page({ params }: { params: Promise<{ event: string
             {list.map((p) => (
               <article key={p.name} className={`flex flex-col border bg-white p-7 ${p.highlight ? "border-gold" : "border-black"}`}>
                 <h3 className="text-xl font-semibold uppercase">{p.name}</h3>
-                <p className="mt-2 text-3xl font-light">{p.price}€</p>
+                <p className="mt-2 text-3xl font-light">{p.price_text}</p>
                 <p className="mt-1 text-sm text-gold">{p.duration}</p>
                 <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
                 <BookLink event={slug} pkg={p.name} lp={`lp-${lp}`} className="mt-6 block bg-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] text-white hover:bg-gold hover:text-black">Επιλογή</BookLink>

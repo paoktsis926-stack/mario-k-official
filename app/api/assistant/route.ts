@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { g, packages, faq, services, eventTypes } from "@/lib/content";
+import { g, faq, services, eventTypes } from "@/lib/content";
+import { getPackages } from "@/lib/hubCatalog";
 
 const hits = new Map<string, { n: number; t: number }>();
 const reply = (message: string, status = 200) => NextResponse.json({ reply: message }, { status });
 
-function systemPrompt() {
-  const pk = packages.map((p) => `- ${p.name}: ${p.price}€, ${p.duration}. Ιδανικό για: ${p.best_for}. Περιλαμβάνει: ${p.features.join("; ")}. Extras: ${p.extras.join("; ")}`).join("\n");
+async function systemPrompt() {
+  const packages = await getPackages();
+  const pk = packages.map((p) => `- ${p.name}: ${p.price_text}, ${p.duration}. Ιδανικό για: ${p.best_for}. Περιλαμβάνει: ${p.features.join("; ")}. Extras: ${p.extras.join("; ")}`).join("\n");
   const fq = faq.map((f) => `Ε: ${f.question}\nΑ: ${f.answer}`).join("\n");
   return `Είσαι ο ψηφιακός βοηθός του DJ MARIO K (Αλεξανδρούπολη και Έβρος). Απαντάς φιλικά και σύντομα (έως 4 προτάσεις), στα ελληνικά ή στη γλώσσα του πελάτη.
 ΚΑΝΟΝΕΣ:
@@ -42,7 +44,7 @@ export async function POST(request: Request) {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: process.env.ASSISTANT_MODEL || "claude-haiku-5-5", max_tokens: 450, system: systemPrompt(), messages }),
+      body: JSON.stringify({ model: process.env.ASSISTANT_MODEL || "claude-haiku-5-5", max_tokens: 450, system: await systemPrompt(), messages }),
       cache: "no-store",
     });
     if (!r.ok) { console.error("[assistant]", r.status, (await r.text()).slice(0, 300)); return reply("Δεν μπόρεσα να απαντήσω τώρα. Καλέστε μας ή γράψτε στο WhatsApp.", 502); }
