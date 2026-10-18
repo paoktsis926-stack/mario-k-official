@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, type FormEvent } from "react";
+import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { g, telHref, waHref } from "@/lib/content";
 import { applyTheme } from "@/lib/events";
@@ -75,6 +75,8 @@ function BookingForm() {
   const [error, setError] = useState("");
 
   const [avail, setAvail] = useState("");
+  const [offer, setOffer] = useState(false);
+  const wl = useRef(false);
   useEffect(() => {
     if (!form.date) { setAvail(""); return; }
     const ac = new AbortController();
@@ -111,6 +113,8 @@ function BookingForm() {
         guest_count: Number(form.guestCount),
         package: form.package || "",
         src: getSrc(),
+        event_slug: event,
+        waitlist: wl.current,
         message: (selectedEvent.api === "Άλλο" ? `[${selectedEvent.label}] ` : "") + form.message.trim(),
         source: "Next.js Website",
         external_id: `web-${crypto.randomUUID()}`,
@@ -123,6 +127,9 @@ function BookingForm() {
       });
 
       const data = await response.json();
+      wl.current = false;
+      setOffer(!!data.waitlist_offer);
+      if (data.waitlist_offer) throw new Error(String(data.message));
 
       if (response.status === 409 || data.is_duplicate) {
         throw new Error(
@@ -353,6 +360,11 @@ function BookingForm() {
             <p role="alert" className="border border-red-300 bg-red-50 p-4 text-sm text-red-800">
               {error}
             </p>
+          )}
+          {offer && (
+            <button type="submit" onClick={() => { wl.current = true; }} disabled={loading} className="w-full border border-black px-6 py-4 text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">
+              Εγγραφή σε λίστα αναμονής για αυτή την ημερομηνία
+            </button>
           )}
 
           <button
