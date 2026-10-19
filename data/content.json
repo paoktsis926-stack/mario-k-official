@@ -258,7 +258,7 @@
  "packages": [
   {
    "name": "Essential",
-   "price": 300,
+   "price": 310,
    "duration": "Έως 5 ώρες",
    "tagline": "Για μικρότερες εκδηλώσεις",
    "best_for": "Πάρτι, βαφτίσεις, μικρές δεξιώσεις",
@@ -547,5 +547,15 @@
    "description": "",
    "visible": true
   }
- ]
+ ],
+ "media": {
+  "hero_video": "",
+  "reels": []
+ },
+ "banner": {
+  "text": "",
+  "link": "",
+  "visible": false
+ },
+ "posts": []
 }
