@@ -10,8 +10,9 @@ export const nav: [string, string][] = [
 
 const topNav = nav.filter(([, h]) => !["/", "/synergazomenoi-xoroi", "/syxnes-erotiseis"].includes(h));
 const mobileNav: [string, string][] = [
-  ["ΠΑΚΕΤΑ", "/paketa"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["MIXES", "/mixes"],
-  ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"], ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"],
+  ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"],
+  ["MIXES", "/mixes"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"], ["ΧΩΡΟΙ", "/synergazomenoi-xoroi"],
+  ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"], ["ΕΠΙΚΟΙΝΩΝΙΑ / ΚΡΑΤΗΣΗ", "/booking"],
 ];
 
 const ig = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" /></svg>;
@@ -33,8 +34,8 @@ export default function Header() {
         </div>
         <details className="relative xl:hidden">
           <summary className="cursor-pointer list-none border border-white/30 px-4 py-3 text-xs tracking-widest">ΜΕΝΟΥ</summary>
-          <div className="absolute right-0 mt-2 flex w-60 flex-col gap-4 border border-white/10 bg-black p-6 text-xs tracking-[0.18em]">
-            {mobileNav.map(([l, h]) => <Link key={h} href={h}>{l}</Link>)}
+          <div className="absolute right-0 mt-2 flex max-h-[70vh] w-[min(18rem,calc(100vw-2rem))] flex-col gap-1 overflow-y-auto border border-white/10 bg-black p-3 text-xs tracking-[0.12em] shadow-xl">
+            {mobileNav.map(([l, h]) => <Link key={h} href={h} className="min-h-11 px-3 py-3 hover:bg-white/10">{l}</Link>)}
             <a href={telHref} className="text-gold">{g.phone}</a>
           </div>
         </details>
