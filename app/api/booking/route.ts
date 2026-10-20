@@ -89,18 +89,8 @@ export async function POST(request: Request) {
     } catch (e) { console.error("[hub]", e); }
   }
 
-  // 2) ΕΦΕΔΡΙΚΗ διαδρομή: Base44 (μόνο αν το HUB δεν απάντησε)
-  if (!via) {
-    const apiBase = process.env.DJPRO_API_BASE?.replace(/\/+$/, ""), apiKey = process.env.DJPRO_API_KEY;
-    if (!apiBase || !apiKey) return fail("Η υπηρεσία κρατήσεων δεν είναι διαθέσιμη αυτή τη στιγμή. Καλέστε μας.", 503);
-    try {
-      const res = await fetch(`${apiBase}/apiCreateBookingRequest`, { method: "POST", headers: { "Content-Type": "application/json", "x-api-key": apiKey }, body: JSON.stringify(clean), cache: "no-store", signal: AbortSignal.timeout(9000) });
-      const data = await res.json().catch(() => ({} as Record<string, unknown>));
-      if (res.status === 409) return fail("Το αίτημα έχει ήδη καταχωριστεί. Επικοινωνήστε μαζί μας για επιβεβαίωση.", 409);
-      if (!res.ok || data.success !== true) { console.error("[base44]", res.status, JSON.stringify(data).slice(0, 300)); return fail("Δεν ήταν δυνατή η αποστολή. Δοκιμάστε ξανά ή καλέστε μας.", 502); }
-      code = String(data.request_code ?? ""); id = String(data.id ?? ""); via = "base44";
-    } catch (e) { console.error("[base44]", e); return fail("Δεν ήταν δυνατή η αποστολή. Δοκιμάστε ξανά ή καλέστε μας.", 502); }
-  }
+  // Μοναδική διαδρομή καταχώρισης: DJ PRO HUB (Railway). Δεν υπάρχει fallback σε Base44.
+  if (!via) return fail("Η υπηρεσία κρατήσεων δεν είναι διαθέσιμη αυτή τη στιγμή. Καλέστε μας.", 503);
 
   const c = esc(code);
   after(async () => {
