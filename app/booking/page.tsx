@@ -34,6 +34,11 @@ const packageMatchesEvent = (pkg: { slugs: string[] }, slug: string) =>
   pkg.slugs.includes(slug) || pkg.slugs.includes(packageSlugByEvent[slug] || "");
 
 
+function trackBookingEvent(name: string, eventType?: string) {
+  const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag;
+  gtag?.("event", name, { event_category: "booking", ...(eventType ? { event_label: eventType } : {}) });
+}
+
 const getSrc = () => {
   try { return [new URLSearchParams(location.search).get("src"), localStorage.getItem("src")].filter(Boolean).join("-").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 60); } catch { return ""; }
 };
@@ -145,6 +150,7 @@ function BookingForm() {
       if (!selectedEvent) {
         throw new Error("Επιλέξτε τύπο εκδήλωσης.");
       }
+      trackBookingEvent("booking_form_submit", event);
 
       if (!idempotencyKey.current) idempotencyKey.current = `web-${crypto.randomUUID()}`;
       const payload = {
@@ -192,10 +198,12 @@ function BookingForm() {
         );
       }
 
+      trackBookingEvent("booking_request_success", event);
       setRequestCode(
         typeof data.request_code === "string" ? data.request_code : ""
       );
     } catch (err) {
+      trackBookingEvent("booking_request_error", event);
       setError(
         err instanceof Error
           ? err.message
