@@ -8,12 +8,30 @@ import { applyTheme } from "@/lib/events";
 const eventOptions = [
   { value: "wedding", label: "Γάμος", api: "Γάμος" },
   { value: "baptism", label: "Βάφτιση", api: "Άλλο" },
-  { value: "private-party", label: "Πάρτι / Ιδιωτική εκδήλωση", api: "Party" },
-  { value: "bachelorette", label: "Bachelorette / Bachelor Party", api: "Bachelorette" },
+  { value: "bachelorette", label: "Bachelorette Party", api: "Bachelorette" },
+  { value: "private-party", label: "Ιδιωτικό πάρτι", api: "Party" },
+  { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Party" },
+  { value: "reunion", label: "Reunion", api: "Party" },
+  { value: "opening", label: "Εγκαίνια", api: "Άλλο" },
+  { value: "beachbar", label: "Beach Bar", api: "Άλλο" },
+  { value: "carnival-adult", label: "Αποκριάτικο πάρτι ενηλίκων", api: "Party" },
+  { value: "carnival-kids", label: "Παιδικό αποκριάτικο πάρτι", api: "Party" },
   { value: "club", label: "Club / Bar", api: "Άλλο" },
   { value: "corporate", label: "Εταιρική εκδήλωση", api: "Άλλο" },
   { value: "karaoke", label: "Karaoke Party & Games", api: "Άλλο" },
 ];
+
+const packageSlugByEvent: Record<string, string> = {
+  opening: "corporate",
+  beachbar: "club",
+  birthday: "private-party",
+  reunion: "private-party",
+  "carnival-adult": "private-party",
+  "carnival-kids": "private-party",
+};
+
+const packageMatchesEvent = (pkg: { slugs: string[] }, slug: string) =>
+  pkg.slugs.includes(slug) || pkg.slugs.includes(packageSlugByEvent[slug] || "");
 
 
 const getSrc = () => {
@@ -90,7 +108,7 @@ function BookingForm() {
     if (!requestedPackage || !event || !pkgs.length) return;
     const wanted = requestedPackage.trim().toLowerCase();
     const match = pkgs.find((p) =>
-      p.slugs.includes(event) &&
+      packageMatchesEvent(p, event) &&
       (p.name.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
     );
     if (match) setForm((previous) => previous.package ? previous : { ...previous, package: match.label });
@@ -391,7 +409,7 @@ function BookingForm() {
               className={inputClass}
             >
               <option value="">Δεν έχω αποφασίσει</option>
-              {pkgs.filter((p) => p.slugs.includes(event)).map((p) => p.label).map((item) => (
+              {pkgs.filter((p) => packageMatchesEvent(p, event)).map((p) => p.label).map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
