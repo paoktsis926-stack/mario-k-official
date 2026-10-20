@@ -34,7 +34,7 @@ export default function EventHero({ events, headline, text, image, eyebrow, cta,
       </div>
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-5 pb-10 md:justify-center md:px-8">
         <div className="max-w-2xl">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-white/70">{eyebrow}</p>
+          <p className="text-[11px] uppercase tracking-[0.35em] text-white/90">{eyebrow}</p>
           <h1 className="mt-5 text-3xl font-bold leading-[1.15] md:text-[2.6rem]" style={{ fontFamily: "var(--font-comfortaa), var(--font-inter), sans-serif" }}>{c ? c.h : headline}</h1>
           <p className="mt-5 line-clamp-2 max-w-md text-sm leading-7 text-white/75">{c ? c.t : text}</p>
           <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
@@ -45,11 +45,11 @@ export default function EventHero({ events, headline, text, image, eyebrow, cta,
         </div>
       </div>
       <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 md:px-8">
-        <p className="mb-3 text-[10px] uppercase tracking-[0.25em] text-white/55">Για ποια εκδήλωση ψάχνεις DJ;</p>
+        <p className="mb-3 text-[11px] uppercase tracking-[0.25em] text-white/85">Για ποια εκδήλωση ψάχνεις DJ;</p>
         <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0">
           {chips.map((e) => {
             const s = slugOf(e.name);
-            return <button key={s} onClick={() => pick(s)} className={`shrink-0 rounded-full border px-3.5 py-1.5 text-[11px] transition ${ev === s ? "border-white bg-white text-black" : "border-white/30 text-white/85 hover:border-white"}`}>{shortLabel[s] ?? e.name}</button>;
+            return <button key={s} onClick={() => pick(s)} className={`shrink-0 rounded-full border px-3.5 py-1.5 text-[11px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold ${ev === s ? "border-white bg-white text-black" : "border-white/30 text-white/85 hover:border-white"}`}>{shortLabel[s] ?? e.name}</button>;
           })}
         </div>
       </div>
