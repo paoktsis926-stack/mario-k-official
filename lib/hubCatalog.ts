@@ -7,7 +7,7 @@ const MAP: Record<string, string[]> = {
 };
 
 function eventSlugs(eventType: string): string[] {
-  const raw = (eventType || "").trim().toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
+  const raw = (eventType || "").trim().toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
   // Πρώτα αναγνωρίζουμε ελληνικές τιμές, πριν αφαιρεθούν οι ελληνικοί χαρακτήρες.
   if (/γαμ|wedding/.test(raw)) return ["wedding"];
   if (/βαπτ|baptism|vaptisi|vaftisi/.test(raw)) return ["baptism"];
