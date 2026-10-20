@@ -7,11 +7,14 @@ import { getPackages } from "@/lib/hubCatalog";
 import EventHero from "@/components/EventHero";
 import Reels from "@/components/Reels";
 import { slugOf } from "@/lib/events";
+import { getGoogleReviews } from "@/lib/googleReviews";
 
 const h = site.home;
 
 export default async function Home() {
   const packages = await getPackages().catch(() => staticPackages);
+  const googleReviews = await getGoogleReviews();
+  const displayReviews = googleReviews?.reviews.length ? googleReviews.reviews : reviews;
   return (
     <div className="site-home">
       <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} video={media.hero_video} />
@@ -129,14 +132,15 @@ export default async function Home() {
         </div>
       </section>
 
-      {reviews.length > 0 && (
+      {displayReviews.length > 0 && (
         <section className="reveal home-reviews border-t border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <p className="label-caps text-gold">Κριτικές</p>
             <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Τι λένε οι πελάτες μας</h2>
             <span className="mt-6 block h-[3px] w-16 bg-gold" />
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {reviews.map((r) => (
+            {googleReviews && <p className="mt-5 text-sm text-[#555]">{googleReviews.rating.toFixed(1)} ★ · {googleReviews.user_ratings_total} αξιολογήσεις στο Google Maps</p>}
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              {displayReviews.slice(0, 3).map((r) => (
                 <figure key={r.name + r.text.slice(0, 12)} className="flex flex-col border border-black bg-white p-8">
                   <p className="text-gold">{"★".repeat(Math.max(1, Math.min(5, r.stars)))}</p>
                   <blockquote className="mt-4 flex-1 text-sm leading-7 text-[#444]">{r.text}</blockquote>
@@ -144,7 +148,10 @@ export default async function Home() {
                 </figure>
               ))}
             </div>
-            <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γράψτε κι εσείς κριτική στο Google ↗</a>
+            <div className="mt-8 flex flex-wrap gap-6">
+              <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γράψτε κι εσείς κριτική στο Google ↗</a>
+              {googleReviews?.google_maps_url && <a href={googleReviews.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Δείτε τις κριτικές στο Google Maps ↗</a>}
+            </div>
           </div>
         </section>
       )}
