@@ -60,7 +60,7 @@ export async function POST(request: Request) {
   const slug = typeof body.event_slug === "string" && hubType[body.event_slug] ? body.event_slug : "";
   const waitlist = body.waitlist === true;
 
-  let code = "", id = "", via = "";
+  let code = "", id = "", via = "", duplicate = false;
 
   // 1) ΚΥΡΙΑ διαδρομή: DJ PRO HUB (Railway)
   const rb = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), rk = process.env.RAILWAY_API_KEY;
@@ -75,14 +75,14 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           full_name: `${clean.first_name} ${clean.last_name}`.trim(), phone: clean.phone, email: clean.email,
           preferred_date: clean.event_date, event_type: m.type, location: clean.area, venue: clean.venue,
-          guest_count: clean.guest_count, start_time: clean.event_time,
+          guest_count: clean.guest_count, start_time: clean.event_time, idempotency_key: clean.external_id,
           comments: `${m.prefix}${pkgNote}${clean.message}`.slice(0, 1000),
           wants_bachelor: slug === "bachelorette" ? "yes" : "no", package_id: pkgId, how_found: String(clean.source), waitlist,
         }),
         cache: "no-store", signal: AbortSignal.timeout(9000),
       });
       const j = await r.json().catch(() => ({}));
-      if (r.ok && j.ok && j.id) { id = String(j.id); code = `MK-${id.slice(-6).toUpperCase()}`; via = "hub"; }
+      if (r.ok && j.ok && j.id) { id = String(j.id); code = typeof j.request_code === "string" ? j.request_code : `MK-${id.slice(-6).toUpperCase()}`; via = "hub"; duplicate = j.duplicate === true; }
       else if (r.status === 409) return fail(`${j.error || "Η ημερομηνία δεν είναι διαθέσιμη."} Μπορείτε να δηλώσετε ενδιαφέρον για λίστα αναμονής ή να διαλέξετε άλλη ημερομηνία.`, 409, { waitlist_offer: true });
       else if (r.status >= 400 && r.status < 500 && ![401, 403, 429].includes(r.status)) return fail(String(j.error || "Μη έγκυρο αίτημα."), 400);
       else console.error("[hub]", r.status, JSON.stringify(j).slice(0, 300));
@@ -91,6 +91,8 @@ export async function POST(request: Request) {
 
   // Μοναδική διαδρομή καταχώρισης: DJ PRO HUB (Railway). Δεν υπάρχει fallback σε Base44.
   if (!via) return fail("Η υπηρεσία κρατήσεων δεν είναι διαθέσιμη αυτή τη στιγμή. Καλέστε μας.", 503);
+
+  if (duplicate) return NextResponse.json({ success: true, request_code: code, id, via, duplicate: true });
 
   const c = esc(code);
   after(async () => {
