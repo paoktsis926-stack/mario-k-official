@@ -17,7 +17,7 @@ function eventSlugs(eventType: string): string[] {
   if (/karaoke/.test(raw)) return ["karaoke"];
   if (/γενεθ|birthday|reunion|επανεν|party|παρτ|private|ιδιωτ|pre.?party/.test(raw)) return ["private-party"];
   const key = raw.replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
-  return MAP[key] ?? ["private-party"];
+  return MAP[key] ?? [];
 }
 
 // Τιμοκατάλογος απευθείας από το DJ PRO HUB. Αν το HUB δεν απαντήσει, μένουν τα τελευταία γνωστά πακέτα του site.
@@ -35,7 +35,7 @@ export async function getPackages(): Promise<Pkg[]> {
     return j.packages.map((p: { name: string; price: number; price_max: number; duration: string; short_description: string; included_features: string[]; event_type: string }) => ({
       name: p.name, price: p.price, price_text: p.price_max > p.price ? `${p.price}–${p.price_max}€` : `${p.price}€`,
       duration: p.duration || "", tagline: "", best_for: p.short_description || "", features: p.included_features || [], extras,
-      highlight: star.some((s) => p.name.toLowerCase().startsWith(s)), slugs: eventSlugs(p.event_type),
+      highlight: star.some((s) => p.name.toLowerCase().startsWith(s)), slugs: fallback.find((f) => f.name.trim().toLowerCase() === p.name.trim().toLowerCase())?.slugs ?? eventSlugs(p.event_type),
     }));
   } catch {
     return fallback;
