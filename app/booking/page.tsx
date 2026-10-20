@@ -67,6 +67,17 @@ function BookingForm() {
   const [error, setError] = useState("");
 
   const [avail, setAvail] = useState("");
+  const [bookedDates, setBookedDates] = useState<string[]>([]);
+  const [calendarMonth, setCalendarMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
+  useEffect(() => {
+    fetch("/api/booked-dates", { cache: "no-store" })
+      .then((r) => r.ok ? r.json() : { dates: [] })
+      .then((j) => setBookedDates(Array.isArray(j.dates) ? j.dates.filter((d: unknown) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) : []))
+      .catch(() => setBookedDates([]));
+  }, []);
   const [pkgs, setPkgs] = useState<{ label: string; name: string; slugs: string[] }[]>([]);
   useEffect(() => {
     fetch("/api/packages")
@@ -94,6 +105,13 @@ function BookingForm() {
   }, [form.date]);
 
   const selectedEvent = eventOptions.find((item) => item.value === event);
+  const monthYear = calendarMonth.getFullYear();
+  const monthIndex = calendarMonth.getMonth();
+  const monthLabel = calendarMonth.toLocaleDateString("el-GR", { month: "long", year: "numeric" });
+  const monthOffset = (new Date(monthYear, monthIndex, 1).getDay() + 6) % 7;
+  const monthDays = new Date(monthYear, monthIndex + 1, 0).getDate();
+  const now = new Date();
+  const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
   function updateField(field: keyof BookingFormData, value: string) {
     setForm((previous) => ({ ...previous, [field]: value }));
@@ -277,11 +295,40 @@ function BookingForm() {
           <div className="grid gap-6 md:grid-cols-2">
             <div>
               <label className={labelClass}>Ημερομηνία εκδήλωσης *</label>
+              <div className="mb-3 border border-black/15 p-3 sm:p-4">
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <button type="button" aria-label="Προηγούμενος μήνας" onClick={() => setCalendarMonth(new Date(monthYear, monthIndex - 1, 1))} className="px-3 py-2 text-lg hover:bg-black/5">‹</button>
+                  <p className="text-sm font-semibold capitalize">{monthLabel}</p>
+                  <button type="button" aria-label="Επόμενος μήνας" onClick={() => setCalendarMonth(new Date(monthYear, monthIndex + 1, 1))} className="px-3 py-2 text-lg hover:bg-black/5">›</button>
+                </div>
+                <div className="grid grid-cols-7 gap-1 text-center">
+                  {["Δε", "Τρ", "Τε", "Πε", "Πα", "Σα", "Κυ"].map((day) => <span key={day} className="py-1 text-[10px] font-semibold text-black/45">{day}</span>)}
+                  {Array.from({ length: monthOffset }, (_, i) => <span key={`empty-${i}`} />)}
+                  {Array.from({ length: monthDays }, (_, i) => {
+                    const day = i + 1;
+                    const iso = `${monthYear}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+                    const booked = bookedDates.includes(iso);
+                    const past = iso < todayISO;
+                    const selected = form.date === iso;
+                    return <button key={iso} type="button" disabled={booked || past} aria-pressed={selected} aria-label={`${day} ${monthLabel}${booked ? ", κλεισμένη ημερομηνία" : ""}`} title={booked ? "Κλεισμένη ημερομηνία" : undefined} onClick={() => updateField("date", iso)} className={`aspect-square min-w-0 text-xs transition ${booked ? "cursor-not-allowed bg-red-100 text-red-700 line-through" : past ? "cursor-not-allowed text-black/25" : selected ? "bg-gold font-bold text-black" : "hover:bg-black/10"}`}>
+                      {day}
+                    </button>;
+                  })}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-black/55">
+                  <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 bg-gold" /> Επιλεγμένη</span>
+                  <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 bg-red-100 ring-1 ring-red-200" /> Κλεισμένη</span>
+                </div>
+              </div>
               <input
                 required
                 type="date"
+                min={todayISO}
                 value={form.date}
-                onChange={(e) => updateField("date", e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (!bookedDates.includes(value)) updateField("date", value);
+                }}
                 className={inputClass}
               />
               {avail === "available" && <p className="mt-2 text-xs text-green-700">✓ Η ημερομηνία φαίνεται διαθέσιμη (θα την επιβεβαιώσουμε).</p>}
