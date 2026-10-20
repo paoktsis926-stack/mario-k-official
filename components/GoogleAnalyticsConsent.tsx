@@ -15,6 +15,10 @@ export default function GoogleAnalyticsConsent() {
   }, []);
 
   function choose(value: Exclude<Consent, null>) {
+    if (value === "rejected") {
+      const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+      gtag?.("consent", "update", { analytics_storage: "denied" });
+    }
     window.localStorage.setItem("ga-consent", value);
     setConsent(value);
     setShowSettings(false);
