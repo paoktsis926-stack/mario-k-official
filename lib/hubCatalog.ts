@@ -17,7 +17,7 @@ function eventSlugs(eventType: string): string[] {
   if (/karaoke/.test(raw)) return ["karaoke"];
   if (/γενεθ|birthday|reunion|επανεν|party|παρτ|private|ιδιωτ|pre.?party/.test(raw)) return ["private-party"];
   const key = raw.replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
-  return MAP[key] ?? [];
+  return MAP[key] ?? ["private-party"];
 }
 
 // Τιμοκατάλογος απευθείας από το DJ PRO HUB. Αν το HUB δεν απαντήσει, μένουν τα τελευταία γνωστά πακέτα του site.
