@@ -18,7 +18,9 @@ export type LiveGoogleReviews = {
 // Server-only: uses the existing Railway connection variables and never exposes
 // the public-site API key to the browser. Review text is fetched live from Google.
 export async function getGoogleReviews(): Promise<LiveGoogleReviews | null> {
-  const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, "");
+  const base = process.env.RAILWAY_API_BASE
+    ?.replace(/\/+$/, "")
+    .replace(/\/api\/functions$/i, "");
   const key = process.env.RAILWAY_API_KEY;
   if (!base || !key) return null;
 
