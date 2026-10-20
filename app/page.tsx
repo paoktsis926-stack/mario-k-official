@@ -59,35 +59,17 @@ export default async function Home() {
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.packages_title}</h2>
           <span className="mt-6 block h-[3px] w-16 bg-gold" />
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.packages_text}</p>
-          <div className="mt-12 space-y-12">
-            {eventTypes.map((e) => {
-              const eventSlug = slugOf(e.name);
-              const eventPackages = packages.filter((p) => p.slugs?.includes(eventSlug));
-              return (
-                <div key={e.id}>
-                  <h3 className="mb-5 border-b border-black/15 pb-3 text-lg font-semibold uppercase">{e.name}</h3>
-                  {eventPackages.length > 0 ? (
-                    <div className="grid gap-5 md:grid-cols-3">
-                      {eventPackages.map((p) => (
-                        <article key={`${e.id}-${p.name}`} className={`flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
-                          {p.highlight && <p className="label-caps text-gold">{p.tagline}</p>}
-                          <h4 className="mt-2 text-2xl font-bold uppercase">{p.name}</h4>
-                          <p className="mt-3 text-3xl font-light">{p.price_text}</p>
-                          <p className="mt-1 text-sm text-gold">{p.duration}</p>
-                          <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
-                          <Link href={`/booking?event=${eventSlug}&package=${encodeURIComponent(p.name)}`} className="mt-6 block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>
-                        </article>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="border border-black/15 bg-white p-6 text-sm text-[#555]">
-                      Για αυτή την εκδήλωση, ζητήστε εξατομικευμένη προσφορά.
-                      {" "}<Link href={`/booking?event=${eventSlug}`} className="underline">Ζητήστε προσφορά</Link>
-                    </p>
-                  )}
-                </div>
-              );
-            })}
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {packages.map((p) => (
+              <article key={p.name} className={`flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
+                {p.highlight && <p className="label-caps text-gold">{p.tagline}</p>}
+                <h3 className="mt-2 text-2xl font-bold uppercase">{p.name}</h3>
+                <p className="mt-3 text-3xl font-light">{p.price_text}</p>
+                <p className="mt-1 text-sm text-gold">{p.duration}</p>
+                <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
+                <Link href={`/booking?package=${encodeURIComponent(p.name)}`} className="mt-6 block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>
+              </article>
+            ))}
           </div>
           <p className="mt-6 text-sm text-[#555]">Οι τιμές είναι ενδεικτικές. <Link href="/paketa" className="underline">Δείτε αναλυτικά τα πακέτα</Link></p>
         </div>
