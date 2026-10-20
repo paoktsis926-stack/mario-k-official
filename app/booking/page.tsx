@@ -97,6 +97,7 @@ function BookingForm() {
   }, [event, pkgs, requestedPackage]);
   const [offer, setOffer] = useState(false);
   const wl = useRef(false);
+  const idempotencyKey = useRef("");
   useEffect(() => {
     if (!form.date) { setAvail(""); return; }
     const ac = new AbortController();
@@ -127,6 +128,7 @@ function BookingForm() {
         throw new Error("Επιλέξτε τύπο εκδήλωσης.");
       }
 
+      if (!idempotencyKey.current) idempotencyKey.current = `web-${crypto.randomUUID()}`;
       const payload = {
         first_name: form.firstName.trim(),
         last_name: form.lastName.trim(),
@@ -144,7 +146,7 @@ function BookingForm() {
         waitlist: wl.current,
         message: (selectedEvent.api === "Άλλο" ? `[${selectedEvent.label}] ` : "") + form.message.trim(),
         source: "Next.js Website",
-        external_id: `web-${crypto.randomUUID()}`,
+        external_id: idempotencyKey.current,
       };
 
       const response = await fetch("/api/booking", {
