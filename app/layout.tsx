@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Comfortaa, Cormorant_Garamond } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -44,6 +45,12 @@ export const viewport: Viewport = { themeColor: "#0b0b0b" };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="el" suppressHydrationWarning className={`${inter.variable} ${comfortaa.variable} ${cormorant.variable} antialiased`}>
+      <head>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-MPHCMP6W7X" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-MPHCMP6W7X');`}
+        </Script>
+      </head>
       <body className="min-h-screen bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));if(location.pathname.startsWith('/dj/')){var e=q.get('event')||location.pathname.split('/')[2];if(e)document.documentElement.dataset.event=e}else{delete document.documentElement.dataset.event}}catch(e){}" }} />
