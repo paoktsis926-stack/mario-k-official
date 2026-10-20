@@ -1,7 +1,15 @@
 # MARIO K Official
-Οι φωτογραφίες και το λογότυπο φορτώνονται προσωρινά από το Base44 (`data/content.json`). Κατέβασέ τα και βάλε τα δικά σου links όταν αποσυνδεθείς από το Base44.
-Χρειάζεται `.env.local` με `DJPRO_API_BASE` και `DJPRO_API_KEY`. Τρέξιμο: `npm install && npm run dev`.
 
-## Admin (`/admin`)
-Env (Vercel + .env.local): `ADMIN_PASSWORD`, `ADMIN_SECRET` (τυχαίο μακρύ κείμενο), `GITHUB_TOKEN` (fine-grained, Contents: read/write στο repo), προαιρετικά `GITHUB_REPO`, `GITHUB_BRANCH`.
-Η αποθήκευση γράφει το `data/content.json` στο GitHub και το Vercel κάνει νέο deploy.
+## Σύνδεση κρατήσεων
+Το site στέλνει τα αιτήματα κρατήσεων αποκλειστικά στο DJ PRO HUB μέσω Railway.
+Απαιτούνται οι μεταβλητές περιβάλλοντος `RAILWAY_API_BASE` και `RAILWAY_API_KEY` στο Vercel και στο τοπικό `.env.local`.
+Δεν υπάρχει εφεδρική διαδρομή κρατήσεων προς Base44.
+
+## Περιεχόμενο και διαχείριση
+Οι φωτογραφίες και το λογότυπο πρέπει ακόμη να μεταφερθούν από τις παλιές διευθύνσεις Base44 σε ανεξάρτητη φιλοξενία πριν αφαιρεθούν πλήρως οι σχετικές εξαρτήσεις.
+Η διαχείριση περιεχομένου βρίσκεται στο `/admin`.
+Μεταβλητές περιβάλλοντος: `ADMIN_PASSWORD`, `ADMIN_SECRET`, `GITHUB_TOKEN` (fine-grained token με Contents: read/write στο repo), προαιρετικά `GITHUB_REPO`, `GITHUB_BRANCH`.
+Η αποθήκευση γράφει το `data/content.json` στο GitHub και το Vercel κάνει νέο deployment.
+
+## Εκτέλεση
+`npm install && npm run dev`
