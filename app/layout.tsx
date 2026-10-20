@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   title: "MARIO K — DJ & Entertainment | Γάμοι, Βαπτίσεις, Πάρτι",
   description: "Ο MARIO K για γάμους, βαπτίσεις, πάρτι και εταιρικές εκδηλώσεις. DJ, karaoke, παιχνίδια, ήχος και φωτισμός με επαγγελματικό εξοπλισμό, σε Αλεξανδρούπολη και σε όλο τον Έβρο.",
   keywords: "DJ, DJ Mario K, DJ Αλεξανδρούπολη, DJ Έβρος, γάμος, βάπτιση, πάρτι, εταιρική εκδήλωση, karaoke, ήχος, φωτισμός, DJ service",
+  icons: { icon: "/icon.svg", shortcut: "/icon.svg" },
   openGraph: { title: "MARIO K — DJ & Entertainment", siteName: g.brand_name, locale: "el_GR", type: "website", images: ["https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png"] },
 };
 
