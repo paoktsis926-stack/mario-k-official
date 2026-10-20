@@ -67,7 +67,7 @@ function BookingForm() {
   const [error, setError] = useState("");
 
   const [avail, setAvail] = useState("");
-  const [pkgs, setPkgs] = useState<{ label: string; slugs: string[] }[]>([]);
+  const [pkgs, setPkgs] = useState<{ label: string; name: string; slugs: string[] }[]>([]);
   useEffect(() => {
     fetch("/api/packages")
       .then((r) => { if (!r.ok) throw new Error("Δεν φορτώθηκαν τα πακέτα."); return r.json(); })
@@ -80,7 +80,7 @@ function BookingForm() {
     const wanted = requestedPackage.trim().toLowerCase();
     const match = pkgs.find((p) =>
       p.slugs.includes(event) &&
-      (p.label.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
+      (p.name.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
     );
     if (match) setForm((previous) => previous.package ? previous : { ...previous, package: match.label });
   }, [event, pkgs, requestedPackage]);
