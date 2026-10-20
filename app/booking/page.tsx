@@ -80,7 +80,7 @@ function BookingForm() {
     const wanted = requestedPackage.trim().toLowerCase();
     const match = pkgs.find((p) =>
       p.slugs.includes(event) &&
-      (p.name.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
+      (p.label.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
     );
     if (match) setForm((previous) => previous.package ? previous : { ...previous, package: match.label });
   }, [event, pkgs, requestedPackage]);
