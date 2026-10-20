@@ -4,11 +4,15 @@ import { g, telHref } from "@/lib/content";
 import { outline } from "./Ui";
 
 export const nav: [string, string][] = [
-  ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"], ["ΜΙΧΕΣ", "/mixes"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"],
+  ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"], ["MIXES", "/mixes"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"],
   ["ΧΩΡΟΙ", "/synergazomenoi-xoroi"], ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"], ["ΕΠΙΚΟΙΝΩΝΙΑ", "/booking"],
 ];
 
 const topNav = nav.filter(([, h]) => !["/", "/synergazomenoi-xoroi", "/syxnes-erotiseis"].includes(h));
+const mobileNav: [string, string][] = [
+  ["ΠΑΚΕΤΑ", "/paketa"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["MIXES", "/mixes"],
+  ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"], ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"],
+];
 
 const ig = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" /></svg>;
 const tt = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.3 2.4 2 4.2 5 4.5" /></svg>;
@@ -30,7 +34,7 @@ export default function Header() {
         <details className="relative xl:hidden">
           <summary className="cursor-pointer list-none border border-white/30 px-4 py-3 text-xs tracking-widest">ΜΕΝΟΥ</summary>
           <div className="absolute right-0 mt-2 flex w-60 flex-col gap-4 border border-white/10 bg-black p-6 text-xs tracking-[0.18em]">
-            {nav.map(([l, h]) => <Link key={h} href={h}>{l}</Link>)}
+            {mobileNav.map(([l, h]) => <Link key={h} href={h}>{l}</Link>)}
             <a href={telHref} className="text-gold">{g.phone}</a>
           </div>
         </details>
