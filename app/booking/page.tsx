@@ -15,8 +15,6 @@ const eventOptions = [
   { value: "karaoke", label: "Karaoke Party & Games", api: "Άλλο" },
 ];
 
-const allPackages = ["Essential — 300€", "Signature — 500€", "Full Production — 900€"];
-const packagesByEvent: Record<string, string[]> = Object.fromEntries(eventOptions.map((o) => [o.value, allPackages]));
 
 const getSrc = () => {
   try { return [new URLSearchParams(location.search).get("src"), localStorage.getItem("src")].filter(Boolean).join("-").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 60); } catch { return ""; }
@@ -62,21 +60,30 @@ function BookingForm() {
     : "";
 
   const [event, setEvent] = useState(initialEvent);
-  const [form, setForm] = useState<BookingFormData>({
-    ...initialForm,
-    package:
-      packagesByEvent[initialEvent]?.find((item) =>
-        item.startsWith(requestedPackage)
-      ) || "",
-  });
+  const [form, setForm] = useState<BookingFormData>({ ...initialForm });
 
   const [loading, setLoading] = useState(false);
   const [requestCode, setRequestCode] = useState("");
   const [error, setError] = useState("");
 
   const [avail, setAvail] = useState("");
-  const [pkgs, setPkgs] = useState<{ label: string; slugs: string[] }[]>([]);
-  useEffect(() => { fetch("/api/packages").then((r) => r.json()).then((l) => Array.isArray(l) && setPkgs(l)).catch(() => {}); }, []);
+  const [pkgs, setPkgs] = useState<{ label: string; name: string; slugs: string[] }[]>([]);
+  useEffect(() => {
+    fetch("/api/packages")
+      .then((r) => { if (!r.ok) throw new Error("Δεν φορτώθηκαν τα πακέτα."); return r.json(); })
+      .then((l) => { if (Array.isArray(l)) setPkgs(l); })
+      .catch(() => setPkgs([]));
+  }, []);
+
+  useEffect(() => {
+    if (!requestedPackage || !event || !pkgs.length) return;
+    const wanted = requestedPackage.trim().toLowerCase();
+    const match = pkgs.find((p) =>
+      p.slugs.includes(event) &&
+      (p.name.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
+    );
+    if (match) setForm((previous) => previous.package ? previous : { ...previous, package: match.label });
+  }, [event, pkgs, requestedPackage]);
   const [offer, setOffer] = useState(false);
   const wl = useRef(false);
   useEffect(() => {
@@ -335,7 +342,7 @@ function BookingForm() {
               className={inputClass}
             >
               <option value="">Δεν έχω αποφασίσει</option>
-              {(pkgs.length ? pkgs.filter((p) => p.slugs.includes(event)).map((p) => p.label) : packagesByEvent[event] || []).map((item) => (
+              {pkgs.filter((p) => p.slugs.includes(event)).map((p) => p.label).map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
