@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Comfortaa, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -39,12 +39,14 @@ export const metadata: Metadata = {
   openGraph: { title: "MARIO K — DJ & Entertainment", siteName: g.brand_name, locale: "el_GR", type: "website", images: ["https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png"] },
 };
 
+export const viewport: Viewport = { themeColor: "#0b0b0b" };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="el" suppressHydrationWarning className={`${inter.variable} ${comfortaa.variable} ${cormorant.variable} antialiased`}>
       <body className="min-h-screen bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));var e=q.get('event')||localStorage.getItem('ev');if(e)document.documentElement.dataset.event=e}catch(e){}" }} />
+        <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));if(location.pathname.startsWith('/dj/')){var e=q.get('event')||location.pathname.split('/')[2];if(e)document.documentElement.dataset.event=e}else{delete document.documentElement.dataset.event}}catch(e){}" }} />
         <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<><FloatingContact /><MiniPlayer tracks={mixes.filter((m) => m.url.includes("soundcloud.com")).map((m) => ({ title: m.title, url: m.url.split("?")[0] }))} />{process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}</>}>{children}</SiteChrome>
         <Analytics />
       </body>

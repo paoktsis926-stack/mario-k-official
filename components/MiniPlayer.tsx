@@ -31,7 +31,7 @@ export default function MiniPlayer({ tracks }: { tracks: { title: string; url: s
   return (
     <>
       <iframe ref={frame} title="player" aria-hidden="true" tabIndex={-1} className="pointer-events-none fixed -left-[9999px] h-[120px] w-[300px]" allow="autoplay" src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(tracks[0].url)}&auto_play=false&visual=false&hide_related=true&show_comments=false`} />
-      <div className="fixed bottom-16 left-3 z-40 flex items-center gap-3 rounded-full border border-white/15 bg-black/90 p-1.5 pr-4 text-white shadow-lg backdrop-blur md:bottom-6 md:left-5">
+      <div className="fixed bottom-16 left-3 z-40 hidden items-center gap-3 rounded-full border border-white/15 bg-black/90 p-1.5 pr-4 text-white shadow-lg backdrop-blur md:bottom-6 md:left-5 md:flex">
         <button onClick={() => widget.current?.toggle()} disabled={!ready} aria-label={playing ? "Παύση" : "Αναπαραγωγή"} className="flex h-10 w-10 items-center justify-center rounded-full bg-gold text-black disabled:opacity-40">{playing ? "❚❚" : "▶"}</button>
         {open && (
           <>
