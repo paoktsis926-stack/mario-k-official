@@ -7,17 +7,17 @@ const MAP: Record<string, string[]> = {
 };
 
 function eventSlugs(eventType: string): string[] {
-  const key = (eventType || "").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
-  if (MAP[key]) return MAP[key];
-  if (/wedding|gamos|γαμο/.test(key)) return ["wedding"];
-  if (/baptism|vaptisi|vaftisi|βαπτ/.test(key)) return ["baptism"];
-  if (/bachelor|bachelorette/.test(key)) return ["bachelorette"];
-  if (/beach.?bar|club/.test(key)) return ["club"];
-  if (/corporate|company|etairik|εταιρ|opening|inauguration|egkain/.test(key)) return ["corporate"];
-  if (/karaoke/.test(key)) return ["karaoke"];
-  if (/party|private|birthday|reunion|pre.?party|party/.test(key)) return ["private-party"];
-  // Unknown event types must not be assigned to every category.
-  return [];
+  const raw = (eventType || "").trim().toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
+  // Πρώτα αναγνωρίζουμε ελληνικές τιμές, πριν αφαιρεθούν οι ελληνικοί χαρακτήρες.
+  if (/γαμ|wedding/.test(raw)) return ["wedding"];
+  if (/βαπτ|baptism|vaptisi|vaftisi/.test(raw)) return ["baptism"];
+  if (/bachelor|bachelorette/.test(raw)) return ["bachelorette"];
+  if (/beach.?bar|club|bar/.test(raw)) return ["club"];
+  if (/εταιρ|corporate|company|opening|inauguration|εγκαιν/.test(raw)) return ["corporate"];
+  if (/karaoke/.test(raw)) return ["karaoke"];
+  if (/γενεθ|birthday|reunion|επανεν|party|παρτ|private|ιδιωτ|pre.?party/.test(raw)) return ["private-party"];
+  const key = raw.replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+  return MAP[key] ?? [];
 }
 
 // Τιμοκατάλογος απευθείας από το DJ PRO HUB. Αν το HUB δεν απαντήσει, μένουν τα τελευταία γνωστά πακέτα του site.
