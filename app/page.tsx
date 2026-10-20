@@ -13,7 +13,7 @@ const h = site.home;
 export default async function Home() {
   const packages = await getPackages().catch(() => staticPackages);
   return (
-    <>
+    <div className="site-home">
       <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} video={media.hero_video} />
 
       <div className="overflow-x-auto border-y border-black bg-black py-4 text-white">
@@ -22,7 +22,7 @@ export default async function Home() {
         </p>
       </div>
 
-      <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal home-events mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
         <p className="label-caps text-gold">Εκδηλώσεις</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.event_title}</h2>
         <span className="mt-6 block h-[3px] w-16 bg-gold" />
@@ -41,7 +41,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="reveal mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
+      <section className="reveal home-about mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
         <img src={site.about.portrait} alt="MARIO K" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
         <div>
           <p className="label-caps text-gold">Ο DJ</p>
@@ -53,7 +53,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="reveal border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal home-packages border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Πακέτα</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.packages_title}</h2>
@@ -93,7 +93,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal home-highlights mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
         <p className="label-caps text-gold">Highlights</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.photos_title}</h2>
         <span className="mt-6 block h-[3px] w-16 bg-gold" />
@@ -106,7 +106,7 @@ export default async function Home() {
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
       </section>
 
-      <section className="reveal border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+      <section className="reveal home-process border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Πώς δουλεύουμε</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.about.process_title}</h2>
@@ -120,7 +120,7 @@ export default async function Home() {
       </section>
 
       {reels.length > 0 && (
-        <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+        <section className="reveal home-reels mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
           <p className="label-caps text-gold">Reels</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Η ατμόσφαιρα σε κίνηση</h2>
           <span className="mt-6 block h-px w-14 bg-gold" />
@@ -129,7 +129,7 @@ export default async function Home() {
       )}
 
       {mixes.length > 0 && (
-        <section className="reveal mx-auto max-w-4xl px-5 py-14 md:py-20">
+        <section className="reveal home-mixes mx-auto max-w-4xl px-5 py-14 md:py-20">
           <p className="label-caps text-gold">Mixes</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Άκου τον ήχο</h2>
           <span className="mt-6 block h-px w-14 bg-gold" />
@@ -148,7 +148,7 @@ export default async function Home() {
       </section>
 
       {reviews.length > 0 && (
-        <section className="reveal border-t border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
+        <section className="reveal home-reviews border-t border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <p className="label-caps text-gold">Κριτικές</p>
             <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Τι λένε οι πελάτες μας</h2>
@@ -167,7 +167,7 @@ export default async function Home() {
         </section>
       )}
 
-      <section className="reveal mx-auto max-w-4xl px-5 py-14 md:py-20">
+      <section className="reveal home-faq mx-auto max-w-4xl px-5 py-14 md:py-20">
         <p className="label-caps text-gold">FAQ</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.faq_title}</h2>
         <p className="mb-10 mt-6 text-sm leading-relaxed text-[#555]">{h.faq_text}</p>
@@ -176,6 +176,6 @@ export default async function Home() {
       </section>
 
       <Cta title={h.cta_title} text={h.cta_text} button={h.cta_button} />
-    </>
+    </div>
   );
 }
