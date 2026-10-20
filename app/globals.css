@@ -34,3 +34,37 @@ h1, h2, h3 { font-family: var(--font-inter), system-ui, sans-serif; }
 .eq span { display: block; width: 3px; height: 14px; background: currentColor; transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
 .eq span:nth-child(2) { animation-delay: .2s; } .eq span:nth-child(3) { animation-delay: .4s; } .eq span:nth-child(4) { animation-delay: .1s; }
 .eq.paused span { animation-play-state: paused; transform: scaleY(.3); }
+
+
+/* MARIO K premium editorial refresh */
+:root { color-scheme: light; }
+html { --accent: #c6a45a; }
+body { background: #f5f2eb; color: #111; }
+::selection { background: #c6a45a; color: #090909; }
+a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #c6a45a; outline-offset: 3px; }
+.label-caps { letter-spacing: .22em; }
+.site-home section { position: relative; }
+.site-home .home-events, .site-home .home-about, .site-home .home-highlights, .site-home .home-reels, .site-home .home-mixes, .site-home .home-faq { background: #f5f2eb; }
+.site-home .home-packages, .site-home .home-process, .site-home .home-reviews { background: #ebe6dc; }
+.site-home h2 { letter-spacing: -.035em; line-height: 1.08; }
+.site-home .home-events > div > a { outline: 1px solid rgb(198 164 90 / .25); outline-offset: -1px; }
+.site-home .home-events > div > a img { filter: saturate(.78); transition: filter .25s ease, transform .35s ease; }
+.site-home .home-events > div > a:hover img { filter: saturate(1); }
+.site-home .home-packages article { border-color: rgb(17 17 17 / .16); box-shadow: 0 10px 30px rgb(20 17 10 / .035); }
+.site-home .home-packages article[class*="border-gold"] { border-color: #c6a45a; box-shadow: 0 12px 34px rgb(115 86 29 / .10); }
+.site-home .home-packages article a { background: #111; color: #fff; border-color: #111; }
+.site-home .home-packages article a:hover { background: #c6a45a; color: #111; }
+.site-home .home-process li { border-color: rgb(17 17 17 / .15); }
+.site-home .home-reviews figure { border-color: rgb(17 17 17 / .14); }
+.site-home .home-highlights img { filter: saturate(.78); }
+.site-home .home-highlights img:hover { filter: saturate(1); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .reveal, .hero-par, .page-in { animation: none !important; }
+}
+@media (max-width: 767px) {
+  .site-home h2 { font-size: clamp(1.65rem, 7vw, 2.25rem); }
+  .site-home .home-packages article { padding: 1.35rem; }
+  .site-home .home-events { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+}
