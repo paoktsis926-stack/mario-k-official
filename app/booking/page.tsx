@@ -12,13 +12,13 @@ const eventOptions = [
   { value: "private-party", label: "Ιδιωτικό πάρτι", api: "Party" },
   { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Party" },
   { value: "reunion", label: "Reunion", api: "Party" },
-  { value: "opening", label: "Εγκαίνια", api: "Άλλο" },
-  { value: "beachbar", label: "Beach Bar", api: "Άλλο" },
+  { value: "opening", label: "Εγκαίνια", api: "Εταιρικό" },
+  { value: "beachbar", label: "Beach Bar", api: "Party" },
   { value: "carnival-adult", label: "Αποκριάτικο πάρτι ενηλίκων", api: "Party" },
   { value: "carnival-kids", label: "Παιδικό αποκριάτικο πάρτι", api: "Party" },
-  { value: "club", label: "Club / Bar", api: "Άλλο" },
-  { value: "corporate", label: "Εταιρική εκδήλωση", api: "Άλλο" },
-  { value: "karaoke", label: "Karaoke Party & Games", api: "Άλλο" },
+  { value: "club", label: "Club / Bar", api: "Club" },
+  { value: "corporate", label: "Εταιρική εκδήλωση", api: "Εταιρικό" },
+  { value: "karaoke", label: "Karaoke Party & Games", api: "Karaoke" },
 ];
 
 const packageSlugByEvent: Record<string, string> = {
