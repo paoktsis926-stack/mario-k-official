@@ -3,7 +3,11 @@ import Link from "next/link";
 import { posts } from "@/lib/content";
 import { PageHero, Cta } from "@/components/Ui";
 
-export const metadata = { title: "Άρθρα & συμβουλές — MARIO K" };
+export const metadata = {
+  title: "Άρθρα & Συμβουλές για DJ και Εκδηλώσεις | MARIO K",
+  description: "Συμβουλές για την επιλογή DJ, τη μουσική του γάμου, την οργάνωση πάρτι και τον σχεδιασμό της ψυχαγωγίας της εκδήλωσής σας.",
+  alternates: { canonical: "/blog" },
+};
 
 export default function Page() {
   return (
@@ -13,7 +17,7 @@ export default function Page() {
         <div className="grid gap-6">
           {posts.map((p) => (
             <Link key={p.slug} href={`/blog/${p.slug}`} className="group flex flex-col gap-5 border border-black p-6 transition hover:border-gold md:flex-row">
-              {p.image_url && <img src={p.image_url} alt="" loading="lazy" className="h-40 w-full object-cover grayscale md:w-56" />}
+              {p.image_url && <img src={p.image_url} alt={p.title} loading="lazy" className="h-40 w-full object-cover grayscale md:w-56" />}
               <div>
                 <p className="label-caps text-gold">{p.date}</p>
                 <h2 className="mt-2 text-xl font-semibold group-hover:text-gold">{p.title}</h2>
