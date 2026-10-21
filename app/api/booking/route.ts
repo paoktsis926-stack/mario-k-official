@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   let code = "", id = "", via = "", duplicate = false;
 
   // 1) ΚΥΡΙΑ διαδρομή: DJ PRO HUB (Railway)
-  const rb = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), rk = process.env.RAILWAY_API_KEY;
+  const rb = process.env.RAILWAY_API_BASE?.replace(/\/api\/functions\/?$/i, "").replace(/\/api\/?$/i, "").replace(/\/+$/, ""), rk = process.env.RAILWAY_API_KEY;
   if (rb && rk && slug) {
     try {
       const pkgId = await findPackageId(rb, rk, clean.package);
