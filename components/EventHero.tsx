@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { slugOf, copy, waLink, shortLabel } from "@/lib/events";
 
@@ -27,7 +28,7 @@ export default function EventHero({ events, headline, text, image, eyebrow, cta,
   return (
     <section className="relative flex min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-black text-white">
       <div className="absolute inset-y-0 right-0 w-full md:w-[62%]">
-        {video ? <video src={video} poster={bg} autoPlay muted loop playsInline className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" /> : <img key={bg} src={bg} alt="" className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" />}
+        {video ? <video src={video} poster={bg} autoPlay muted loop playsInline className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" /> : <Image key={bg} src={bg} alt="DJ MARIO K σε εκδήλωση" fill priority sizes="(max-width: 768px) 100vw, 62vw" className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" />}
         <div className="absolute inset-0 opacity-70 mix-blend-multiply transition-colors duration-500" style={{ background: "linear-gradient(180deg, var(--accent), #0b0620 90%)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent md:bg-gradient-to-r md:from-black md:via-black/35 md:to-transparent" />
       </div>
