@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="border-t border-white/10 bg-black px-5 py-14 text-white md:px-10">
       <div className="mx-auto grid max-w-[1500px] gap-10 md:grid-cols-3">
         <div>
-          <img src={g.logo_url} alt={g.brand_name} className="h-16 w-auto" />
+          <img src={g.logo_url} alt={g.logo_alt || g.brand_name} className="h-16 w-auto" />
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">{g.footer_note}</p>
         </div>
         <div className="grid grid-cols-2 gap-3 text-xs tracking-[0.15em] text-white/70">
