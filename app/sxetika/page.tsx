@@ -2,7 +2,11 @@
 import { site } from "@/lib/content";
 import { PageHero, Cta, Points } from "@/components/Ui";
 
-export const metadata = { title: "Σχετικά με τον DJ — MARIO K" };
+export const metadata = {
+  title: "Σχετικά με τον DJ MARIO K | Εμπειρία & Εκδηλώσεις",
+  description: "Γνωρίστε τον MARIO K, επαγγελματία DJ για γάμους, βαπτίσεις, private parties και εταιρικές εκδηλώσεις στην Αλεξανδρούπολη και σε όλη την Ελλάδα.",
+  alternates: { canonical: "/sxetika" },
+};
 const a = site.about;
 
 export default function Page() {
