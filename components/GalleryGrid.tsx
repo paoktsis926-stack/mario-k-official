@@ -20,7 +20,7 @@ export default function GalleryGrid({ photos, eventTypes }: { photos: any[]; eve
             {x.video_url ? (
               <video src={x.video_url} controls preload="metadata" playsInline className="aspect-[4/3] w-full bg-black object-cover" />
             ) : (
-              <Image src={x.image_url} alt={x.title} width={960} height={720} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" className="aspect-[4/3] w-full object-cover grayscale transition hover:grayscale-0" />
+              <Image src={x.image_url} alt={x.image_alt || `DJ MARIO K - ${x.title}`} width={960} height={720} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" className="aspect-[4/3] w-full object-cover grayscale transition hover:grayscale-0" />
             )}
             <figcaption className="p-4">
               <p className="label-caps text-gold">{eventTypes.find((e) => e.id === x.event_type_id)?.name ?? ""}</p>
