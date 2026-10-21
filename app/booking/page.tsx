@@ -75,6 +75,9 @@ function BookingForm() {
   const searchParams = useSearchParams();
   const requestedEvent = searchParams.get("event") || "";
   const requestedPackage = searchParams.get("package") || "";
+  const requestedDateRaw = searchParams.get("date") || "";
+  // Ημερομηνία από τον βοηθό (ή σύνδεσμο): μόνο έγκυρη μορφή και όχι στο παρελθόν.
+  const requestedDate = /^\d{4}-\d{2}-\d{2}$/.test(requestedDateRaw) && requestedDateRaw >= new Date().toISOString().slice(0, 10) ? requestedDateRaw : "";
 
   const initialEvent = eventOptions.some(
     (item) => item.value === requestedEvent
@@ -83,7 +86,7 @@ function BookingForm() {
     : "";
 
   const [event, setEvent] = useState(initialEvent);
-  const [form, setForm] = useState<BookingFormData>({ ...initialForm });
+  const [form, setForm] = useState<BookingFormData>({ ...initialForm, date: requestedDate });
 
   const [loading, setLoading] = useState(false);
   const [requestCode, setRequestCode] = useState("");
@@ -92,8 +95,8 @@ function BookingForm() {
   const [avail, setAvail] = useState("");
   const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [calendarMonth, setCalendarMonth] = useState(() => {
-    const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), 1);
+    const base = requestedDate ? new Date(`${requestedDate}T12:00:00`) : new Date();
+    return new Date(base.getFullYear(), base.getMonth(), 1);
   });
   useEffect(() => {
     fetch("/api/booked-dates", { cache: "no-store" })
