@@ -4,11 +4,11 @@ export const slugOf = (name: string) =>
   : /γενεθ|birthday/i.test(name) ? "birthday"
   : /reunion|επανεν/i.test(name) ? "reunion"
   : /εγκαιν|opening|inauguration/i.test(name) ? "opening"
-  : /beach\\s?bar/i.test(name) ? "beachbar"
+  : /beach\s?bar/i.test(name) ? "beachbar"
   : /αποκρι.*ενηλικ|carnival.*adult/i.test(name) ? "carnival-adult"
   : /παιδικ.*αποκρι|carnival.*kids/i.test(name) ? "carnival-kids"
   : /bachelor/i.test(name) ? "bachelorette"
-  : /club|\\bbar\\b/i.test(name) ? "club" : /εταιρ/i.test(name) ? "corporate" : /karaoke/i.test(name) ? "karaoke" : "private-party";
+  : /club|\bbar\b/i.test(name) ? "club" : /εταιρ/i.test(name) ? "corporate" : /karaoke/i.test(name) ? "karaoke" : "private-party";
 
 export const copy: Record<string, { h: string; t: string }> = {
   wedding: { h: "Η μουσική που θα θυμάστε για πάντα", t: "Από την είσοδο μέχρι τον τελευταίο χορό, η μουσική του γάμου σας με στυλ και συναίσθημα." },
