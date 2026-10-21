@@ -3,7 +3,11 @@ import { getPackages } from "@/lib/hubCatalog";
 import { PageHero, Cta } from "@/components/Ui";
 import PackagesGrid from "@/components/PackagesGrid";
 
-export const metadata = { title: "Πακέτα Υπηρεσιών — MARIO K" };
+export const metadata = {
+  title: "Πακέτα DJ για Γάμους, Βαπτίσεις & Πάρτι | MARIO K",
+  description: "Δείτε πακέτα DJ για γάμους, βαπτίσεις, γενέθλια, bachelor και ιδιωτικά πάρτι. Επιλογές διάρκειας και υπηρεσιών με εξατομικευμένη προσφορά.",
+  alternates: { canonical: "/paketa" },
+};
 const p = site.packages;
 
 export default async function Page() {
