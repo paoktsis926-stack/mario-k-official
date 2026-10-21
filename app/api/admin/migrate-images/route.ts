@@ -61,7 +61,7 @@ export async function POST(request: Request) {
             if (!bytes.length || bytes.length > 8 * 1024 * 1024) throw new Error(`Η εικόνα «${label}» είναι κενή ή ξεπερνά τα 8MB.`);
             if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error("Δεν έχει ρυθμιστεί η μόνιμη βιβλιοθήκη φωτογραφιών.");
             const path = `${slug(label)}-${id}.${ext}`;
-            const uploaded = await fetch(`https://blob.vercel-storage.com/${encodeURIComponent(path)}`, {
+            const uploaded = await fetch(`https://blob.vercel-storage.com/?pathname=${encodeURIComponent(path)}`, {
               method: "PUT",
               headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`, "x-api-version": "7", "x-content-type": type, "x-allow-overwrite": "true" },
               body: new Uint8Array(bytes), cache: "no-store",
