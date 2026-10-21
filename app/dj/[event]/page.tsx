@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ event: st
       title: `DJ για ${lpLabel[slug]} — MARIO K`,
       description: copy[slug].t,
       type: "website",
-      ...(ev?.image_url ? { images: [{ url: ev.image_url, alt: `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη` }] } : {}),
+      ...(ev?.image_url ? { images: [{ url: ev.image_url, alt: ev.image_alt || `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη` }] } : {}),
     },
   } : { robots: { index: false, follow: true } };
 }
@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: Promise<{ event: string
     <>
       <SetTheme slug={slug} />
       <section className="relative flex min-h-[80svh] items-end overflow-hidden bg-black px-5 pb-16 text-white md:items-center md:px-8">
-        <Image src={ev?.image_url || site.home.hero_image} alt={`DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη και τον Έβρο`} fill priority sizes="100vw" className="absolute inset-0 h-full w-full object-cover grayscale" />
+        <Image src={ev?.image_url || site.home.hero_image} alt={ev?.image_alt || site.home.hero_image_alt || `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη και τον Έβρο`} fill priority sizes="100vw" className="absolute inset-0 h-full w-full object-cover grayscale" />
         <div className="absolute inset-0 opacity-70 mix-blend-multiply" style={{ background: "linear-gradient(180deg, var(--accent), #0b0620 90%)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent md:bg-gradient-to-r md:from-black md:via-black/60" />
         <div className="relative mx-auto w-full max-w-6xl">

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { isAuthed } from "@/lib/adminAuth";
 import { putFile } from "@/lib/github";
 
+const greek: Record<string, string> = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o" };
+
 const IMAGE_TYPES = {
   "image/jpeg": { ext: "jpg", valid: (b: Buffer) => b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff },
   "image/png": { ext: "png", valid: (b: Buffer) => b.length >= 8 && b.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) },
@@ -25,7 +27,7 @@ export async function POST(request: Request) {
   if (!type.valid(bytes)) return fail("Το περιεχόμενο του αρχείου δεν αντιστοιχεί στον δηλωμένο τύπο εικόνας.", 415);
 
   const original = file.name.split(/[\\/]/).pop() || "image";
-  const stem = original.replace(/\.[^.]*$/, "").toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "image";
+  const stem = original.replace(/\.[^.]*$/, "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[α-ω]/g, (ch) => greek[ch] || ch).replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "image";
   const name = `${Date.now()}-${stem}.${type.ext}`;
   try {
     await putFile(`public/uploads/${name}`, bytes.toString("base64"), `Admin: ανέβασμα ${name}`);

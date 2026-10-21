@@ -50,13 +50,13 @@ export const metadata: Metadata = {
     url: base,
     locale: "el_GR",
     type: "website",
-    images: [{ url: "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png", width: 1200, height: 630, alt: "MARIO K — DJ και ψυχαγωγία εκδηλώσεων" }],
+    images: [{ url: g.logo_url, width: 1200, height: 630, alt: "MARIO K — DJ και ψυχαγωγία εκδηλώσεων" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "MARIO K — DJ & Entertainment",
     description: "DJ για γάμους, βαπτίσεις, πάρτι και εταιρικές εκδηλώσεις.",
-    images: ["https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png"],
+    images: [g.logo_url],
   },
 };
 

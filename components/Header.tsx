@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-white/10 bg-black/95 text-white backdrop-blur">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-6 px-5 py-3 md:px-10">
-        <Link href="/"><img src={g.logo_url} alt={g.brand_name} className="h-12 w-auto mix-blend-screen" /></Link>
+        <Link href="/"><img src={g.logo_url} alt={g.logo_alt || g.brand_name} className="h-12 w-auto mix-blend-screen" /></Link>
         <nav className="hidden items-center gap-7 text-[11px] tracking-[0.18em] text-white/80 xl:flex">
           {topNav.map(([l, h]) => <Link key={h} href={h} className="transition hover:text-gold">{l}</Link>)}
         </nav>

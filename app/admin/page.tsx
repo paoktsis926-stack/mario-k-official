@@ -5,7 +5,7 @@ import { seedPosts } from "@/lib/content";
 
 const Ctx = createContext<any[]>([]);
 const L: Record<string, string> = {
-  name: "Όνομα", hero_video: "Βίντεο hero (link αρχείου .mp4)", reels: "Reels (κάθετα βίντεο)", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
+  name: "Όνομα", image_alt: "Εναλλακτικό κείμενο φωτογραφίας (SEO)", hero_image_alt: "Εναλλακτικό κείμενο φωτογραφίας hero (SEO)", portrait_alt: "Εναλλακτικό κείμενο πορτρέτου (SEO)", logo_alt: "Εναλλακτικό κείμενο λογοτύπου (SEO)", hero_video: "Βίντεο hero (link αρχείου .mp4)", reels: "Reels (κάθετα βίντεο)", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
   features: "Τι περιλαμβάνει (μία γραμμή ανά στοιχείο)", extras: "Προαιρετικά extras (μία γραμμή το καθένα)",
   highlight: "Προτεινόμενο πακέτο (με έμφαση)", event_types: "Για ποιες εκδηλώσεις ισχύει", question: "Ερώτηση", answer: "Απάντηση",
   category: "Κατηγορία", title: "Τίτλος", image_url: "Φωτογραφία", video_url: "Βίντεο (link)", event_type_id: "Εκδήλωση",
@@ -42,14 +42,12 @@ function Field({ k, v, set }: { k: string; v: any; set: (x: any) => void }) {
   }
   return (
     <label className="block text-sm"><span className="font-medium">{pretty(k)}</span>
-      {s.length > 70 || s.includes("\n") ? <textarea rows={k === "body" ? 14 : 4} className={inp} value={s} onChange={(e) => set(e.target.value)} /> : <input className={inp} value={s} onChange={(e) => set(e.target.value)} />}
-      {IMG.test(k) && (
-        <span className="mt-2 flex items-center gap-4">
-          {(preview || s) && <img src={preview || s} alt="" className="h-20 w-20 rounded object-cover" />}
-          <input type="file" accept="image/*" disabled={busy} onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
-          {busy && <span className="text-xs">Ανεβαίνει…</span>}
+      {IMG.test(k) ? (
+        <span className="mt-2 flex flex-wrap items-center gap-4">
+          {(preview || s) && <img src={preview || s} alt="" className="h-24 w-24 rounded object-cover" />}
+          <span className="flex flex-col gap-2"><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" disabled={busy} onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />{busy && <span className="text-xs">Ανεβαίνει…</span>}<span className="text-xs text-black/60">{s ? "Υπάρχει φωτογραφία — επίλεξε αρχείο για αντικατάσταση." : "Δεν έχει οριστεί φωτογραφία."}</span></span>
         </span>
-      )}
+      ) : (s.length > 70 || s.includes("\n") ? <textarea rows={k === "body" ? 14 : 4} className={inp} value={s} onChange={(e) => set(e.target.value)} /> : <input className={inp} value={s} onChange={(e) => set(e.target.value)} />)}
     </label>
   );
 }
@@ -93,6 +91,7 @@ export default function Admin() {
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [login, setLogin] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [migrating, setMigrating] = useState(false);
   const dirty = data !== null && JSON.stringify(data) !== saved;
 
   async function load() {
@@ -125,6 +124,15 @@ export default function Admin() {
     await fetch("/api/admin/login", { method: "DELETE" });
     setData(null); setLogin(true); setPw("");
   }
+  async function migrateImages() {
+    if (dirty) { setMsg({ ok: false, t: "Αποθήκευσε πρώτα τις αλλαγές σου πριν από τη μεταφορά φωτογραφιών." }); return; }
+    setMigrating(true); setMsg(null);
+    const r = await fetch("/api/admin/migrate-images", { method: "POST" }).then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου κατά τη μεταφορά." }));
+    setMigrating(false);
+    if (r.ok) { await load(); setMsg({ ok: true, t: r.message }); }
+    else setMsg({ ok: false, t: r.message || "Αποτυχία μεταφοράς φωτογραφιών." });
+  }
+
   async function save() {
     setSaving(true); setMsg(null);
     const r = await fetch("/api/admin/content", { method: "PUT", body: JSON.stringify({ data, sha }) }).then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου" }));
@@ -161,6 +169,7 @@ export default function Admin() {
           {msg && <p className={`mb-6 rounded border p-4 text-sm ${msg.ok ? "border-green-700 bg-green-50 text-green-900" : "border-red-700 bg-red-50 text-red-900"}`}>{msg.t}</p>}
           {dirty && <p className="mb-6 text-xs text-black/60">Έχεις αλλαγές που δεν έχουν αποθηκευτεί.</p>}
           {tab === "reviews" && <p className="mb-6 text-sm text-black/70">Βάλε τις κριτικές όπως ακριβώς τις έγραψαν οι πελάτες. Τικάρισε «Εμφάνιση στο site» για να εμφανιστεί η κάθε μία.</p>}
+          {tab === "photos" && <section className="mb-6 rounded border border-black/15 bg-white p-4"><h2 className="font-semibold">Βιβλιοθήκη φωτογραφιών</h2><p className="mt-2 text-sm text-black/70">Μεταφέρει τις παλιές φωτογραφίες από Base44 στη φιλοξενία του site, ενημερώνει τις καταχωρίσεις και προσθέτει αρχικό alt text για SEO. Γίνεται μία συγκεντρωτική ενημέρωση του site.</p><button className={`${btn} mt-3`} disabled={migrating || dirty} onClick={migrateImages}>{migrating ? "Μεταφορά φωτογραφιών…" : "Μεταφορά παλιών φωτογραφιών από Base44"}</button>{dirty && <p className="mt-2 text-xs text-amber-800">Αποθήκευσε πρώτα τις αλλαγές για να ενεργοποιηθεί η μεταφορά.</p>}</section>}
           <Node k="" v={data[tab]} set={(x) => setData({ ...data, [tab]: x })} />
           <p className="mt-10 text-xs text-black/50">Εικόνες έως 4MB. Για βίντεο βάλε link. Οι αλλαγές ανεβαίνουν στο GitHub και το site ενημερώνεται μόνο του.</p>
         </main>

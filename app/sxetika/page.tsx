@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <PageHero eyebrow="Σχετικά" title={a.title} subtitle={a.subtitle} intro={a.intro} />
       <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-24">
-        <Image src={a.portrait} alt="MARIO K, επαγγελματίας DJ για γάμους και εκδηλώσεις" width={900} height={1125} sizes="(max-width: 768px) 100vw, 40vw" className="w-full object-cover grayscale" />
+        <Image src={a.portrait} alt={a.portrait_alt || "MARIO K, επαγγελματίας DJ για γάμους και εκδηλώσεις"} width={900} height={1125} sizes="(max-width: 768px) 100vw, 40vw" className="w-full object-cover grayscale" />
         <div>
           <h2 className="text-2xl font-bold uppercase">{a.bio_title}</h2>
           {a.bio_text.split("\n\n").map((t: string) => <p key={t.slice(0, 20)} className="mt-5 text-sm leading-7 text-[#444]">{t}</p>)}
