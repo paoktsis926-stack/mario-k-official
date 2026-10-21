@@ -20,7 +20,7 @@
    "title": "Σχετικά με τον DJ",
    "subtitle": "MARIO K | Event & Wedding DJ",
    "intro": "Επαγγελματίας DJ με πολυετή εμπειρία σε γάμους, βαπτίσεις, private parties και εταιρικές εκδηλώσεις. Εξειδίκευση στη δημιουργία της κατάλληλης ατμόσφαιρας και στη διατήρηση του κεφιού στην πίστα από την πρώτη μέχρι την τελευταία στιγμή.",
-   "portrait": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/30af39f85_AC65C211-AB7B-4FF4-B280-E7C3D4BAECA2.jpg",
+   "portrait": "/uploads/schetika-me-ton-dj-4173307bcf57.jpg",
    "bio_title": "Σύντομο βιογραφικό",
    "bio_text": "Ο MARIO K δραστηριοποιείται στον χώρο του event DJing, συνδυάζοντας την αγάπη για τη μουσική με τον επαγγελματισμό και τη σωστή οργάνωση. Με εμπειρία σε εκατοντάδες εκδηλώσεις, διαθέτει την ευελιξία να προσαρμόζει το πρόγραμμα σε κάθε είδος κοινού.\n\nΑπό τις πιο απαιτητικές δεξιώσεις γάμου μέχρι δυναμικά private parties, στόχος είναι η παροχή μιας ολοκληρωμένης μουσικής εμπειρίας με υψηλής ποιότητας ήχο και προσεκτικά επιλεγμένο ρεπερτόριο.",
    "experience_title": "Εμπειρία & Επαγγελματική Πορεία",
@@ -60,7 +60,8 @@
    "areas_note": "Για εκδηλώσεις εκτός της βασικής περιοχής δραστηριοποίησης, το κόστος μετακίνησης υπολογίζεται βάσει τοποθεσίας και αναφέρεται ξεκάθαρα στην προσφορά.",
    "cta_title": "Ας μιλήσουμε για την εκδήλωσή σας",
    "cta_text": "Στείλτε μας τα βασικά στοιχεία της εκδήλωσής σας (ημερομηνία, περιοχή, τύπος event) και θα σας απαντήσουμε άμεσα με μια προσαρμοσμένη πρόταση.",
-   "cta_button": "Επικοινωνήστε Μαζί μας"
+   "cta_button": "Επικοινωνήστε Μαζί μας",
+   "portrait_alt": "MARIO K - Σχετικά με τον DJ"
   },
   "venues": {
    "title": "Χώρος & Περιοχές Κάλυψης",
@@ -122,7 +123,7 @@
   "global": {
    "brand_name": "MARIO K",
    "tagline": "Professional DJ & Entertainment",
-   "logo_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/e45b02758_LOGOTYPO.jpeg",
+   "logo_url": "/uploads/mario-k-2f4c093884a8.jpg",
    "phone": "+30 698 707 3580",
    "email": "mkiriakidis936@gmail.com",
    "whatsapp": "+30 698 707 3580",
@@ -130,13 +131,14 @@
    "instagram_url": "https://www.instagram.com/dj_mariok/",
    "facebook_url": "",
    "tiktok_url": "https://www.tiktok.com/@djmarios_k?_r=1&_t=ZN-9AMFqui5N2d",
-   "footer_note": "Επαγγελματίας DJ για γάμους, βαφτίσεις, πάρτι και εταιρικές εκδηλώσεις, με έμφαση στη σωστή επιλογή μουσικής και στη ροή της βραδιάς."
+   "footer_note": "Επαγγελματίας DJ για γάμους, βαφτίσεις, πάρτι και εταιρικές εκδηλώσεις, με έμφαση στη σωστή επιλογή μουσικής και στη ροή της βραδιάς.",
+   "logo_alt": "MARIO K - MARIO K"
   },
   "home": {
    "hero_eyebrow": "Professional DJ",
    "hero_headline": "Μουσική & Ατμόσφαιρα που κάνουν την εκδήλωσή σας ξεχωριστή",
    "hero_text": "Ο MARIO K προσφέρει εξειδικευμένες μουσικές υπηρεσίες για γάμους, βαπτίσεις, πάρτι και εταιρικά events. Με επαγγελματισμό, προσαρμοσμένα DJ sets και εξοπλισμό υψηλής ποιότητας, εξασφαλίζουμε γεμάτη πίστα και ασταμάτητο κέφι από την πρώτη νότα μέχρι το τέλος.",
-   "hero_image": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/13bc3f761_1A8571B2-25CB-47E9-B6F9-5F0C6875D64E.jpg",
+   "hero_image": "/uploads/moysiki-atmosfaira-poy-kanoyn-tin-ekdilosi-sas-x-97ccc7df2ccc.jpg",
    "hero_video_url": "",
    "hero_cta": "Δείτε τα πακέτα",
    "hero_cta_secondary": "Επικοινωνία",
@@ -171,7 +173,8 @@
    "reviews_form_text": "Πείτε μου πώς πήγε η εκδήλωσή σας. Η αξιολόγηση εμφανίζεται στο site μετά από έλεγχο.",
    "cta_title": "Ας Σχεδιάσουμε Μαζί την Εκδήλωσή σας",
    "cta_text": "Στείλτε μας την ημερομηνία, την περιοχή και τον τύπο της εκδήλωσής σας για να λάβετε άμεσα μια προσαρμοσμένη πρόταση.",
-   "cta_button": "Ζητήστε Διαθεσιμότητα"
+   "cta_button": "Ζητήστε Διαθεσιμότητα",
+   "hero_image_alt": "MARIO K - Μουσική & Ατμόσφαιρα που κάνουν την εκδήλωσή σας ξεχωριστή"
   }
  },
  "eventTypes": [
@@ -179,43 +182,50 @@
    "id": "6ac5fb9d98941942a43e2a6f",
    "name": "Γάμος",
    "description": "Ολοκληρωμένη μουσική επιμέλεια για τη δεξίωση και το πάρτι του γάμου σας. Δημιουργούμε το κατάλληλο μουσικό πρόγραμμα, προσαρμοσμένο στις προτιμήσεις σας, για να παραμείνει η πίστα γεμάτη από το απεριτίφ μέχρι το πρωί.",
-   "image_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/d30fe6cbd_Wedding-DJ-Special-Effects-Services-.png"
+   "image_url": "/uploads/gamos-878ca6f4f7ee.png",
+   "image_alt": "MARIO K - Γάμος"
   },
   {
    "id": "6ac5fb9d98941942a43e2a70",
    "name": "Βάφτιση",
    "description": "Ευχάριστη και ανεβαστική μουσική για τη γιορτή της βάφτισης. Μουσικές επιλογές που καλύπτουν όλες τις ηλικίες, δημιουργώντας μια ζεστή, οικογενειακή και εορταστική ατμόσφαιρα.",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/991a8f5a8_generated_image.png"
+   "image_url": "/uploads/vaftisi-1f439826b3c2.png",
+   "image_alt": "MARIO K - Βάφτιση"
   },
   {
    "id": "6ac5fb9d98941942a43e2a71",
    "name": "Πάρτι & Ιδιωτική εκδήλωση",
    "description": "Custom DJ sets για γενέθλια, bachelorette, επέτειους και ιδιωτικά πάρτι. Προσαρμόζουμε τη μουσική στο ύφος που θέλετε (mainstream, dance, retro, ελληνικά) για ασταμάτητο χορό.",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/79d57cdf0_generated_image.png"
+   "image_url": "/uploads/parti-idiotiki-ekdilosi-ad1eb4a9cc42.png",
+   "image_alt": "MARIO K - Πάρτι & Ιδιωτική εκδήλωση"
   },
   {
    "id": "6ac6386661ec272b4b553db5",
    "name": "Bachelor & Bachelorette Party",
    "description": "Δυναμικά DJ sets και προσαρμοσμένες μουσικές επιλογές για ένα αξέχαστο πάρτι πριν τη μεγάλη μέρα.",
-   "image_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/aaf640f7d_760d97d5-36d7-4116-af67-b9e865180101.jpeg"
+   "image_url": "/uploads/bachelor-bachelorette-party-b3d420a60ee3.jpg",
+   "image_alt": "MARIO K - Bachelor & Bachelorette Party"
   },
   {
    "id": "6ac5fb9d98941942a43e2a72",
    "name": "Club / Bar",
    "description": "Δυναμικά DJ sets με τις τελευταίες επιτυχίες, καθαρές μεταβάσεις και σωστή ανάγνωση του κοινού, εξασφαλίζοντας την απόλυτη ατμόσφαιρα διασκέδασης.",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/6b4a32a3d_generated_image.png"
+   "image_url": "/uploads/club-bar-380463dfc732.png",
+   "image_alt": "MARIO K - Club / Bar"
   },
   {
    "id": "6ac5fb9d98941942a43e2a73",
    "name": "Εταιρική εκδήλωση",
    "description": "Επαγγελματική μουσική κάλυψη για εταιρικά πάρτι, κοπή πίτας, εγκαίνια και παρουσιάσεις. Διακριτική μουσική επένδυση ή ανεβαστικό πάρτι, ανάλογα με τον χαρακτήρα της εκδήλωσης.",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/bab5f69da_generated_image.png"
+   "image_url": "/uploads/etairiki-ekdilosi-cf29d635daad.png",
+   "image_alt": "MARIO K - Εταιρική εκδήλωση"
   },
   {
    "id": "6ac5fb9d98941942a43e2a74",
    "name": "Karaoke Party & Games",
    "description": "Karaoke βραδιές με μεγάλο ρεπερτόριο, για εκδηλώσεις όπου θέλετε όλοι να συμμετέχουν.",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/5e204a295_generated_image.png"
+   "image_url": "/uploads/karaoke-party-games-a652ff9f5125.png",
+   "image_alt": "MARIO K - Karaoke Party & Games"
   }
  ],
  "services": [
@@ -484,9 +494,10 @@
  "photos": [
   {
    "title": "Πρώτος χορός",
-   "image_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/2bcbf4628_images.jpeg",
+   "image_url": "/uploads/protos-choros-bdd00bde938a.jpg",
    "video_url": null,
-   "event_type_id": "6ac5fb9d98941942a43e2a6f"
+   "event_type_id": "6ac5fb9d98941942a43e2a6f",
+   "image_alt": "MARIO K - Πρώτος χορός"
   },
   {
    "title": "Παραδοσιακό γλέντι & γεμάτη πίστα",
@@ -496,33 +507,38 @@
   },
   {
    "title": "Βάφτιση με χορό μέχρι αργά",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/f7e24b791_generated_image.png",
+   "image_url": "/uploads/vaftisi-me-choro-mechri-arga-016aaee5e901.png",
    "video_url": null,
-   "event_type_id": "6ac5fb9d98941942a43e2a70"
+   "event_type_id": "6ac5fb9d98941942a43e2a70",
+   "image_alt": "MARIO K - Βάφτιση με χορό μέχρι αργά"
   },
   {
    "title": "Club night",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/f96f51a82_generated_image.png",
+   "image_url": "/uploads/club-night-8cdca6755a70.png",
    "video_url": null,
-   "event_type_id": "6ac5fb9d98941942a43e2a72"
+   "event_type_id": "6ac5fb9d98941942a43e2a72",
+   "image_alt": "MARIO K - Club night"
   },
   {
    "title": "Ιδιωτικό πάρτι",
-   "image_url": "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/c64ffa277_generated_image.png",
+   "image_url": "/uploads/idiotiko-parti-8cd17ea05b2a.png",
    "video_url": null,
-   "event_type_id": "6ac5fb9d98941942a43e2a71"
+   "event_type_id": "6ac5fb9d98941942a43e2a71",
+   "image_alt": "MARIO K - Ιδιωτικό πάρτι"
   },
   {
    "title": "Bachelor Party",
-   "image_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/1636c211a_Gemini_Generated_Image_owt2bpowt2bpowt2.jpeg",
+   "image_url": "/uploads/bachelor-party-84567c46904c.jpg",
    "video_url": null,
-   "event_type_id": "6ac6386661ec272b4b553db5"
+   "event_type_id": "6ac6386661ec272b4b553db5",
+   "image_alt": "MARIO K - Bachelor Party"
   },
   {
    "title": "Reunion Party ",
-   "image_url": "https://base44.app/api/apps/6ac5f8673cefccb19a9f86d3/files/mp/public/6ac5f8673cefccb19a9f86d3/44fdd629e_4f28000f-04dd-48a0-ad16-eff929e618b9rs-800_51_2221158-176598782173117.jpeg",
+   "image_url": "/uploads/reunion-party-d0fd66eebb90.jpg",
    "video_url": null,
-   "event_type_id": "6ac5fb9d98941942a43e2a74"
+   "event_type_id": "6ac5fb9d98941942a43e2a74",
+   "image_alt": "MARIO K - Reunion Party "
   }
  ],
  "reviews": [
