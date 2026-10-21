@@ -31,22 +31,51 @@ export default async function Home() {
         </p>
       </div>
 
-      <section className="reveal home-events mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
-        <p className="label-caps text-gold">Εκδηλώσεις</p>
+      <section className="home-events mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+        <p className="label-caps text-gold">Εκδηλώσεις & πακέτα</p>
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.event_title}</h2>
         <span className="mt-6 block h-[3px] w-16 bg-gold" />
         <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.event_text}</p>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {eventTypes.map((e) => (
-            <Link key={e.id} href={`/booking?event=${slugOf(e.name)}`} className="group relative block aspect-[4/3] overflow-hidden bg-black">
-              {e.image_url && <Image src={e.image_url} alt={e.image_alt || `DJ για ${e.name} στην Αλεξανδρούπολη και τον Έβρο`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-70 grayscale transition duration-500 group-hover:scale-105 group-hover:opacity-90" />}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <h3 className="text-base font-semibold uppercase">{e.name}</h3>
-                <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/70">{e.description}</p>
-              </div>
-            </Link>
-          ))}
+        <div className="mt-10 space-y-8 md:space-y-10">
+          {eventTypes.map((e) => {
+            const slug = slugOf(e.name);
+            const matchingPackages = packages.filter((p) => p.slugs.includes(slug));
+            return (
+              <section key={e.id} className="overflow-hidden border border-black/10 bg-white">
+                <div className="grid md:grid-cols-[0.9fr_1.1fr]">
+                  <div className="relative min-h-56 bg-black md:min-h-72">
+                    {e.image_url && <Image src={e.image_url} alt={e.image_alt || `DJ για ${e.name} στην Αλεξανδρούπολη και τον Έβρο`} fill sizes="(max-width: 768px) 100vw, 40vw" loading="lazy" className="object-cover opacity-80" />}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-8">
+                      <p className="label-caps text-gold">MARIO K · DJ & Entertainment</p>
+                      <h3 className="mt-3 text-2xl font-semibold uppercase md:text-3xl">{e.name}</h3>
+                      <p className="mt-2 max-w-md text-sm leading-6 text-white/75">{e.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col p-5 md:p-8">
+                    <p className="label-caps text-gold">Διαθέσιμα πακέτα</p>
+                    {matchingPackages.length ? (
+                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        {matchingPackages.map((p) => (
+                          <article key={p.name} className={`flex flex-col border p-4 ${p.highlight ? "border-gold bg-[#faf7ef]" : "border-black/10"}`}>
+                            <h4 className="text-base font-semibold uppercase">{p.name}</h4>
+                            <p className="mt-2 text-2xl font-light">{p.price_text}</p>
+                            {p.duration && <p className="mt-1 text-xs text-gold">{p.duration}</p>}
+                            {p.best_for && <p className="mt-3 flex-1 text-sm leading-6 text-[#555]">{p.best_for}</p>}
+                            {p.features?.length > 0 && <ul className="mt-3 space-y-1 text-xs leading-5 text-[#555]">{p.features.slice(0, 3).map((feature) => <li key={feature}>— {feature}</li>)}</ul>}
+                            <Link href={`/booking?event=${slug}&package=${encodeURIComponent(p.name)}`} className="mt-5 inline-flex min-h-11 items-center justify-center border border-black bg-black px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white transition hover:border-gold hover:bg-gold hover:text-black">Επιλογή πακέτου</Link>
+                          </article>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="mt-4 text-sm leading-6 text-[#555]">Στείλτε τα στοιχεία της εκδήλωσής σας για να λάβετε εξατομικευμένη πρόταση.</p>
+                    )}
+                    <Link href={`/booking?event=${slug}`} className="mt-5 inline-flex min-h-11 w-fit items-center border-b border-gold pb-1 text-xs font-semibold uppercase tracking-[0.16em]">Έλεγχος διαθεσιμότητας για {e.name} ↗</Link>
+                  </div>
+                </div>
+              </section>
+            );
+          })}
         </div>
       </section>
 
@@ -59,28 +88,6 @@ export default async function Home() {
           <p className="mt-6 text-sm leading-7 text-[#555] md:text-base">{site.about.bio_text.split("\n\n")[0]}</p>
           <Points items={site.about.experience_points.slice(0, 3)} />
           <Link href="/sxetika" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γνωρίστε με καλύτερα ↗</Link>
-        </div>
-      </section>
-
-      <section className="reveal home-packages border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
-        <div className="mx-auto max-w-6xl">
-          <p className="label-caps text-gold">Πακέτα</p>
-          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{h.packages_title}</h2>
-          <span className="mt-6 block h-[3px] w-16 bg-gold" />
-          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.packages_text}</p>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {packages.map((p) => (
-              <article key={p.name} className={`flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
-                {p.highlight && <p className="label-caps text-gold">{p.tagline}</p>}
-                <h3 className="mt-2 text-2xl font-bold uppercase">{p.name}</h3>
-                <p className="mt-3 text-3xl font-light">{p.price_text}</p>
-                <p className="mt-1 text-sm text-gold">{p.duration}</p>
-                <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
-                <Link href={`/booking?package=${encodeURIComponent(p.name)}`} className="mt-6 block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>
-              </article>
-            ))}
-          </div>
-          <p className="mt-6 text-sm text-[#555]">Οι τιμές είναι ενδεικτικές. <Link href="/paketa" className="underline">Δείτε αναλυτικά τα πακέτα</Link></p>
         </div>
       </section>
 
