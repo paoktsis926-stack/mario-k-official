@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export const metadata = { title: "Πολιτική Απορρήτου — MARIO K" };
+export const metadata = {
+  title: "Πολιτική Απορρήτου | MARIO K",
+  description: "Πολιτική απορρήτου για τα στοιχεία που υποβάλλονται μέσω της φόρμας κράτησης και επικοινωνίας του MARIO K.",
+  alternates: { canonical: "/privacy" },
+};
 
 export default function Privacy() {
   return (
