@@ -12,8 +12,20 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ event: string }> }) {
-  const slug = lpSlugs[(await params).event];
-  return slug ? { title: `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη & τον Έβρο — MARIO K`, description: copy[slug].t } : {};
+  const event = (await params).event;
+  const slug = lpSlugs[event];
+  const ev = slug ? eventTypes.find((e) => slugOf(e.name) === slug) : undefined;
+  return slug ? {
+    title: `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη & τον Έβρο — MARIO K`,
+    description: copy[slug].t,
+    alternates: { canonical: `/dj/${event}` },
+    openGraph: {
+      title: `DJ για ${lpLabel[slug]} — MARIO K`,
+      description: copy[slug].t,
+      type: "website",
+      ...(ev?.image_url ? { images: [{ url: ev.image_url, alt: `DJ για ${lpLabel[slug]} στην Αλεξανδρούπολη` }] } : {}),
+    },
+  } : { robots: { index: false, follow: true } };
 }
 
 export default async function Page({ params }: { params: Promise<{ event: string }> }) {
