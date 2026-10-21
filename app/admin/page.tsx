@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @next/next/no-img-element */
 import { createContext, useContext, useEffect, useState } from "react";
 import { seedPosts } from "@/lib/content";
+import "./admin.css";
 
 const Ctx = createContext<any[]>([]);
 const L: Record<string, string> = {
@@ -142,36 +143,41 @@ export default function Admin() {
   }
 
   if (login) return (
-    <main className="mx-auto max-w-sm px-5 py-24 text-black">
-      <h1 className="text-2xl font-bold">MARIO K · Διαχείριση</h1>
-      <input type="password" placeholder="Κωδικός" className={`${inp} mt-6`} value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && doLogin()} />
-      <button className={`${btn} mt-3`} onClick={doLogin}>Είσοδος</button>
-      {msg && <p className="mt-4 text-sm text-red-700">{msg.t}</p>}
+    <main className="admin-login">
+      <section className="admin-login-card">
+        <div className="admin-mark">MK</div>
+        <div className="admin-login-kicker">MARIO K · OFFICIAL</div>
+        <h1>Πίνακας διαχείρισης</h1>
+        <p>Συνδέσου για να ενημερώσεις το περιεχόμενο του site σου.</p>
+        <input type="password" autoComplete="current-password" aria-label="Κωδικός πρόσβασης" placeholder="Κωδικός πρόσβασης" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && doLogin()} />
+        <button onClick={doLogin}>Είσοδος στο Admin Panel</button>
+        {msg && <p className="admin-login-error" role="alert">{msg.t}</p>}
+      </section>
     </main>
   );
   if (!data) return <main className="p-10 text-black">{msg?.t || "Φόρτωση…"}</main>;
 
   return (
     <Ctx.Provider value={data.eventTypes}>
-      <div className="min-h-screen bg-[#f7f5f0] text-black">
-        <header className="sticky top-0 z-10 border-b border-black bg-white">
-          <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-3 px-5 py-3">
-            <strong className="text-sm uppercase tracking-widest">MARIO K · Διαχείριση</strong>
-            <a href="/" target="_blank" className="text-xs underline">Προβολή site ↗</a>
-            <button onClick={logout} className="text-xs underline">Έξοδος</button>
-            <button onClick={save} disabled={!dirty || saving} className="ml-auto rounded bg-[#c2a86a] px-5 py-2 text-xs font-bold uppercase disabled:opacity-40">{saving ? "Αποθήκευση…" : dirty ? "Αποθήκευση αλλαγών" : "Όλα αποθηκευμένα"}</button>
+      <div className="admin-shell">
+        <header className="admin-header">
+          <div className="admin-topbar">
+            <div className="admin-brand"><span className="admin-mark">MK</span><div><strong className="admin-title">MARIO K · Admin</strong><p className="admin-subtitle">Website content management</p></div></div>
+            <a href="/" target="_blank" rel="noreferrer" className="admin-action">Προβολή site ↗</a>
+            <button onClick={logout} className="admin-action">Έξοδος</button>
+            <button onClick={save} disabled={!dirty || saving} className="admin-action admin-action-primary ml-auto">{saving ? "Αποθήκευση…" : dirty ? "Αποθήκευση αλλαγών" : "Όλα αποθηκευμένα"}</button>
           </div>
-          <nav className="mx-auto flex max-w-4xl gap-2 overflow-x-auto whitespace-nowrap px-5 pb-3">
-            {tabs.map(([t, l]) => <button key={t} onClick={() => setTab(t)} className={`${btn} ${tab === t ? "bg-black text-white" : ""}`}>{l}</button>)}
+          <nav className="admin-nav" aria-label="Ενότητες διαχείρισης">
+            {tabs.map(([t, l]) => <button key={t} onClick={() => setTab(t)} aria-current={tab === t ? "page" : undefined} className={`${btn} ${tab === t ? "bg-black text-white" : ""}`}>{l}</button>)}
           </nav>
         </header>
-        <main className="mx-auto max-w-4xl px-5 py-8">
-          {msg && <p className={`mb-6 rounded border p-4 text-sm ${msg.ok ? "border-green-700 bg-green-50 text-green-900" : "border-red-700 bg-red-50 text-red-900"}`}>{msg.t}</p>}
-          {dirty && <p className="mb-6 text-xs text-black/60">Έχεις αλλαγές που δεν έχουν αποθηκευτεί.</p>}
+        <main className="admin-main">\n          <div className="admin-page-heading"><div><p className="admin-eyebrow">Περιεχόμενο ιστοσελίδας</p><h1 className="admin-page-title">{tabs.find(([key]) => key === tab)?.[1] ?? "Διαχείριση"}</h1><p className="admin-page-description">Διαχειρίσου το περιεχόμενο που εμφανίζεται στο MARIO K Official. Οι αλλαγές αποθηκεύονται με ασφάλεια και δημοσιεύονται αυτόματα.</p></div></div>
+          {msg && <p className="admin-status" data-kind={msg.ok ? "success" : "error"} role="status">{msg.t}</p>}
+          {dirty && <p className="admin-dirty"><span aria-hidden="true">●</span> Έχεις αλλαγές που δεν έχουν αποθηκευτεί. Αποθήκευσε πριν φύγεις από την ενότητα.</p>}
           {tab === "reviews" && <p className="mb-6 text-sm text-black/70">Βάλε τις κριτικές όπως ακριβώς τις έγραψαν οι πελάτες. Τικάρισε «Εμφάνιση στο site» για να εμφανιστεί η κάθε μία.</p>}
           {tab === "photos" && <section className="mb-6 rounded border border-black/15 bg-white p-4"><h2 className="font-semibold">Βιβλιοθήκη φωτογραφιών</h2><p className="mt-2 text-sm text-black/70">Μεταφέρει τις παλιές φωτογραφίες από Base44 στη φιλοξενία του site, ενημερώνει τις καταχωρίσεις και προσθέτει αρχικό alt text για SEO. Γίνεται μία συγκεντρωτική ενημέρωση του site.</p><button className={`${btn} mt-3`} disabled={migrating || dirty} onClick={migrateImages}>{migrating ? "Μεταφορά φωτογραφιών…" : "Μεταφορά παλιών φωτογραφιών από Base44"}</button>{dirty && <p className="mt-2 text-xs text-amber-800">Αποθήκευσε πρώτα τις αλλαγές για να ενεργοποιηθεί η μεταφορά.</p>}</section>}
-          <Node k="" v={data[tab]} set={(x) => setData({ ...data, [tab]: x })} />
-          <p className="mt-10 text-xs text-black/50">Εικόνες έως 4MB. Για βίντεο βάλε link. Οι αλλαγές ανεβαίνουν στο GitHub και το site ενημερώνεται μόνο του.</p>
+          <div className="admin-editor"><Node k="" v={data[tab]} set={(x) => setData({ ...data, [tab]: x })} /></div>
+          <p className="admin-footer">Αρχεία εικόνας έως 4MB · Για βίντεο χρησιμοποίησε σύνδεσμο. Η αποθήκευση ενημερώνει το περιεχόμενο μέσω GitHub και ενεργοποιεί το αυτόματο deployment του Vercel.</p>
         </main>
       </div>
     </Ctx.Provider>
