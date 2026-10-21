@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       title: p.title,
       description: p.excerpt,
-      ...(p.image_url ? { images: [{ url: p.image_url, alt: p.title }] } : {}),
+      ...(p.image_url ? { images: [{ url: p.image_url, alt: p.image_alt || p.title }] } : {}),
       publishedTime: p.date || undefined,
     },
   } : { robots: { index: false, follow: true } };
