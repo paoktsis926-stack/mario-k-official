@@ -117,3 +117,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   .site-home .package-card:hover, .site-home .home-highlights img:hover { transform: none; }
 }
+
+
+/* Motion enhancement — CSS-only, progressive, and safe for existing interactions. */
+@keyframes mk-fade-up { from { opacity: 0; transform: translate3d(0, 22px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes mk-image-settle { from { transform: scale(1.055); } to { transform: scale(1); } }
+.site-hero .hero-copy > * { animation: mk-fade-up .75s cubic-bezier(.2,.7,.2,1) both; }
+.site-hero .hero-copy > *:nth-child(1) { animation-delay: .06s; }
+.site-hero .hero-copy > *:nth-child(2) { animation-delay: .14s; }
+.site-hero .hero-copy > *:nth-child(3) { animation-delay: .22s; }
+.site-hero .hero-copy > *:nth-child(4) { animation-delay: .3s; }
+.site-hero img, .site-hero video { animation: mk-image-settle 1.25s cubic-bezier(.2,.7,.2,1) both; }
+.site-home .event-card, .site-home .package-card, .site-home .home-process li, .site-home .home-reviews figure { transition: transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease, border-color .25s ease; }
+.site-home .event-card:hover { transform: translateY(-5px); box-shadow: 0 20px 44px rgb(0 0 0 / .16); }
+.site-home .event-card img { transition: transform .65s cubic-bezier(.2,.7,.2,1), filter .35s ease; }
+.site-home .event-card:hover img { transform: scale(1.045); }
+.site-home .home-process li:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgb(0 0 0 / .06); }
+.site-home a:focus-visible, .site-home button:focus-visible, .site-hero a:focus-visible { outline: 2px solid #c6a45a; outline-offset: 4px; }
+@media (hover: none) { .site-home .event-card:hover, .site-home .package-card:hover, .site-home .home-process li:hover { transform: none; box-shadow: none; } .site-home .event-card:hover img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .site-hero .hero-copy > *, .site-hero img, .site-hero video { animation: none !important; } .site-home .event-card, .site-home .event-card img, .site-home .package-card, .site-home .home-process li, .site-home .home-reviews figure { transition: none !important; } }
