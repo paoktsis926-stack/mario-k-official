@@ -10,6 +10,12 @@ import Reels from "@/components/Reels";
 import GoogleReviewsSection from "@/components/GoogleReviewsSection";
 import { slugOf } from "@/lib/events";
 
+export const metadata = {
+  title: "DJ στην Αλεξανδρούπολη για Γάμους, Βαπτίσεις & Πάρτι | MARIO K",
+  description: "Επαγγελματίας DJ στην Αλεξανδρούπολη και τον Έβρο για γάμους, βαπτίσεις, bachelor parties, γενέθλια και ιδιωτικές εκδηλώσεις. Μουσική, ήχος και φωτισμός.",
+  alternates: { canonical: "/" },
+};
+
 const h = site.home;
 
 export default async function Home() {
@@ -32,7 +38,7 @@ export default async function Home() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {eventTypes.map((e) => (
             <Link key={e.id} href={`/booking?event=${slugOf(e.name)}`} className="group relative block aspect-[4/3] overflow-hidden bg-black">
-              {e.image_url && <img src={e.image_url} alt={e.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-70 grayscale transition duration-500 group-hover:scale-105 group-hover:opacity-90" />}
+              {e.image_url && <img src={e.image_url} alt={`DJ για ${e.name} στην Αλεξανδρούπολη και τον Έβρο`} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-70 grayscale transition duration-500 group-hover:scale-105 group-hover:opacity-90" />}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                 <h3 className="text-base font-semibold uppercase">{e.name}</h3>
@@ -44,7 +50,7 @@ export default async function Home() {
       </section>
 
       <section className="reveal home-about mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
-        <img src={site.about.portrait} alt="MARIO K" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
+        <img src={site.about.portrait} alt="MARIO K, επαγγελματίας DJ για γάμους και εκδηλώσεις" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
         <div>
           <p className="label-caps text-gold">Ο DJ</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.about.bio_title}</h2>
@@ -84,7 +90,7 @@ export default async function Home() {
         <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.photos_text}</p>
         <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4">
           {photos.filter((p) => p.image_url).slice(0, 4).map((p) => (
-            <img key={p.title} src={p.image_url!} alt={p.title} loading="lazy" className="aspect-square w-full object-cover grayscale" />
+            <img key={p.title} src={p.image_url!} alt={`Φωτογραφία εκδήλωσης DJ MARIO K: ${p.title}`} loading="lazy" className="aspect-square w-full object-cover grayscale" />
           ))}
         </div>
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
