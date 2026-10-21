@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     treeEntries.push({ path: "data/content.json", mode: "100644", type: "blob", sha: contentBlob.sha } as any);
     const configResponse = await gh("/contents/next.config.ts?ref=" + encodeURIComponent(BRANCH()));
     const configText = Buffer.from(configResponse.content, "base64").toString("utf8");
-    const configWithoutLegacyHosts = configText.replace(/  images: \{\s*remotePatterns: \[\s*\{ protocol: "https", hostname: "base44\\.app" \},\s*\{ protocol: "https", hostname: "media\\.base44\\.com" \},\s*\],\s*\},\s*/, "");
+    const configWithoutLegacyHosts = configText.replace(/  images: \{\s*remotePatterns: \[\s*\{ protocol: "https", hostname: "base44\.app" \},\s*\{ protocol: "https", hostname: "media\.base44\.com" \},\s*\],\s*\},\s*/, "");
     if (configWithoutLegacyHosts !== configText) {
       const configBlob = await githubBlob(configWithoutLegacyHosts, "utf-8");
       treeEntries.push({ path: "next.config.ts", mode: "100644", type: "blob", sha: configBlob.sha } as any);
