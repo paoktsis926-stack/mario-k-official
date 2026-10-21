@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: Promise<{ event: string
   const ev = eventTypes.find((e) => slugOf(e.name) === slug);
   const packages = await getPackages();
   const pk = packages.filter((p) => p.slugs.includes(slug));
-  const list = pk.length ? pk : packages;
+  const list = pk;
   const btn = "px-7 py-4 text-[11px] uppercase tracking-[0.18em] transition";
   return (
     <>
@@ -67,6 +67,7 @@ export default async function Page({ params }: { params: Promise<{ event: string
       <section className="border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
           <p className="label-caps text-gold">Πακέτα</p>
+          {list.length ? (
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {list.map((p) => (
               <article key={p.name} className={`flex flex-col border bg-white p-7 ${p.highlight ? "border-gold" : "border-black"}`}>
@@ -78,6 +79,9 @@ export default async function Page({ params }: { params: Promise<{ event: string
               </article>
             ))}
           </div>
+          ) : (
+            <p className="mt-6 max-w-2xl text-sm leading-7 text-[#555]">Η τιμή διαμορφώνεται ανάλογα με τον χώρο, τη διάρκεια και τις ανάγκες της εκδήλωσης. Ζητήστε εξατομικευμένη προσφορά.</p>
+          )}
         </div>
       </section>
 
