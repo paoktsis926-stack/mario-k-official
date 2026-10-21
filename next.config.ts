@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-async redirects() {
+  images: { remotePatterns: [{ protocol: "https", hostname: "**.public.blob.vercel-storage.com" }] },
+  async redirects() {
     return [{ source: "/epikoinonia", destination: "/booking", permanent: true }];
   },
   /* config options here */

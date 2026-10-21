@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { isAuthed } from "@/lib/adminAuth";
-import { putFile } from "@/lib/github";
 
 const greek: Record<string, string> = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o" };
 
@@ -29,10 +28,17 @@ export async function POST(request: Request) {
   const original = file.name.split(/[\\/]/).pop() || "image";
   const stem = original.replace(/\.[^.]*$/, "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[α-ω]/g, (ch) => greek[ch] || ch).replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "image";
   const name = `${Date.now()}-${stem}.${type.ext}`;
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return fail("Δεν έχει ρυθμιστεί η μόνιμη βιβλιοθήκη φωτογραφιών.", 503);
   try {
-    await putFile(`public/uploads/${name}`, bytes.toString("base64"), `Admin: ανέβασμα ${name}`);
-    return NextResponse.json({ ok: true, url: `/uploads/${name}` });
-  } catch (e) {
-    return fail((e as Error).message, 502);
+    const response = await fetch(`https://blob.vercel-storage.com/?pathname=${encodeURIComponent(name)}`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`, "x-api-version": "7", "x-content-type": file.type, "x-allow-overwrite": "true" },
+      body: new Uint8Array(bytes), cache: "no-store",
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || typeof result.url !== "string") return fail(`Αποτυχία αποθήκευσης φωτογραφίας (${response.status}).`, 502);
+    return NextResponse.json({ ok: true, url: result.url });
+  } catch {
+    return fail("Δεν ήταν δυνατή η σύνδεση με τη βιβλιοθήκη φωτογραφιών.", 502);
   }
 }
