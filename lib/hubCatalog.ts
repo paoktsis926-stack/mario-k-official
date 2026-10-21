@@ -24,20 +24,24 @@ function eventSlugs(eventType: string): string[] {
 export async function getPackages(): Promise<Pkg[]> {
   "use cache";
   cacheLife("minutes");
-  const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), key = process.env.RAILWAY_API_KEY;
+  const base = process.env.RAILWAY_API_BASE?.replace(/\\/+$/, ""), key = process.env.RAILWAY_API_KEY;
   if (!base || !key) return fallback;
   try {
     const r = await fetch(`${base}/api/functions/publicCatalog`, { headers: { "x-api-key": key }, signal: AbortSignal.timeout(6000) });
     const j = await r.json();
     if (!r.ok || !Array.isArray(j.packages) || !j.packages.length) return fallback;
-    const extras: string[] = (j.add_ons || []).slice(0, 8).map((a: { name: string; price: number }) => `${a.name}${a.price ? ` (+${a.price}€)` : ""}`);
-    const star = fallback.filter((f) => f.highlight).map((f) => f.name.toLowerCase());
-    return j.packages.map((p: { name: string; price: number; price_max: number; duration: string; short_description: string; included_features: string[]; event_type: string }) => ({
-      name: p.name, price: p.price, price_text: p.price_max > p.price ? `${p.price}–${p.price_max}€` : `${p.price}€`,
-      duration: p.duration || "", tagline: "", best_for: p.short_description || "", features: p.included_features || [], extras,
-      highlight: star.some((s) => p.name.toLowerCase().startsWith(s)), slugs: fallback.find((f) => f.name.trim().toLowerCase() === p.name.trim().toLowerCase())?.slugs ?? eventSlugs(p.event_type),
-    }));
-  } catch {
-    return fallback;
-  }
+    // Keep event-specific site offers unless the HUB has a package with the exact same name.
+    const remote = new Map<string, { price: number; price_max?: number; duration?: string; short_description?: string; included_features?: string[] }>(
+      j.packages.filter((p: any) => typeof p.name === "string").map((p: any) => [p.name.trim().toLowerCase(), p])
+    );
+    return fallback.map((p) => {
+      const hub = remote.get(p.name.trim().toLowerCase());
+      if (!hub) return p;
+      const price = Number.isFinite(hub.price) ? hub.price : p.price;
+      const max = Number.isFinite(hub.price_max) ? hub.price_max : price;
+      return { ...p, price, price_text: max > price ? `${price}–${max}€` : `${price}€`,
+        duration: hub.duration || p.duration, best_for: hub.short_description || p.best_for,
+        features: Array.isArray(hub.included_features) && hub.included_features.length ? hub.included_features : p.features };
+    });
+  } catch { return fallback; }
 }
