@@ -11,20 +11,20 @@ const strFields = ["first_name", "last_name", "phone", "email", "event_type", "e
 const fail = (message: string, status: number, extra: Record<string, unknown> = {}) => NextResponse.json({ success: false, message, ...extra }, { status });
 
 // Αντιστοίχιση τύπων του site → ετικέτες που αναγνωρίζει το HUB (publicTypeMap). Η αρχική επιλογή του πελάτη μένει στα σχόλια.
-const hubType: Record<string, { type: string; prefix: string }> = {
-  wedding: { type: "wedding", prefix: "" },
-  baptism: { type: "baptism", prefix: "" },
-  "private-party": { type: "party", prefix: "" },
-  bachelorette: { type: "bachelorette", prefix: "" },
-  birthday: { type: "party", prefix: "[Γενέθλια ενηλίκων] " },
-  reunion: { type: "party", prefix: "[Reunion] " },
-  opening: { type: "Εταιρικό", prefix: "[Εγκαίνια] " },
-  beachbar: { type: "Club", prefix: "[Beach Bar] " },
-  "carnival-adult": { type: "party", prefix: "[Αποκριάτικο πάρτι ενηλίκων] " },
-  "carnival-kids": { type: "party", prefix: "[Παιδικό αποκριάτικο πάρτι] " },
-  club: { type: "Club", prefix: "[Club / Bar] " },
-  corporate: { type: "Εταιρικό", prefix: "" },
-  karaoke: { type: "party", prefix: "[Karaoke Party & Games] " },
+const hubType: Record<string, { type: string; prefix: string; label: string }> = {
+  wedding: { type: "wedding", prefix: "", label: "Γάμος" },
+  baptism: { type: "baptism", prefix: "", label: "Βάπτιση" },
+  "private-party": { type: "party", prefix: "", label: "Ιδιωτικό Party" },
+  bachelorette: { type: "bachelor", prefix: "", label: "Bachelorette Party" },
+  birthday: { type: "party", prefix: "[Γενέθλια ενηλίκων] ", label: "Γενέθλια" },
+  reunion: { type: "party", prefix: "[Reunion] ", label: "Reunion" },
+  opening: { type: "Εταιρικό", prefix: "[Εγκαίνια] ", label: "Εγκαίνια" },
+  beachbar: { type: "Club", prefix: "[Beach Bar] ", label: "Beach Bar" },
+  "carnival-adult": { type: "party", prefix: "[Αποκριάτικο πάρτι ενηλίκων] ", label: "Party" },
+  "carnival-kids": { type: "party", prefix: "[Παιδικό αποκριάτικο πάρτι] ", label: "Party" },
+  club: { type: "Club", prefix: "[Club / Bar] ", label: "Club / Bar" },
+  corporate: { type: "Εταιρικό", prefix: "", label: "Εταιρική εκδήλωση" },
+  karaoke: { type: "party", prefix: "[Karaoke Party & Games] ", label: "Karaoke" },
 };
 
 let catalog: { at: number; list: { package_id: string; name: string }[] } | null = null;
@@ -55,9 +55,16 @@ export async function POST(request: Request) {
   if (typeof guests !== "number" || !Number.isInteger(guests) || guests < 1 || guests > 5000) return fail("Μη έγκυρος αριθμός καλεσμένων.", 400);
   clean.guest_count = guests;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean.email as string)) return fail("Μη έγκυρο email.", 400);
-  const date = new Date(clean.event_date as string);
+  const dateValue = clean.event_date as string;
+  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateValue)) return fail("Μη έγκυρη ημερομηνία.", 400);
+  const [year, month, day] = dateValue.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return fail("Μη έγκυρη ημερομηνία.", 400);
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  if (isNaN(date.getTime()) || date < today) return fail("Η ημερομηνία πρέπει να είναι μελλοντική.", 400);
+  if (date < today) return fail("Η ημερομηνία πρέπει να είναι σήμερα ή μελλοντική.", 400);
+  if (!/^(?:[01]\\d|2[0-3]):[0-5]\\d$/.test(clean.event_time as string)) return fail("Μη έγκυρη ώρα εκδήλωσης.", 400);
+  const phone = clean.phone as string;
+  if (phone.length > 30 || (phone.match(/\\d/g) || []).length < 7 || !/^[+\\d\\s().-]+$/.test(phone)) return fail("Μη έγκυρος αριθμός τηλεφώνου.", 400);
 
   clean.package = typeof body.package === "string" ? body.package.slice(0, 100) : "";
   clean.message = typeof body.message === "string" ? body.message.slice(0, 2000) : "";
@@ -83,7 +90,8 @@ export async function POST(request: Request) {
           preferred_date: clean.event_date, event_type: m.type, location: clean.area, venue: clean.venue,
           guest_count: clean.guest_count, start_time: clean.event_time, idempotency_key: clean.external_id,
           comments: `${m.prefix}${pkgNote}${clean.message}`.slice(0, 1000),
-          wants_bachelor: slug === "bachelorette" ? "yes" : "no", package_id: pkgId, how_found: String(clean.source), waitlist,
+          event_subtype: m.label, package_id: pkgId, package_name: clean.package,
+          how_found: String(clean.source), waitlist, wants_bachelor: slug === "bachelorette" ? "yes" : "no",
         }),
         cache: "no-store", signal: AbortSignal.timeout(9000),
       });
