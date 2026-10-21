@@ -1,7 +1,11 @@
 import { site, faq } from "@/lib/content";
 import { PageHero, Cta, Faqs } from "@/components/Ui";
 
-export const metadata = { title: "Συχνές Ερωτήσεις — MARIO K" };
+export const metadata = {
+  title: "Συχνές Ερωτήσεις για DJ & Κρατήσεις | MARIO K",
+  description: "Απαντήσεις για κρατήσεις DJ, μουσικές επιλογές, εξοπλισμό ήχου και φωτισμού, διάρκεια υπηρεσιών και οργάνωση εκδηλώσεων.",
+  alternates: { canonical: "/syxnes-erotiseis" },
+};
 const f = site.faq;
 const cats = [...new Set(faq.map((x) => x.category))];
 

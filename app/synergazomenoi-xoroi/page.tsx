@@ -1,7 +1,11 @@
 import { site } from "@/lib/content";
 import { PageHero, Cta, Points } from "@/components/Ui";
 
-export const metadata = { title: "Χώροι & Περιοχές Κάλυψης — MARIO K" };
+export const metadata = {
+  title: "Περιοχές Κάλυψης DJ | Αλεξανδρούπολη, Έβρος & Ελλάδα",
+  description: "DJ και μουσική κάλυψη εκδηλώσεων στην Αλεξανδρούπολη, τον Έβρο, τη Θράκη, τη Θεσσαλονίκη και σε όλη την Ελλάδα κατόπιν συνεννόησης.",
+  alternates: { canonical: "/synergazomenoi-xoroi" },
+};
 const v = site.venues;
 
 export default function Page() {

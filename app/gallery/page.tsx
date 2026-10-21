@@ -2,7 +2,11 @@ import { site, photos, eventTypes } from "@/lib/content";
 import { PageHero, Cta } from "@/components/Ui";
 import GalleryGrid from "@/components/GalleryGrid";
 
-export const metadata = { title: "Φωτογραφίες & Gallery — MARIO K" };
+export const metadata = {
+  title: "Φωτογραφίες από Εκδηλώσεις & DJ Sets | MARIO K",
+  description: "Δείτε φωτογραφίες από γάμους, βαπτίσεις, private parties και εταιρικές εκδηλώσεις με DJ MARIO K.",
+  alternates: { canonical: "/gallery" },
+};
 const p = site.photos;
 
 export default function Page() {

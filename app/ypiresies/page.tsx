@@ -1,7 +1,11 @@
 import { site, services } from "@/lib/content";
 import { PageHero, Cta } from "@/components/Ui";
 
-export const metadata = { title: "Υπηρεσίες — MARIO K" };
+export const metadata = {
+  title: "Υπηρεσίες DJ, Ήχου & Φωτισμού Εκδηλώσεων | MARIO K",
+  description: "Υπηρεσίες DJ και ψυχαγωγίας για γάμους, βαπτίσεις, private parties και εταιρικές εκδηλώσεις, με επαγγελματικό ήχο, φωτισμό και ειδικά εφέ.",
+  alternates: { canonical: "/ypiresies" },
+};
 const s = site.services;
 
 function Group({ title, text, cat }: { title: string; text: string; cat: string }) {

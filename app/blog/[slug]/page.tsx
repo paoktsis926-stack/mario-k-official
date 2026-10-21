@@ -9,7 +9,18 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const p = posts.find((x) => x.slug === slug);
-  return p ? { title: `${p.title} — MARIO K`, description: p.excerpt } : {};
+  return p ? {
+    title: `${p.title} — MARIO K`,
+    description: p.excerpt,
+    alternates: { canonical: `/blog/${p.slug}` },
+    openGraph: {
+      type: "article",
+      title: p.title,
+      description: p.excerpt,
+      ...(p.image_url ? { images: [{ url: p.image_url, alt: p.title }] } : {}),
+      publishedTime: p.date || undefined,
+    },
+  } : { robots: { index: false, follow: true } };
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {

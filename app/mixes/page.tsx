@@ -2,7 +2,11 @@ import { mixes, SOUNDCLOUD_PROFILE } from "@/lib/content";
 import { PageHero, Cta } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 
-export const metadata = { title: "Mixes — MARIO K" };
+export const metadata = {
+  title: "DJ Mixes & Μουσικά Sets | MARIO K",
+  description: "Ακούστε DJ mixes του MARIO K με ελληνικές και διεθνείς επιλογές, dance, mainstream και μουσική για διαφορετικά είδη εκδηλώσεων.",
+  alternates: { canonical: "/mixes" },
+};
 
 export default function Page() {
   return (
