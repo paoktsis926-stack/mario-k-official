@@ -56,15 +56,15 @@ export async function POST(request: Request) {
   clean.guest_count = guests;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean.email as string)) return fail("Μη έγκυρο email.", 400);
   const dateValue = clean.event_date as string;
-  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateValue)) return fail("Μη έγκυρη ημερομηνία.", 400);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) return fail("Μη έγκυρη ημερομηνία.", 400);
   const [year, month, day] = dateValue.split("-").map(Number);
   const date = new Date(year, month - 1, day);
   if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return fail("Μη έγκυρη ημερομηνία.", 400);
   const today = new Date(); today.setHours(0, 0, 0, 0);
   if (date < today) return fail("Η ημερομηνία πρέπει να είναι σήμερα ή μελλοντική.", 400);
-  if (!/^(?:[01]\\d|2[0-3]):[0-5]\\d$/.test(clean.event_time as string)) return fail("Μη έγκυρη ώρα εκδήλωσης.", 400);
+  if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(clean.event_time as string)) return fail("Μη έγκυρη ώρα εκδήλωσης.", 400);
   const phone = clean.phone as string;
-  if (phone.length > 30 || (phone.match(/\\d/g) || []).length < 7 || !/^[+\\d\\s().-]+$/.test(phone)) return fail("Μη έγκυρος αριθμός τηλεφώνου.", 400);
+  if (phone.length > 30 || (phone.match(/\d/g) || []).length < 7 || !/^[+\d\\s().-]+$/.test(phone)) return fail("Μη έγκυρος αριθμός τηλεφώνου.", 400);
 
   clean.package = typeof body.package === "string" ? body.package.slice(0, 100) : "";
   clean.message = typeof body.message === "string" ? body.message.slice(0, 2000) : "";
