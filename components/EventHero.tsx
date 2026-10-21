@@ -26,19 +26,19 @@ export default function EventHero({ events, headline, text, image, imageAlt, eye
   const bg = cur?.image_url || image;
 
   return (
-    <section className="relative flex min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-black text-white">
+    <section className="site-hero relative flex min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-black text-white">
       <div className="absolute inset-y-0 right-0 w-full md:w-[62%]">
-        {video ? <video src={video} poster={bg} autoPlay muted loop playsInline className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" /> : <Image key={bg} src={bg} alt={cur?.image_alt || imageAlt || "DJ MARIO K σε εκδήλωση"} fill priority sizes="(max-width: 768px) 100vw, 62vw" className="hero-par h-full w-full object-cover object-[50%_10%] grayscale md:object-[50%_20%]" />}
-        <div className="absolute inset-0 opacity-70 mix-blend-multiply transition-colors duration-500" style={{ background: "linear-gradient(180deg, var(--accent), #0b0620 90%)" }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent md:bg-gradient-to-r md:from-black md:via-black/35 md:to-transparent" />
+        {video ? <video src={video} poster={bg} autoPlay muted loop playsInline className="hero-par h-full w-full object-cover object-[50%_10%] md:object-[50%_20%]" /> : <Image key={bg} src={bg} alt={cur?.image_alt || imageAlt || "DJ MARIO K σε εκδήλωση"} fill priority sizes="(max-width: 768px) 100vw, 62vw" className="hero-par h-full w-full object-cover object-[50%_10%] md:object-[50%_20%]" />}
+        <div className="absolute inset-0 opacity-35 mix-blend-multiply transition-colors duration-500" style={{ background: "linear-gradient(180deg, var(--accent), #0b0620 90%)" }} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/5 md:bg-gradient-to-r md:from-black md:via-black/25 md:to-black/5" />
       </div>
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-5 pb-10 md:justify-center md:px-8">
-        <div className="max-w-2xl">
+        <div className="hero-copy max-w-2xl">
           <p className="text-[11px] uppercase tracking-[0.35em] text-white/90">{eyebrow}</p>
-          <h1 className="mt-5 text-3xl font-bold leading-[1.15] md:text-[2.6rem]" style={{ fontFamily: "var(--font-comfortaa), var(--font-inter), sans-serif" }}>{c ? c.h : headline}</h1>
+          <h1 className="hero-title mt-5 text-4xl font-bold leading-[1.02] md:text-6xl lg:text-7xl" style={{ fontFamily: "var(--font-comfortaa), var(--font-inter), sans-serif" }}>{c ? c.h : headline}</h1>
           <p className="mt-5 line-clamp-2 max-w-md text-sm leading-7 text-white/75">{c ? c.t : text}</p>
           <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-            <Link href={ev ? `/booking?event=${ev}` : "/booking"} className="bg-white px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-black transition hover:opacity-90">{cta}</Link>
+            <Link href={ev ? `/booking?event=${ev}` : "/booking"} className="hero-primary-cta bg-[#c6a45a] px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-white">{cta}</Link>
             <Link href="/paketa" className="text-[11px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white">Δείτε τα πακέτα →</Link>
             <a href={waLink(wa, ev)} target="_blank" rel="noopener noreferrer" className="hidden text-[11px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white md:inline">WhatsApp →</a>
           </div>

@@ -38,8 +38,8 @@ export default async function Home() {
         <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.event_text}</p>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {eventTypes.map((e) => (
-            <Link key={e.id} href={`/booking?event=${slugOf(e.name)}`} className="group relative block aspect-[4/3] overflow-hidden bg-black">
-              {e.image_url && <Image src={e.image_url} alt={e.image_alt || `DJ για ${e.name} στην Αλεξανδρούπολη και τον Έβρο`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-70 grayscale transition duration-500 group-hover:scale-105 group-hover:opacity-90" />}
+            <Link key={e.id} href={`/booking?event=${slugOf(e.name)}`} className="event-card group relative block aspect-[4/3] overflow-hidden bg-black">
+              {e.image_url && <Image src={e.image_url} alt={e.image_alt || `DJ για ${e.name} στην Αλεξανδρούπολη και τον Έβρο`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100" />}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                 <h3 className="text-base font-semibold uppercase">{e.name}</h3>
@@ -51,7 +51,7 @@ export default async function Home() {
       </section>
 
       <section className="reveal home-about mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[2fr_3fr] md:gap-16 md:px-8 md:py-20">
-        <Image src={site.about.portrait} alt={site.about.portrait_alt || "MARIO K, επαγγελματίας DJ για γάμους και εκδηλώσεις"} width={900} height={1125} sizes="(max-width: 768px) 100vw, 40vw" loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
+        <Image src={site.about.portrait} alt={site.about.portrait_alt || "MARIO K, επαγγελματίας DJ για γάμους και εκδηλώσεις"} width={900} height={1125} sizes="(max-width: 768px) 100vw, 40vw" loading="lazy" className="about-portrait aspect-[4/5] w-full object-cover" />
         <div>
           <p className="label-caps text-gold">Ο DJ</p>
           <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.about.bio_title}</h2>
@@ -70,7 +70,7 @@ export default async function Home() {
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.packages_text}</p>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {packages.map((p) => (
-              <article key={p.name} className={`flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
+              <article key={p.name} className={`package-card flex flex-col border bg-white p-8 ${p.highlight ? "border-gold" : "border-black"}`}>
                 {p.highlight && <p className="label-caps text-gold">{p.tagline}</p>}
                 <h3 className="mt-2 text-2xl font-bold uppercase">{p.name}</h3>
                 <p className="mt-3 text-3xl font-light">{p.price_text}</p>
@@ -91,7 +91,7 @@ export default async function Home() {
         <p className="mt-6 max-w-3xl text-sm leading-relaxed text-[#555] md:text-base">{h.photos_text}</p>
         <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4">
           {photos.filter((p) => p.image_url).slice(0, 4).map((p) => (
-            <Image key={p.title} src={p.image_url!} alt={p.image_alt || `Φωτογραφία εκδήλωσης DJ MARIO K: ${p.title}`} width={600} height={600} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" className="aspect-square w-full object-cover grayscale" />
+            <Image key={p.title} src={p.image_url!} alt={p.image_alt || `Φωτογραφία εκδήλωσης DJ MARIO K: ${p.title}`} width={600} height={600} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" className="aspect-square w-full object-cover" />
           ))}
         </div>
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
