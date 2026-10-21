@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   const name = `${Date.now()}-${stem}.${type.ext}`;
   if (!process.env.BLOB_READ_WRITE_TOKEN) return fail("Δεν έχει ρυθμιστεί η μόνιμη βιβλιοθήκη φωτογραφιών.", 503);
   try {
-    const response = await fetch(`https://blob.vercel-storage.com/${encodeURIComponent(name)}`, {
+    const response = await fetch(`https://blob.vercel-storage.com/?pathname=${encodeURIComponent(name)}`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`, "x-api-version": "7", "x-content-type": file.type, "x-allow-overwrite": "true" },
       body: new Uint8Array(bytes), cache: "no-store",
