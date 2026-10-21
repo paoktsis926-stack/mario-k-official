@@ -7,17 +7,17 @@ import { applyTheme } from "@/lib/events";
 
 const eventOptions = [
   { value: "wedding", label: "Γάμος", api: "Γάμος" },
-  { value: "baptism", label: "Βάφτιση", api: "Άλλο" },
+  { value: "baptism", label: "Βάφτιση", api: "Βάπτιση" },
   { value: "bachelorette", label: "Bachelorette Party", api: "Bachelorette" },
-  { value: "private-party", label: "Ιδιωτικό πάρτι", api: "Party" },
-  { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Party" },
-  { value: "reunion", label: "Reunion", api: "Party" },
-  { value: "opening", label: "Εγκαίνια", api: "Εταιρικό" },
-  { value: "beachbar", label: "Beach Bar", api: "Party" },
-  { value: "carnival-adult", label: "Αποκριάτικο πάρτι ενηλίκων", api: "Party" },
-  { value: "carnival-kids", label: "Παιδικό αποκριάτικο πάρτι", api: "Party" },
+  { value: "private-party", label: "Ιδιωτικό πάρτι", api: "Ιδιωτικό Party" },
+  { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Γενέθλια" },
+  { value: "reunion", label: "Reunion", api: "Reunion" },
+  { value: "opening", label: "Εγκαίνια", api: "Εγκαίνια" },
+  { value: "beachbar", label: "Beach Bar", api: "Beach Bar" },
+  { value: "carnival-adult", label: "Αποκριάτικο πάρτι ενηλίκων", api: "Αποκριάτικο πάρτι ενηλίκων" },
+  { value: "carnival-kids", label: "Παιδικό αποκριάτικο πάρτι", api: "Παιδικό αποκριάτικο πάρτι" },
   { value: "club", label: "Club / Bar", api: "Club" },
-  { value: "corporate", label: "Εταιρική εκδήλωση", api: "Εταιρικό" },
+  { value: "corporate", label: "Εταιρική εκδήλωση", api: "Εταιρική εκδήλωση" },
   { value: "karaoke", label: "Karaoke Party & Games", api: "Karaoke" },
 ];
 
@@ -171,7 +171,7 @@ function BookingForm() {
         src: getSrc(),
         event_slug: event,
         waitlist: wl.current,
-        message: (selectedEvent.api === "Άλλο" ? `[${selectedEvent.label}] ` : "") + form.message.trim(),
+        message: form.message.trim(),
         source: "Next.js Website",
         external_id: idempotencyKey.current,
       };
