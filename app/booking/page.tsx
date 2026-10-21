@@ -21,14 +21,7 @@ const eventOptions = [
   { value: "karaoke", label: "Karaoke Party & Games", api: "Karaoke" },
 ];
 
-const packageSlugByEvent: Record<string, string> = {
-  opening: "corporate",
-  beachbar: "club",
-  birthday: "private-party",
-  reunion: "private-party",
-  "carnival-adult": "private-party",
-  "carnival-kids": "private-party",
-};
+const packageSlugByEvent: Record<string, string> = {};
 
 const packageMatchesEvent = (pkg: { slugs: string[] }, slug: string) =>
   pkg.slugs.includes(slug) || pkg.slugs.includes(packageSlugByEvent[slug] || "");
