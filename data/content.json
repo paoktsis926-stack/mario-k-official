@@ -220,38 +220,38 @@
  ],
  "services": [
   {
-   "name": "DJ / Music",
-   "tagline": "Το βασικό",
-   "category": "personal"
-  },
-  {
-   "name": "Karaoke",
-   "tagline": "Για όλους",
+   "name": "DJ & Μουσική Κάλυψη",
+   "tagline": "Πλήρης μουσική κάλυψη για κάθε εκδήλωση",
    "category": "personal"
   },
   {
    "name": "Εξατομικευμένη Μουσική Επιμέλεια",
-   "tagline": "Custom Music Curation",
+   "tagline": "Δημιουργία προσωποποιημένης λίστας για τα γούστα σας",
    "category": "personal"
   },
   {
    "name": "Ηχητική Κάλυψη",
-   "tagline": "Μέσω συνεργάτη",
+   "tagline": "Επαγγελματικός ήχος υψηλής ποιότητας μέσω συνεργάτη",
    "category": "partner"
   },
   {
-   "name": "Φωτισμός",
-   "tagline": "Μέσω συνεργάτη",
+   "name": "Φωτισμός Εκδηλώσεων",
+   "tagline": "Διασκέδαση και διαδραστικό πρόγραμμα για όλους μέσω συνεργάτη",
    "category": "partner"
   },
   {
-   "name": "Smoke / Haze",
-   "tagline": "Μέσω συνεργάτη",
+   "name": "Karaoke Party",
+   "tagline": "Εντυπωσιακά εφέ για την είσοδο και το πάρτι",
+   "category": "personal"
+  },
+  {
+   "name": "Εφέ Καπνού & Καθαρό Haze",
+   "tagline": "Εντυπωσιακά εφέ για την είσοδο και το πάρτι",
    "category": "partner"
   },
   {
    "name": "Ειδικά DJ Extras",
-   "tagline": "Μέσω συνεργάτη",
+   "tagline": "Επιπλέον υπηρεσίες για ξεχωριστές στιγμές",
    "category": "partner"
   }
  ],
