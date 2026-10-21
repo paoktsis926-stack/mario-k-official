@@ -33,7 +33,7 @@ async function findPackageId(base: string, key: string, label: unknown) {
   if (!name) return "";
   try {
     if (!catalog || Date.now() - catalog.at > 300_000) {
-      const r = await fetch(`${base}/publicCatalog`, { headers: { "x-api-key": key }, cache: "no-store", signal: AbortSignal.timeout(5000) });
+      const r = await fetch(`${base}/api/functions/publicCatalog`, { headers: { "x-api-key": key }, cache: "no-store", signal: AbortSignal.timeout(5000) });
       const j = await r.json();
       catalog = { at: Date.now(), list: Array.isArray(j.packages) ? j.packages : [] };
     }
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       const pkgId = await findPackageId(rb, rk, clean.package);
       const m = hubType[slug];
       const pkgNote = clean.package && !pkgId ? `Πακέτο: ${clean.package}\n` : "";
-      const r = await fetch(`${rb}/publicSiteBooking`, {
+      const r = await fetch(`${rb}/api/functions/publicSiteBooking`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": rk },
         body: JSON.stringify({
