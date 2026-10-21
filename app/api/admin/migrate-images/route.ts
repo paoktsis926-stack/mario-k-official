@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 import { isAuthed } from "@/lib/adminAuth";
 
-export const runtime = "nodejs";
 export const maxDuration = 300;
 
 const OWNER_REPO = () => process.env.GITHUB_REPO || "paoktsis926-stack/mario-k-official";
