@@ -21,7 +21,7 @@ const isOldImage = (key: string, value: unknown): value is string => {
   if (!imageKeys.has(key)) return false;
   try { return allowedHosts.has(new URL(value).hostname); } catch { return false; }
 };
-const slug = (s: string) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "image";
+const greek: Record<string, string> = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o" };\nconst slug = (s: string) => s.normalize("NFKD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().replace(/[α-ω]/g, (ch) => greek[ch] || ch).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "image";
 
 async function gh(path: string, init?: RequestInit) {
   const r = await fetch(`${API()}${path}`, { ...init, headers: headers(), cache: "no-store" });
