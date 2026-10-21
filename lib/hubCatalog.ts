@@ -24,7 +24,7 @@ function eventSlugs(eventType: string): string[] {
 export async function getPackages(): Promise<Pkg[]> {
   "use cache";
   cacheLife("minutes");
-  const base = process.env.RAILWAY_API_BASE?.replace(/\\/+$/, ""), key = process.env.RAILWAY_API_KEY;
+  const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), key = process.env.RAILWAY_API_KEY;
   if (!base || !key) return fallback;
   try {
     const r = await fetch(`${base}/api/functions/publicCatalog`, { headers: { "x-api-key": key }, signal: AbortSignal.timeout(6000) });
