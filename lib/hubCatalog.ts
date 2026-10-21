@@ -27,7 +27,7 @@ export async function getPackages(): Promise<Pkg[]> {
   const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), key = process.env.RAILWAY_API_KEY;
   if (!base || !key) return fallback;
   try {
-    const r = await fetch(`${base}/publicCatalog`, { headers: { "x-api-key": key }, signal: AbortSignal.timeout(6000) });
+    const r = await fetch(`${base}/api/functions/publicCatalog`, { headers: { "x-api-key": key }, signal: AbortSignal.timeout(6000) });
     const j = await r.json();
     if (!r.ok || !Array.isArray(j.packages) || !j.packages.length) return fallback;
     const extras: string[] = (j.add_ons || []).slice(0, 8).map((a: { name: string; price: number }) => `${a.name}${a.price ? ` (+${a.price}€)` : ""}`);
