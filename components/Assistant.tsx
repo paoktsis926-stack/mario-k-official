@@ -10,10 +10,11 @@ function Bubble({ m }: { m: Msg }) {
   const text = m.content.replace(/\[\[BOOK[^\]]*\]\]/, "").trim();
   const ev = mm?.[1].match(/event=([\w-]+)/)?.[1];
   const pkg = mm?.[1].match(/package=([^\s\]]+)/)?.[1];
+  const date = mm?.[1].match(/date=(\d{4}-\d{2}-\d{2})/)?.[1];
   return (
     <div className={m.role === "user" ? "ml-8 text-right" : "mr-8"}>
       <p className={`inline-block whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-left text-sm leading-6 ${m.role === "user" ? "bg-black text-white" : "bg-[#f1efe9] text-black"}`}>{text}</p>
-      {mm && <Link href={`/booking?event=${ev ?? ""}${pkg ? `&package=${encodeURIComponent(pkg)}` : ""}&src=ai`} className="mt-2 block rounded-full bg-gold px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-black">Ζητήστε προσφορά →</Link>}
+      {mm && <Link href={`/booking?event=${ev ?? ""}${pkg ? `&package=${encodeURIComponent(pkg)}` : ""}${date ? `&date=${date}` : ""}&src=ai`} className="mt-2 block rounded-full bg-gold px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-black">Ζητήστε προσφορά →</Link>}
     </div>
   );
 }
