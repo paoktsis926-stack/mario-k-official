@@ -3,8 +3,24 @@ import { lpSlugs } from "@/lib/events";
 import type { MetadataRoute } from "next";
 
 const base = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`;
-const paths = ["", "/ypiresies", "/paketa", "/mixes", "/gallery", "/synergazomenoi-xoroi", "/sxetika", "/syxnes-erotiseis", "/booking", "/privacy", "/blog"];
+const paths = [
+  "",
+  "/ypiresies",
+  "/paketa",
+  "/mixes",
+  "/gallery",
+  "/synergazomenoi-xoroi",
+  "/sxetika",
+  "/syxnes-erotiseis",
+  "/booking",
+  "/privacy",
+  "/blog",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...paths, ...Object.keys(lpSlugs).map((k) => `/dj/${k}`), ...posts.map((x) => `/blog/${x.slug}`)].map((p) => ({ url: base + p, changeFrequency: "monthly", priority: p === "" ? 1 : 0.7 }));
+  return [...paths, ...Object.keys(lpSlugs).map((k) => `/dj/${k}`), ...posts.map((x) => `/blog/${x.slug}`)].map((p) => ({
+    url: base + p,
+    changeFrequency: p === "" ? "weekly" : "monthly",
+    priority: p === "" ? 1 : p === "/booking" ? 0.9 : p.startsWith("/dj/") ? 0.85 : p.startsWith("/blog/") ? 0.6 : 0.7,
+  }));
 }
