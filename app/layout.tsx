@@ -35,10 +35,29 @@ const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["
 export const metadata: Metadata = {
   metadataBase: new URL(base),
   title: "MARIO K — DJ & Entertainment | Γάμοι, Βαπτίσεις, Πάρτι",
-  description: "Ο MARIO K για γάμους, βαπτίσεις, πάρτι και εταιρικές εκδηλώσεις. DJ, karaoke, παιχνίδια, ήχος και φωτισμός με επαγγελματικό εξοπλισμό, σε Αλεξανδρούπολη και σε όλο τον Έβρο.",
-  keywords: "DJ, DJ Mario K, DJ Αλεξανδρούπολη, DJ Έβρος, γάμος, βάπτιση, πάρτι, εταιρική εκδήλωση, karaoke, ήχος, φωτισμός, DJ service",
+  description: "Ο MARIO K για γάμους, βαπτίσεις, bachelor και private parties, γενέθλια και εταιρικές εκδηλώσεις. Επαγγελματικό DJ set, karaoke, ήχος και φωτισμός στην Αλεξανδρούπολη, τον Έβρο και όλη την Ελλάδα.",
+  keywords: ["DJ Mario K", "DJ Αλεξανδρούπολη", "DJ Έβρος", "DJ γάμου", "DJ βάπτισης", "DJ για πάρτι", "DJ bachelor party", "εταιρική εκδήλωση", "karaoke", "επαγγελματικός ήχος", "φωτισμός εκδηλώσεων"],
   icons: { icon: "/icon.svg", shortcut: "/icon.svg" },
-  openGraph: { title: "MARIO K — DJ & Entertainment", siteName: g.brand_name, locale: "el_GR", type: "website", images: ["https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png"] },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  openGraph: {
+    title: "MARIO K — DJ & Entertainment",
+    description: "DJ για γάμους, βαπτίσεις, πάρτι και εταιρικές εκδηλώσεις στην Αλεξανδρούπολη, τον Έβρο και σε όλη την Ελλάδα.",
+    siteName: g.brand_name,
+    url: base,
+    locale: "el_GR",
+    type: "website",
+    images: [{ url: "https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png", width: 1200, height: 630, alt: "MARIO K — DJ και ψυχαγωγία εκδηλώσεων" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MARIO K — DJ & Entertainment",
+    description: "DJ για γάμους, βαπτίσεις, πάρτι και εταιρικές εκδηλώσεις.",
+    images: ["https://media.base44.com/images/public/6ac5f8673cefccb19a9f86d3/0ea58aad1_generated_image.png"],
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#0b0b0b" };
