@@ -37,8 +37,8 @@ export async function getPackages(): Promise<Pkg[]> {
     return fallback.map((p) => {
       const hub = remote.get(p.name.trim().toLowerCase());
       if (!hub) return p;
-      const price = Number.isFinite(hub.price) ? hub.price : p.price;
-      const max = Number.isFinite(hub.price_max) ? hub.price_max : price;
+      const price = typeof hub.price === "number" && Number.isFinite(hub.price) ? hub.price : p.price;
+      const max = typeof hub.price_max === "number" && Number.isFinite(hub.price_max) ? hub.price_max : price;
       return { ...p, price, price_text: max > price ? `${price}–${max}€` : `${price}€`,
         duration: hub.duration || p.duration, best_for: hub.short_description || p.best_for,
         features: Array.isArray(hub.included_features) && hub.included_features.length ? hub.included_features : p.features };
