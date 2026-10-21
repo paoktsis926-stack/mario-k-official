@@ -64,7 +64,7 @@ export async function POST(request: Request) {
   if (date < today) return fail("Η ημερομηνία πρέπει να είναι σήμερα ή μελλοντική.", 400);
   if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(clean.event_time as string)) return fail("Μη έγκυρη ώρα εκδήλωσης.", 400);
   const phone = clean.phone as string;
-  if (phone.length > 30 || (phone.match(/\d/g) || []).length < 7 || !/^[+\d\\s().-]+$/.test(phone)) return fail("Μη έγκυρος αριθμός τηλεφώνου.", 400);
+  if (phone.length > 30 || (phone.match(/\d/g) || []).length < 7 || !/^[+\d\s().-]+$/.test(phone)) return fail("Μη έγκυρος αριθμός τηλεφώνου.", 400);
 
   clean.package = typeof body.package === "string" ? body.package.slice(0, 100) : "";
   clean.message = typeof body.message === "string" ? body.message.slice(0, 2000) : "";
