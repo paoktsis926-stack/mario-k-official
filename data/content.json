@@ -554,9 +554,9 @@
   "reels": []
  },
  "banner": {
-  "text": "",
-  "link": "",
-  "visible": false
+  "text": "Ζητήστε προσφορά για την εκδήλωσή σας",
+  "link": "/booking",
+  "visible": true
  },
  "posts": []
 }
