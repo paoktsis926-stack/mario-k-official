@@ -6,7 +6,7 @@ export async function GET() {
   if (!base || !key) return NextResponse.json({ dates: [] });
 
   try {
-    const response = await fetch(`${base}/publicSiteData`, {
+    const response = await fetch(`${base}/api/functions/publicSiteData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
