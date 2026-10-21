@@ -43,9 +43,9 @@ export async function POST(request: Request) {
     const data = JSON.parse(Buffer.from(current.content, "base64").toString("utf8"));
     const files: { path: string; url: string; key: string; label: string }[] = [];
     const seen = new Map<string, string>();
-    function collect(node: any, parent: any = null, parentKey = "") {
+    async function collect(node: any, parent: any = null, parentKey = ""): Promise<void> {
       if (!node || typeof node !== "object") return;
-      if (Array.isArray(node)) { for (const item of node) collect(item, null, ""); return; }
+      if (Array.isArray(node)) { for (const item of node) await collect(item, null, ""); return; }
       for (const [key, value] of Object.entries(node)) {
         if (isOldImage(key, value)) {
           if (!seen.has(value)) {
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
           }
         }
       }
-      for (const [key, value] of Object.entries(node)) if (value && typeof value === "object") collect(value, node, key);
+      for (const [key, value] of Object.entries(node)) if (value && typeof value === "object") await collect(value, node, key);
     }
     await collect(data);
     if (!files.length) return NextResponse.json({ ok: true, migrated: 0, message: "Δεν βρέθηκαν παλιές εξωτερικές φωτογραφίες για μεταφορά." });
