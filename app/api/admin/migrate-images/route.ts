@@ -100,6 +100,13 @@ export async function POST(request: Request) {
     }));
     const contentBlob = await githubBlob(JSON.stringify(data, null, 1), "utf-8");
     treeEntries.push({ path: "data/content.json", mode: "100644", type: "blob", sha: contentBlob.sha } as any);
+    const configResponse = await gh("/contents/next.config.ts?ref=" + encodeURIComponent(BRANCH()));
+    const configText = Buffer.from(configResponse.content, "base64").toString("utf8");
+    const configWithoutLegacyHosts = configText.replace(/  images: \{\s*remotePatterns: \[\s*\{ protocol: "https", hostname: "base44\\.app" \},\s*\{ protocol: "https", hostname: "media\\.base44\\.com" \},\s*\],\s*\},\s*/, "");
+    if (configWithoutLegacyHosts !== configText) {
+      const configBlob = await githubBlob(configWithoutLegacyHosts, "utf-8");
+      treeEntries.push({ path: "next.config.ts", mode: "100644", type: "blob", sha: configBlob.sha } as any);
+    }
     const tree = await gh("/git/trees", { method: "POST", body: JSON.stringify({ base_tree: parentCommit.tree.sha, tree: treeEntries }) });
     const commit = await gh("/git/commits", { method: "POST", body: JSON.stringify({ message: "Migrate site images to first-party media library", tree: tree.sha, parents: [parentSha] }) });
     await gh(`/git/refs/heads/${encodeURIComponent(BRANCH())}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha, force: false }) });
