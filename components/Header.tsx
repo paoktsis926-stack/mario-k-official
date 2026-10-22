@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { g, telHref } from "@/lib/content";
@@ -30,13 +32,13 @@ export default function Header() {
         <div className="hidden items-center gap-5 md:flex">
           <a href={g.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/80 hover:text-gold">{ig}</a>
           <a href={g.tiktok_url} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-white/80 hover:text-gold">{tt}</a>
-          <a href={telHref} className={`flex items-center gap-3 px-5 py-3 text-xs tracking-[0.15em] ${outline}`}>{phoneIcon}{g.phone}</a>
+          <a href={telHref} onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }} className={`flex items-center gap-3 px-5 py-3 text-xs tracking-[0.15em] ${outline}`}>{phoneIcon}{g.phone}</a>
         </div>
         <details className="relative xl:hidden">
           <summary className="cursor-pointer list-none border border-white/30 px-4 py-3 text-xs tracking-widest">ΜΕΝΟΥ</summary>
           <div className="absolute right-0 mt-2 flex max-h-[70vh] w-[min(18rem,calc(100vw-2rem))] flex-col gap-1 overflow-y-auto border border-white/10 bg-black p-3 text-xs tracking-[0.12em] shadow-xl">
             {mobileNav.map(([l, h]) => <Link key={h} href={h} className="min-h-11 px-3 py-3 hover:bg-white/10">{l}</Link>)}
-            <a href={telHref} className="text-gold">{g.phone}</a>
+            <a href={telHref} className="text-gold" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }}>{g.phone}</a>
           </div>
         </details>
       </div>
