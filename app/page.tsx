@@ -8,6 +8,7 @@ import { getPackages } from "@/lib/hubCatalog";
 import EventHero from "@/components/EventHero";
 import Reels from "@/components/Reels";
 import { slugOf } from "@/lib/events";
+import { packageSlug } from "@/lib/packageSlug";
 
 export const metadata = {
   title: "DJ στην Αλεξανδρούπολη για Γάμους, Βαπτίσεις & Πάρτι | MARIO K",
@@ -74,7 +75,10 @@ export default async function Home() {
                 <p className="mt-3 text-3xl font-light">{p.price_text}</p>
                 <p className="mt-1 text-sm text-gold">{p.duration}</p>
                 <p className="mt-4 flex-1 text-sm text-[#555]">{p.best_for}</p>
-                <Link href={`/booking?package=${encodeURIComponent(p.name)}`} className="mt-6 block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>
+                <div className="mt-6 grid gap-3">
+                  <Link href={`/paketa/${packageSlug(p.name)}`} className="block border border-black/30 px-5 py-3 text-center text-xs uppercase tracking-[0.16em] transition hover:border-gold hover:text-gold">Αναλυτικές πληροφορίες</Link>
+                  <Link href={`/booking?package=${encodeURIComponent(p.name)}`} className="block border border-black px-5 py-4 text-center text-xs uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Επιλογή</Link>
+                </div>
               </article>
             ))}
           </div>
