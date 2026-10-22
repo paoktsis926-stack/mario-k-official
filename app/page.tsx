@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
-import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels, reviews, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels, reviews, GOOGLE_REVIEW_URL, leadFeatures } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import { getPackages } from "@/lib/hubCatalog";
@@ -89,9 +89,9 @@ export default async function Home() {
 
       <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
         <div className="grid gap-6 lg:grid-cols-2">
-          <PackageQuiz packages={packages} mixes={mixes.map((m) => ({ title: m.title, url: m.url }))} />
+          <PackageQuiz packages={packages} mixes={mixes.map((m) => ({ title: m.title, url: m.url }))} settings={leadFeatures?.quiz} />
           <div className="grid content-start gap-6">
-            <CallbackRequest />
+            <CallbackRequest settings={leadFeatures?.callback} />
             <article className="border border-black/15 bg-black p-6 text-white md:p-8">
               <p className="label-caps text-gold">Για ζευγάρια</p><h2 className="mt-3 text-2xl font-semibold">Οδηγός μουσικής γάμου</h2>
               <p className="mt-3 text-sm leading-6 text-white/70">Δωρεάν χρονοδιάγραμμα βραδιάς και ερωτηματολόγιο μουσικών επιλογών.</p>
