@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 
 type Consent = "accepted" | "rejected" | null;
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function GoogleAnalyticsConsent() {
   const [consent, setConsent] = useState<Consent>(null);
@@ -26,10 +27,10 @@ export default function GoogleAnalyticsConsent() {
 
   return (
     <>
-      {consent === "accepted" && (
+      {consent === "accepted" && gaId && (
         <>
           <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-MPHCMP6W7X"
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
             strategy="afterInteractive"
           />
           <Script id="google-analytics" strategy="afterInteractive">
@@ -37,7 +38,7 @@ export default function GoogleAnalyticsConsent() {
 function gtag(){window.dataLayer.push(arguments);}
 window.gtag = gtag;
 gtag('js', new Date());
-gtag('config', 'G-MPHCMP6W7X', { anonymize_ip: true });`}
+gtag('config', ${JSON.stringify(gaId)});`}
           </Script>
         </>
       )}
