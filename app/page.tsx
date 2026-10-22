@@ -106,9 +106,9 @@ export default async function Home() {
               </div>
               <Link href="/booking" className="inline-flex min-h-12 items-center justify-center border border-black px-6 py-3 text-xs uppercase tracking-[0.16em] transition hover:bg-black hover:text-white">Ζητήστε προσφορά</Link>
             </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mx-auto mt-10 max-w-3xl">
               {reviews.slice(0, 3).map((review) => (
-                <article key={review.name + review.date} className="flex min-h-56 flex-col border border-black/15 bg-white/70 p-6 md:p-8">
+                <article key={review.name + review.date} className="flex min-h-56 flex-col border border-black/15 bg-white/70 p-7 shadow-sm md:p-10">
                   <div className="flex items-center gap-1 text-gold" aria-label={`${review.stars} στα 5 αστέρια`}>
                     {Array.from({ length: Math.max(0, Math.min(5, review.stars)) }, (_, i) => <span key={i} aria-hidden="true">★</span>)}
                     <span className="sr-only">{review.stars} στα 5 αστέρια</span>
