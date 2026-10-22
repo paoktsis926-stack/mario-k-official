@@ -15,6 +15,10 @@ const paths = [
   "/booking",
   "/privacy",
   "/blog",
+  "/perioxes/alexandroupoli",
+  "/perioxes/komotini",
+  "/perioxes/orestiada",
+  "/perioxes/samothraki",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
