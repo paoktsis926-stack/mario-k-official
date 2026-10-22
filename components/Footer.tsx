@@ -15,8 +15,8 @@ export default function Footer() {
           {nav.map(([l, h]) => <Link key={h} href={h} className="hover:text-gold">{l}</Link>)}
         </div>
         <div className="space-y-3 text-sm text-white/70">
-          <a href={telHref} className="flex items-center gap-3 hover:text-gold">{phoneIcon}{g.phone}</a>
-          <a href={waHref} className="block hover:text-gold">WhatsApp</a>
+          <a href={telHref} className="flex items-center gap-3 hover:text-gold" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }}>{phoneIcon}{g.phone}</a>
+          <a href={waHref} className="block hover:text-gold" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_whatsapp", { contact_method: "whatsapp" }); }}>WhatsApp</a>
           <a href={`mailto:${g.email}`} className="block hover:text-gold">{g.email}</a>
           <p className="text-white/45">{g.location}</p>
           <p className="flex gap-5 pt-2">
