@@ -26,6 +26,18 @@ const pretty = (k: string) => L[k] ?? k.replace(/_/g, " ").replace(/^./, (c) => 
 const IMG = /(image_url|portrait|logo_url|hero_image)$/;
 const inp = "mt-1 w-full rounded border border-black/25 bg-white p-2.5 text-sm text-black focus:border-[#c2a86a] focus:outline-none";
 const btn = "rounded border border-black/70 px-3 py-1.5 text-xs hover:bg-black hover:text-white disabled:opacity-40";
+const STRING_ARRAY_KEYS = new Set(["features", "extras", "event_types", "experience_points", "set_points", "process_steps", "areas_points", "sourcing_points", "coverage_points", "why_points"]);
+const ARRAY_ITEM_DEFAULTS: Record<string, any> = {
+  eventTypes: { id: "", name: "", description: "", image_url: "", image_alt: "" },
+  services: { name: "", tagline: "", category: "personal", description: "", image_url: "", visible: true },
+  packages: { name: "", price: 0, duration: "", tagline: "", best_for: "", features: [], event_types: [], extras: [], highlight: false, visible: true },
+  faq: { question: "", answer: "", category: "" },
+  photos: { title: "", image_url: "", video_url: "", event_type_id: "", image_alt: "" },
+  reviews: { name: "", stars: 5, text: "", date: "", visible: false },
+  mixes: { title: "", url: "", description: "", visible: true },
+  reels: { title: "", video_url: "", visible: false },
+  posts: { title: "", slug: "", excerpt: "", body: "", visible: false },
+};
 const blank = (x: any): any => Array.isArray(x) ? [] : x && typeof x === "object" ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, blank(v)])) : typeof x === "number" ? 0 : typeof x === "boolean" ? false : "";
 
 function Field({ k, v, set }: { k: string; v: any; set: (x: any) => void }) {
@@ -59,8 +71,8 @@ function Node({ k, v, set }: { k: string; v: any; set: (x: any) => void }) {
   if (k === "event_type_id") return <label className="block text-sm"><span className="font-medium">{pretty(k)}</span><select className={inp} value={v ?? ""} onChange={(e) => set(e.target.value)}><option value="">— καμία —</option>{events.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}</select></label>;
   if (k === "event_types" && Array.isArray(v)) return <div className="text-sm"><span className="font-medium">{pretty(k)}</span><div className="mt-2 grid gap-2 sm:grid-cols-2">{events.map((e) => <label key={e.id} className="flex items-center gap-2"><input type="checkbox" checked={v.includes(e.id)} onChange={(c) => set(c.target.checked ? [...v, e.id] : v.filter((x: string) => x !== e.id))} />{e.name}</label>)}</div></div>;
   if (Array.isArray(v)) {
-    if (v.every((x) => typeof x === "string"))
-      return <label className="block text-sm"><span className="font-medium">{pretty(k)}{L[k] ? "" : " (μία γραμμή ανά στοιχείο)"}</span><textarea rows={Math.min(8, v.length + 1)} className={inp} value={v.join("\n")} onChange={(e) => set(e.target.value.split("\n"))} /></label>;
+    if (STRING_ARRAY_KEYS.has(k) || (v.length > 0 && v.every((x) => typeof x === "string")))
+      return <label className="block text-sm"><span className="font-medium">{pretty(k)}{L[k] ? "" : " (μία γραμμή ανά στοιχείο)"}</span><textarea rows={Math.min(8, Math.max(3, v.length + 1))} className={inp} value={v.join("\n")} onChange={(e) => set(e.target.value.split("\n"))} /></label>;
     const move = (i: number, d: number) => { const a = [...v]; const j = i + d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; set(a); };
     return (
       <div>
@@ -72,7 +84,7 @@ function Node({ k, v, set }: { k: string; v: any; set: (x: any) => void }) {
               <div className="flex flex-wrap gap-2 border-t border-black/10 pt-4"><button className={btn} onClick={() => move(i, -1)}>↑ Πάνω</button><button className={btn} onClick={() => move(i, 1)}>↓ Κάτω</button><button className={`${btn} ml-auto text-red-700`} onClick={() => confirm("Να διαγραφεί αυτό το στοιχείο;") && set(v.filter((_: any, j: number) => j !== i))}>Διαγραφή</button></div></div>
           </details>
         ))}
-        <button className={btn} onClick={() => set([...v, blank(v[0] ?? {})])}>+ Προσθήκη νέου</button>
+        <button className={btn} onClick={() => set([...v, blank(v[0] ?? ARRAY_ITEM_DEFAULTS[k] ?? {})])}>+ Προσθήκη νέου</button>
       </div>
     );
   }
@@ -176,7 +188,7 @@ export default function Admin() {
           {dirty && <p className="admin-dirty"><span aria-hidden="true">●</span> Έχεις αλλαγές που δεν έχουν αποθηκευτεί. Αποθήκευσε πριν φύγεις από την ενότητα.</p>}
           {tab === "reviews" && <p className="mb-6 text-sm text-black/70">Βάλε τις κριτικές όπως ακριβώς τις έγραψαν οι πελάτες. Τικάρισε «Εμφάνιση στο site» για να εμφανιστεί η κάθε μία.</p>}
           {tab === "photos" && <section className="mb-6 rounded border border-black/15 bg-white p-4"><h2 className="font-semibold">Βιβλιοθήκη φωτογραφιών και βίντεο</h2><p className="mt-2 text-sm text-black/70">Μετέφερε τα παλιά αρχεία από Base44 στη φιλοξενία του site. Οι σύνδεσμοι ενημερώνονται στο περιεχόμενο και δημοσιεύονται με το αυτόματο deployment του Vercel.</p><div className="mt-3 flex flex-wrap gap-2"><button className={btn} disabled={migrating || dirty} onClick={migrateImages}>{migrating ? "Μεταφορά αρχείων…" : "Μεταφορά παλιών φωτογραφιών από Base44"}</button><button className={btn} disabled={migrating || dirty} onClick={async () => { if (!confirm("Να μεταφερθούν τα βίντεο από Base44 στη Vercel Blob;")) return; setMigrating(true); setMsg(null); const r = await fetch("/api/admin/migrate-videos", { method: "POST" }).then((x) => x.json()).catch(() => ({ ok: false, message: "Σφάλμα δικτύου κατά τη μεταφορά βίντεο." })); setMigrating(false); if (r.ok) { await load(); setMsg({ ok: true, t: r.message }); } else setMsg({ ok: false, t: r.message || "Αποτυχία μεταφοράς βίντεο." }); }}>{migrating ? "Μεταφορά αρχείων…" : "Μεταφορά βίντεο από Base44"}</button></div>{dirty && <p className="mt-2 text-xs text-amber-800">Αποθήκευσε πρώτα τις αλλαγές για να ενεργοποιηθεί η μεταφορά.</p>}</section>}
-          <div className="admin-editor"><Node k="" v={data[tab]} set={(x) => setData({ ...data, [tab]: x })} /></div>
+          <div className="admin-editor"><Node k={Array.isArray(data[tab]) ? tab : ""} v={data[tab]} set={(x) => setData({ ...data, [tab]: x })} /></div>
           <p className="admin-footer">Αρχεία εικόνας έως 4MB · Για βίντεο χρησιμοποίησε σύνδεσμο. Η αποθήκευση ενημερώνει το περιεχόμενο μέσω GitHub και ενεργοποιεί το αυτόματο deployment του Vercel.</p>
         </main>
       </div>
