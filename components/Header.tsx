@@ -26,8 +26,15 @@ export default function Header() {
     <header className="sticky top-0 z-30 border-b border-white/10 bg-black/95 text-white backdrop-blur">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-6 px-5 py-3 md:px-10">
         <Link href="/"><img src={g.logo_url} alt={g.logo_alt || g.brand_name} className="h-12 w-auto mix-blend-screen" /></Link>
-        <nav className="hidden items-center gap-7 text-[11px] tracking-[0.18em] text-white/80 xl:flex">
+        <nav aria-label="Κύρια πλοήγηση" className="hidden items-center gap-6 text-[11px] tracking-[0.14em] text-white/80 xl:flex">
+          <Link href="/" className="transition hover:text-gold">ΑΡΧΙΚΗ</Link>
           {topNav.map(([l, h]) => <Link key={h} href={h} className="transition hover:text-gold">{l}</Link>)}
+          <details className="relative">
+            <summary className="cursor-pointer list-none transition hover:text-gold">ΠΕΡΙΣΣΟΤΕΡΑ <span aria-hidden="true">⌄</span></summary>
+            <div className="absolute right-0 top-full z-50 mt-4 flex w-60 flex-col border border-white/10 bg-black p-2 text-xs tracking-[0.12em] shadow-2xl">
+              {nav.filter(([, h]) => ["/mixes", "/gallery", "/synergazomenoi-xoroi", "/sxetika", "/syxnes-erotiseis"].includes(h)).map(([l, h]) => <Link key={h} href={h} className="min-h-11 px-4 py-3 transition hover:bg-white/10 hover:text-gold">{l}</Link>)}
+            </div>
+          </details>
         </nav>
         <div className="hidden items-center gap-5 md:flex">
           <Link href="/booking" className="hidden items-center bg-[#c6a45a] px-4 py-3 text-xs font-semibold tracking-[0.12em] text-black transition hover:bg-white lg:flex">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ</Link>
@@ -37,7 +44,7 @@ export default function Header() {
         </div>
         <details className="relative xl:hidden">
           <summary className="cursor-pointer list-none border border-white/30 px-4 py-3 text-xs tracking-widest">ΜΕΝΟΥ</summary>
-          <div className="absolute right-0 mt-2 flex max-h-[70vh] w-[min(18rem,calc(100vw-2rem))] flex-col gap-1 overflow-y-auto border border-white/10 bg-black p-3 text-xs tracking-[0.12em] shadow-xl">
+          <div className="absolute right-0 mt-2 flex max-h-[min(75svh,36rem)] w-[min(20rem,calc(100vw-2rem))] flex-col gap-1 overflow-y-auto border border-white/10 bg-black p-3 text-xs tracking-[0.12em] shadow-xl">
             {mobileNav.map(([l, h]) => <Link key={h} href={h} className="min-h-11 px-3 py-3 hover:bg-white/10">{l}</Link>)}
             <a href={telHref} className="text-gold" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }}>{g.phone}</a>
           </div>
