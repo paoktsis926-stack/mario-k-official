@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { telHref, waHref } from "@/lib/content";
 import { outline } from "./Ui";
