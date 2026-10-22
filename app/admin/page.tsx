@@ -6,7 +6,7 @@ import "./admin.css";
 
 const Ctx = createContext<any[]>([]);
 const L: Record<string, string> = {
-  name: "Όνομα", image_alt: "Εναλλακτικό κείμενο φωτογραφίας (SEO)", hero_image_alt: "Εναλλακτικό κείμενο φωτογραφίας hero (SEO)", portrait_alt: "Εναλλακτικό κείμενο πορτρέτου (SEO)", logo_alt: "Εναλλακτικό κείμενο λογοτύπου (SEO)", hero_video: "Βίντεο hero (link αρχείου .mp4)", reels: "Reels (κάθετα βίντεο)", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
+  eyebrow: "Μικρός τίτλος", title: "Τίτλος", intro: "Περιγραφή", button: "Κείμενο κουμπιού", success: "Μήνυμα επιτυχίας", result_title: "Τίτλος πρότασης", booking_button: "Κουμπί προσφοράς", disclaimer: "Επεξηγηματικό μήνυμα", email_note: "Σημείωση email", timeline_title: "Τίτλος χρονοδιαγράμματος", questionnaire_title: "Τίτλος ερωτηματολογίου", times: "Διαθέσιμες ώρες επικοινωνίας (μία ανά γραμμή)", name: "Όνομα", image_alt: "Εναλλακτικό κείμενο φωτογραφίας (SEO)", hero_image_alt: "Εναλλακτικό κείμενο φωτογραφίας hero (SEO)", portrait_alt: "Εναλλακτικό κείμενο πορτρέτου (SEO)", logo_alt: "Εναλλακτικό κείμενο λογοτύπου (SEO)", hero_video: "Βίντεο hero (link αρχείου .mp4)", reels: "Reels (κάθετα βίντεο)", slug: "Διεύθυνση άρθρου (λατινικά, χωρίς κενά)", excerpt: "Σύντομη περίληψη", body: "Κείμενο άρθρου (κενή γραμμή = νέα παράγραφος, ## = υπότιτλος)", link: "Link (προαιρετικό, π.χ. /booking)", url: "Link (SoundCloud ή YouTube)", price: "Τιμή (€)", duration: "Διάρκεια", tagline: "Υπότιτλος", best_for: "Ιδανικό για",
   features: "Τι περιλαμβάνει (μία γραμμή ανά στοιχείο)", extras: "Προαιρετικά extras (μία γραμμή το καθένα)",
   highlight: "Προτεινόμενο πακέτο (με έμφαση)", event_types: "Για ποιες εκδηλώσεις ισχύει", question: "Ερώτηση", answer: "Απάντηση",
   category: "Κατηγορία", title: "Τίτλος", image_url: "Φωτογραφία", video_url: "Βίντεο (link)", event_type_id: "Εκδήλωση",
@@ -18,10 +18,10 @@ const L: Record<string, string> = {
   note: "Σημείωση", portrait: "Φωτογραφία πορτρέτου", bio_title: "Τίτλος βιογραφικού", bio_text: "Βιογραφικό",
 };
 const P: Record<string, string> = {
-  home: "Αρχική σελίδα", global: "Στοιχεία επικοινωνίας & γενικά", services: "Σελίδα Υπηρεσίες", packages: "Σελίδα Πακέτα",
+  leadFeatures: "Νέα εργαλεία επικοινωνίας", quiz: "Εύρεση πακέτου", callback: "Αίτημα τηλεφωνικής επικοινωνίας", guide: "Οδηγός μουσικής γάμου", home: "Αρχική σελίδα", global: "Στοιχεία επικοινωνίας & γενικά", services: "Σελίδα Υπηρεσίες", packages: "Σελίδα Πακέτα",
   photos: "Σελίδα Φωτογραφίες", venues: "Σελίδα Χώροι", about: "Σελίδα Σχετικά", faq: "Σελίδα FAQ", contact: "Σελίδα Επικοινωνία",
 };
-const tabs: [string, string][] = [["packages", "Πακέτα"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["media", "Βίντεο"], ["banner", "Banner"], ["posts", "Blog"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
+const tabs: [string, string][] = [["packages", "Πακέτα"], ["leadFeatures", "Νέα εργαλεία"], ["faq", "FAQ"], ["photos", "Φωτογραφίες"], ["services", "Υπηρεσίες"], ["eventTypes", "Εκδηλώσεις"], ["media", "Βίντεο"], ["banner", "Banner"], ["posts", "Blog"], ["mixes", "Mixes"], ["reviews", "Κριτικές"], ["site", "Κείμενα & στοιχεία"]];
 const pretty = (k: string) => L[k] ?? k.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
 const IMG = /(image_url|portrait|logo_url|hero_image)$/;
 const inp = "mt-1 w-full rounded border border-black/25 bg-white p-2.5 text-sm text-black focus:border-[#c2a86a] focus:outline-none";
@@ -118,6 +118,7 @@ export default function Admin() {
       if (!r.data.posts) r.data.posts = seedPosts;
       if (!r.data.mixes) r.data.mixes = [{ title: "Greek Deep House Mix", url: "https://soundcloud.com/djmario_k-814023128/greek-deep-house-mix-by-dj", description: "", visible: true }];
       if (!r.data.reviews) r.data.reviews = [{ name: "", stars: 5, text: "", date: "", visible: false }];
+      if (!r.data.leadFeatures) r.data.leadFeatures = { quiz: { eyebrow: "Βρείτε την πρότασή σας", title: "Ποιο πακέτο σου ταιριάζει;", intro: "Απάντησε σε 4 σύντομες ερωτήσεις και θα σου προτείνουμε διαθέσιμο πακέτο και ένα μουσικό mix.", button: "Δες την πρότασή σου", result_title: "Η πρότασή μας", booking_button: "Ζήτησε προσφορά", disclaimer: "Ενδεικτική πρόταση. Η τελική τιμή επιβεβαιώνεται με βάση ημερομηνία, χώρο και ανάγκες." }, callback: { eyebrow: "Άμεση επικοινωνία", title: "Να σε καλέσω;", intro: "Άφησε το τηλέφωνό σου και διάλεξε πότε σε εξυπηρετεί.", button: "Καλέστε με", success: "Το αίτημα καταχωρίστηκε. Θα επικοινωνήσω μαζί σας στην ώρα που επιλέξατε.", times: ["10:00–12:00", "12:00–14:00", "14:00–16:00", "16:00–18:00", "18:00–20:00", "20:00–21:00"] }, guide: { eyebrow: "Δωρεάν οδηγός", title: "Οδηγός μουσικής γάμου", intro: "Πρακτικό χρονοδιάγραμμα βραδιάς και ερωτηματολόγιο μουσικών επιλογών.", button: "Στείλε μου τον δωρεάν οδηγό", email_note: "Το email χρησιμοποιείται για την αποστολή του οδηγού. Δεν εγγράφεσαι αυτόματα σε newsletter.", timeline_title: "Ενδεικτικό χρονοδιάγραμμα", questionnaire_title: "Ερωτηματολόγιο μουσικής" } };
       setData(r.data); setSaved(JSON.stringify(r.data)); setSha(r.sha); setLogin(false); setMsg(null);
     } else { setLogin(true); if (r.message !== "Μη εξουσιοδοτημένο.") setMsg({ ok: false, t: r.message }); }
   }
