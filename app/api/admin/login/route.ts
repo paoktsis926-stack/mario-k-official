@@ -17,7 +17,7 @@ async function sharedLimit(key: string, failed: boolean) {
   const script = failed
     ? 'local lock=redis.call("TTL",KEYS[2]); if lock > 0 then return {0,lock}; end; local n=redis.call("INCR",KEYS[1]); if n == 1 then redis.call("EXPIRE",KEYS[1],ARGV[1]); end; if n >= tonumber(ARGV[2]) then redis.call("SET",KEYS[2],"1","EX",ARGV[3]); return {0,tonumber(ARGV[3])}; end; return {1,0};'
     : 'redis.call("DEL",KEYS[1],KEYS[2]); return {1,0};';
-  const response = await fetch(url.replace(/\\/$/, ""), {
+  const response = await fetch(url.endsWith("/") ? url.slice(0, -1) : url, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify(["EVAL", script, "2", `mario-k:admin:attempts:${key}`, `mario-k:admin:lock:${key}`, String(WINDOW_MS / 1000), String(MAX_FAILURES), String(LOCK_MS / 1000)]),
