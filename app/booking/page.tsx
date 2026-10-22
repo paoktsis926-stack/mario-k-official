@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
+import Script from "next/script";
 import { useSearchParams } from "next/navigation";
 import { g, telHref, waHref } from "@/lib/content";
 import { applyTheme } from "@/lib/events";
@@ -42,6 +43,16 @@ function trackBookingEvent(name: string, eventType?: string) {
 const getSrc = () => {
   try { return [new URLSearchParams(location.search).get("src"), localStorage.getItem("src")].filter(Boolean).join("-").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 60); } catch { return ""; }
 };
+
+declare global {
+  interface Window {
+    onTurnstileSuccess?: (token: string) => void;
+    onTurnstileExpired?: () => void;
+    onTurnstileError?: () => void;
+  }
+}
+
+const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type BookingFormData = {
   firstName: string;
@@ -91,6 +102,13 @@ function BookingForm() {
   const [loading, setLoading] = useState(false);
   const [requestCode, setRequestCode] = useState("");
   const [error, setError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  useEffect(() => {
+    window.onTurnstileSuccess = (token) => setTurnstileToken(token);
+    window.onTurnstileExpired = () => setTurnstileToken("");
+    window.onTurnstileError = () => setTurnstileToken("");
+    return () => { delete window.onTurnstileSuccess; delete window.onTurnstileExpired; delete window.onTurnstileError; };
+  }, []);
 
   const [avail, setAvail] = useState("");
   const [bookedDates, setBookedDates] = useState<string[]>([]);
@@ -153,12 +171,16 @@ function BookingForm() {
       if (!selectedEvent) {
         throw new Error("Επιλέξτε τύπο εκδήλωσης.");
       }
+      if (turnstileSiteKey && !turnstileToken) {
+        throw new Error("Ολοκληρώστε τον έλεγχο προστασίας πριν από την αποστολή.");
+      }
       trackBookingEvent("booking_form_submit", event);
 
       if (!idempotencyKey.current) idempotencyKey.current = `web-${crypto.randomUUID()}`;
       const honeypotValue = String(new FormData(e.currentTarget).get("website") ?? "");
       const payload = {
         website: honeypotValue,
+        turnstileToken,
         first_name: form.firstName.trim(),
         last_name: form.lastName.trim(),
         email: form.email.trim(),
@@ -254,6 +276,13 @@ function BookingForm() {
             <label htmlFor="website">Website</label>
             <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
           </div>
+          {turnstileSiteKey && (
+            <div className="space-y-2">
+              <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" />
+              <div className="cf-turnstile" data-sitekey={turnstileSiteKey} data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileError" />
+              <p className="text-xs text-black/50">Έλεγχος προστασίας από αυτοματοποιημένα αιτήματα.</p>
+            </div>
+          )}
           <div>
             <label className={labelClass}>Τύπος εκδήλωσης *</label>
             <select
