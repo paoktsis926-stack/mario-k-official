@@ -3,6 +3,7 @@ import { slugOf } from "./events";
 
 export const site = data.site as Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export const g = site.global as Record<string, string>;
+export const leadFeatures = (data as unknown as { leadFeatures: Record<string, any> }).leadFeatures;
 export const eventTypes = data.eventTypes as Array<(typeof data.eventTypes)[number] & { image_alt?: string }>;
 export const services = data.services;
 export type Pkg = { name: string; price: number; price_text: string; duration: string; tagline: string; best_for: string; features: string[]; extras: string[]; highlight: boolean; slugs: string[] };
