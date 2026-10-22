@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
-import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels } from "@/lib/content";
+import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels, reviews, GOOGLE_REVIEW_URL } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import { getPackages } from "@/lib/hubCatalog";
@@ -94,6 +94,37 @@ export default async function Home() {
         </div>
         <Link href="/gallery" className="mt-8 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλο το υλικό ↗</Link>
       </section>
+
+      {reviews.length > 0 && (
+        <section className="reveal home-reviews border-y border-black bg-[#ebe6dc] px-5 py-14 md:px-8 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <div>
+                <p className="label-caps text-gold">Εμπειρίες πελατών</p>
+                <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Η εμπιστοσύνη φαίνεται στις λεπτομέρειες</h2>
+                <span className="mt-6 block h-[3px] w-16 bg-gold" />
+              </div>
+              <Link href="/booking" className="inline-flex min-h-12 items-center justify-center border border-black px-6 py-3 text-xs uppercase tracking-[0.16em] transition hover:bg-black hover:text-white">Ζητήστε προσφορά</Link>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {reviews.slice(0, 3).map((review) => (
+                <article key={review.name + review.date} className="flex min-h-56 flex-col border border-black/15 bg-white/70 p-6 md:p-8">
+                  <div className="flex items-center gap-1 text-gold" aria-label={`${review.stars} στα 5 αστέρια`}>
+                    {Array.from({ length: Math.max(0, Math.min(5, review.stars)) }, (_, i) => <span key={i} aria-hidden="true">★</span>)}
+                    <span className="sr-only">{review.stars} στα 5 αστέρια</span>
+                  </div>
+                  <blockquote className="mt-5 flex-1 text-base leading-7 text-[#333]">“{review.text}”</blockquote>
+                  <div className="mt-6 border-t border-black/10 pt-4">
+                    <p className="text-sm font-semibold">{review.name}</p>
+                    {review.date && <p className="mt-1 text-xs text-[#777]">{review.date}</p>}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="mt-7 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.16em] transition hover:text-[#8b6d2e]">Αφήστε αξιολόγηση στο Google ↗</a>
+          </div>
+        </section>
+      )}
 
       <section className="reveal home-process border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
