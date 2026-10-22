@@ -1,10 +1,10 @@
 import { NextResponse, after } from "next/server";
 
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
-async function sendMail(to: string, subject: string, html: string) {
+async function sendMail(to: string, subject: string, html: string, scheduledAt?: string) {
   const key = process.env.RESEND_API_KEY, from = process.env.MAIL_FROM;
   if (!key || !from || !to) return;
-  await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to, subject, html }) }).catch(() => {});
+  await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to, subject, html, ...(scheduledAt ? { scheduled_at: scheduledAt } : {}) }) }).catch((error) => console.error("[email]", error));
 }
 
 const strFields = ["first_name", "last_name", "phone", "email", "event_type", "event_date", "event_time", "area", "venue"] as const;
@@ -128,8 +128,11 @@ export async function POST(request: Request) {
   after(async () => {
     const rows = Object.entries(clean).map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(v)}</td></tr>`).join("");
     await sendMail(process.env.NOTIFY_EMAIL || "", `Νέο αίτημα ${c}: ${esc(clean.event_type)} ${esc(clean.event_date)}`, `<h3>Νέο αίτημα κράτησης ${c}${waitlist ? " (λίστα αναμονής)" : ""}</h3><p>Καταχωρίστηκε μέσω: ${esc(via)}</p><table cellpadding="6">${rows}</table>`);
-    if (process.env.CUSTOMER_MAIL === "on")
-      await sendMail(String(clean.email), "Λάβαμε το αίτημά σας — MARIO K", `<p>Γεια σας ${esc(clean.first_name)},</p><p>Λάβαμε το αίτημά σας (κωδικός <b>${c}</b>) για τις ${esc(clean.event_date)}. Θα επικοινωνήσουμε μαζί σας σύντομα για να επιβεβαιώσουμε τη διαθεσιμότητα.</p><p>MARIO K</p>`);
+    if (process.env.CUSTOMER_MAIL !== "off") {
+      await sendMail(String(clean.email), "Λάβαμε το αίτημά σας — MARIO K", `<p>Γεια σας ${esc(clean.first_name)},</p><p>Λάβαμε το αίτημά σας (κωδικός <b>${c}</b>) για τις ${esc(clean.event_date)}. Θα επικοινωνήσουμε μαζί σας σύντομα για να επιβεβαιώσουμε τη διαθεσιμότητα.</p><p><b>Επόμενα βήματα:</b> θα ελέγξουμε τα στοιχεία και θα επικοινωνήσουμε μαζί σας για την πρόταση και την επιβεβαίωση.</p><p>MARIO K</p>`);
+      const reminderAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+      await sendMail(String(clean.email), "Θέλετε να προχωρήσουμε με την εκδήλωσή σας; — MARIO K", `<p>Γεια σας ${esc(clean.first_name)},</p><p>Επικοινωνούμε σχετικά με το αίτημά σας για τις <b>${esc(clean.event_date)}</b>.</p><p>Αν θέλετε να προχωρήσουμε, απαντήστε σε αυτό το email ή επικοινωνήστε μαζί μας για να συζητήσουμε τις λεπτομέρειες και τη διαθεσιμότητα.</p><p>Αν έχετε ήδη επιβεβαιώσει την κράτηση, μπορείτε να αγνοήσετε αυτό το μήνυμα.</p><p>MARIO K</p>`, reminderAt);
+    }
   });
   return NextResponse.json({ success: true, request_code: code, id, via });
 }

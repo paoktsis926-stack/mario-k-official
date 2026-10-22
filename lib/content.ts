@@ -15,12 +15,11 @@ export const reviews = ((data as unknown as { reviews?: Review[] }).reviews ?? [
 type Mix = { title: string; url: string; description?: string; visible: boolean };
 const defaultMixes: Mix[] = [{ title: "Greek Deep House Mix", url: "https://soundcloud.com/djmario_k-814023128/greek-deep-house-mix-by-dj", description: "", visible: true }];
 export const mixes = ((data as unknown as { mixes?: Mix[] }).mixes ?? defaultMixes).filter((m) => m.visible && m.url);
-type Media = { hero_video: string; reels: { title: string; video_url: string; visible: boolean }[] };
+type Media = { hero_video: string; reels: { title: string; video_url: string; visible: boolean; event_slug?: string }[] };
 const rawMedia = (data as unknown as { media?: Media }).media;
 export const media = { hero_video: rawMedia?.hero_video ?? "" };
-export const reels: { title: string; video_url: string }[] = rawMedia
-  ? rawMedia.reels.filter((r) => r.visible && r.video_url)
-  : data.photos.filter((p) => p.video_url).map((p) => ({ title: p.title, video_url: p.video_url as string }));
+const configuredReels = (rawMedia?.reels ?? []).filter((r) => r.visible && r.video_url).map((r) => ({ title: r.title, video_url: r.video_url, event_slug: r.event_slug }));
+export const reels: { title: string; video_url: string; event_slug?: string }[] = configuredReels.length ? configuredReels : data.photos.filter((p) => p.video_url).map((p) => ({ title: p.title, video_url: p.video_url as string, event_slug: /παραδοσιακ|γλεντι|γάμ|wedding/i.test(p.title) ? "wedding" : undefined }));
 export const SOUNDCLOUD_PROFILE = "https://soundcloud.com/djmario_k-814023128";
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CdbV_Zn66vpoEBM/review";
 export const eventName = (id: string | null) => eventTypes.find((e) => e.id === id)?.name ?? "";

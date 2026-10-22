@@ -4,6 +4,7 @@ import type { MetadataRoute } from "next";
 
 const base = (process.env.SITE_URL || `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`).replace(/\/+$/, "");
 const paths = [
+  "/odigos-mousikis-gamou",
   "",
   "/ypiresies",
   "/paketa",

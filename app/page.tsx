@@ -7,6 +7,7 @@ import MixEmbed from "@/components/MixEmbed";
 import { getPackages } from "@/lib/hubCatalog";
 import EventHero from "@/components/EventHero";
 import Reels from "@/components/Reels";
+import { PackageQuiz, CallbackRequest } from "@/components/LeadFeatures";
 import { slugOf } from "@/lib/events";
 import { packageSlug } from "@/lib/packageSlug";
 
@@ -83,6 +84,20 @@ export default async function Home() {
             ))}
           </div>
           <p className="mt-6 text-sm text-[#555]">Οι τιμές είναι ενδεικτικές. <Link href="/paketa" className="underline">Δείτε αναλυτικά τα πακέτα</Link></p>
+        </div>
+      </section>
+
+      <section className="reveal mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <PackageQuiz packages={packages} mixes={mixes.map((m) => ({ title: m.title, url: m.url }))} />
+          <div className="grid content-start gap-6">
+            <CallbackRequest />
+            <article className="border border-black/15 bg-black p-6 text-white md:p-8">
+              <p className="label-caps text-gold">Για ζευγάρια</p><h2 className="mt-3 text-2xl font-semibold">Οδηγός μουσικής γάμου</h2>
+              <p className="mt-3 text-sm leading-6 text-white/70">Δωρεάν χρονοδιάγραμμα βραδιάς και ερωτηματολόγιο μουσικών επιλογών.</p>
+              <Link href="/odigos-mousikis-gamou" className="mt-5 inline-flex min-h-11 items-center border border-gold px-5 py-3 text-xs uppercase tracking-[0.15em] text-gold hover:bg-gold hover:text-black">Πάρε τον δωρεάν οδηγό</Link>
+            </article>
+          </div>
         </div>
       </section>
 

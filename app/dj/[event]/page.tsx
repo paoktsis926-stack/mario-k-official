@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { site, eventTypes, faq, reviews, g } from "@/lib/content";
+import { site, eventTypes, faq, reviews, g, reels } from "@/lib/content";
+import Reels from "@/components/Reels";
 import { getPackages } from "@/lib/hubCatalog";
 import { slugOf, copy, lpSlugs, lpLabel, waLink } from "@/lib/events";
 import { Faqs, Points } from "@/components/Ui";
@@ -63,6 +64,14 @@ export default async function Page({ params }: { params: Promise<{ event: string
         <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">{site.home.why_title}</h2>
         <Points items={site.home.why_points} />
       </section>
+
+      {reels.some((r) => r.event_slug === slug) && (
+        <section className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-20">
+          <p className="label-caps text-gold">Στιγμές από την πίστα</p><h2 className="mt-3 text-2xl font-semibold md:text-3xl">Ο ήχος κάθε στιγμής</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#555]">Σύντομα αποσπάσματα από πραγματικές εκδηλώσεις, έως 15 δευτερόλεπτα το καθένα.</p>
+          <div className="mt-7"><Reels items={reels.filter((r) => r.event_slug === slug)} /></div>
+        </section>
+      )}
 
       <section className="border-y border-black bg-[#f7f5f0] px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-6xl">
