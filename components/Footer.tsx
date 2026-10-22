@@ -13,8 +13,16 @@ export default function Footer() {
           <img src={g.logo_url} alt={g.logo_alt || g.brand_name} className="h-16 w-auto" />
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">{g.footer_note}</p>
         </div>
-        <div className="grid grid-cols-2 gap-3 text-xs tracking-[0.15em] text-white/70">
-          {nav.map(([l, h]) => <Link key={h} href={h} className="hover:text-gold">{l}</Link>)}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 text-xs tracking-[0.12em] text-white/70">
+          <div className="flex flex-col gap-3">
+            <p className="mb-1 text-[10px] tracking-[0.2em] text-gold">ΕΞΕΡΕΥΝΗΣΤΕ</p>
+            {nav.filter(([, h]) => ["/", "/ypiresies", "/paketa", "/sxetika"].includes(h)).map(([l, h]) => <Link key={h} href={h} className="transition hover:text-gold">{l}</Link>)}
+          </div>
+          <div className="flex flex-col gap-3">
+            <p className="mb-1 text-[10px] tracking-[0.2em] text-gold">ΥΛΙΚΟ & ΠΛΗΡΟΦΟΡΙΕΣ</p>
+            {nav.filter(([, h]) => ["/mixes", "/gallery", "/synergazomenoi-xoroi", "/syxnes-erotiseis"].includes(h)).map(([l, h]) => <Link key={h} href={h} className="transition hover:text-gold">{l}</Link>)}
+            <Link href="/booking" className="transition hover:text-gold">ΚΡΑΤΗΣΗ / ΠΡΟΣΦΟΡΑ</Link>
+          </div>
         </div>
         <div className="space-y-3 text-sm text-white/70">
           <a href={telHref} className="flex items-center gap-3 hover:text-gold" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }}>{phoneIcon}{g.phone}</a>
