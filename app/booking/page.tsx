@@ -36,7 +36,7 @@ const packageMatchesEvent = (pkg: { slugs: string[] }, slug: string) =>
 
 function trackBookingEvent(name: string, eventType?: string) {
   const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag;
-  gtag?.("event", name, { event_category: "booking", ...(eventType ? { event_label: eventType } : {}) });
+  gtag?.("event", name, { ...(eventType ? { event_type: eventType } : {}) });
 }
 
 const getSrc = () => {
@@ -156,7 +156,9 @@ function BookingForm() {
       trackBookingEvent("booking_form_submit", event);
 
       if (!idempotencyKey.current) idempotencyKey.current = `web-${crypto.randomUUID()}`;
+      const honeypotValue = String(new FormData(e.currentTarget).get("website") ?? "");
       const payload = {
+        website: honeypotValue,
         first_name: form.firstName.trim(),
         last_name: form.lastName.trim(),
         email: form.email.trim(),
@@ -201,7 +203,7 @@ function BookingForm() {
         );
       }
 
-      trackBookingEvent("booking_request_success", event);
+      trackBookingEvent("generate_lead", event);
       setRequestCode(
         typeof data.request_code === "string" ? data.request_code : ""
       );
@@ -248,6 +250,10 @@ function BookingForm() {
         </section>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div aria-hidden="true" className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden">
+            <label htmlFor="website">Website</label>
+            <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           <div>
             <label className={labelClass}>Τύπος εκδήλωσης *</label>
             <select
