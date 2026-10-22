@@ -44,6 +44,7 @@ async function findPackageId(base: string, key: string, label: unknown) {
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try { body = await request.json(); } catch { return fail("Μη έγκυρα δεδομένα.", 400); }
+  if (typeof body.website === "string" && body.website.trim()) return fail("Μη έγκυρο αίτημα.", 400);
 
   const clean: Record<string, unknown> = {};
   for (const f of strFields) {
