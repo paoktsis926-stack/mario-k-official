@@ -278,7 +278,7 @@ function BookingForm() {
           </div>
           {turnstileSiteKey && (
             <div className="space-y-2">
-              <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" />
+              <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
               <div className="cf-turnstile" data-sitekey={turnstileSiteKey} data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileError" />
               <p className="text-xs text-black/50">Έλεγχος προστασίας από αυτοματοποιημένα αιτήματα.</p>
             </div>
