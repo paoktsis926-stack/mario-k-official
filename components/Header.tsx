@@ -10,7 +10,7 @@ export const nav: [string, string][] = [
   ["ΧΩΡΟΙ", "/synergazomenoi-xoroi"], ["ΣΧΕΤΙΚΑ", "/sxetika"], ["FAQ", "/syxnes-erotiseis"], ["ΕΠΙΚΟΙΝΩΝΙΑ", "/booking"],
 ];
 
-const topNav = nav.filter(([, h]) => !["/", "/synergazomenoi-xoroi", "/syxnes-erotiseis"].includes(h));
+const topNav: [string, string][] = [["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"]];
 const mobileNav: [string, string][] = [
   ["ΑΡΧΙΚΗ", "/"], ["ΥΠΗΡΕΣΙΕΣ", "/ypiresies"], ["ΠΑΚΕΤΑ", "/paketa"],
   ["MIXES", "/mixes"], ["ΦΩΤΟΓΡΑΦΙΕΣ", "/gallery"], ["ΧΩΡΟΙ", "/synergazomenoi-xoroi"],
