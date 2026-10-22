@@ -45,6 +45,21 @@ export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try { body = await request.json(); } catch { return fail("Μη έγκυρα δεδομένα.", 400); }
   if (typeof body.website === "string" && body.website.trim()) return fail("Μη έγκυρο αίτημα.", 400);
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    const token = typeof body.turnstileToken === "string" ? body.turnstileToken : "";
+    if (!token) return fail("Ολοκληρώστε τον έλεγχο προστασίας.", 400);
+    try {
+      const verification = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ secret: process.env.TURNSTILE_SECRET_KEY, response: token }),
+        cache: "no-store", signal: AbortSignal.timeout(5000),
+      });
+      const verdict = await verification.json().catch(() => ({}));
+      if (!verification.ok || verdict.success !== true) return fail("Ο έλεγχος προστασίας απέτυχε. Δοκιμάστε ξανά.", 400);
+    } catch {
+      return fail("Ο έλεγχος προστασίας δεν είναι διαθέσιμος. Δοκιμάστε ξανά.", 503);
+    }
+  }
 
   const clean: Record<string, unknown> = {};
   for (const f of strFields) {
