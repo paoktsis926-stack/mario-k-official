@@ -12,7 +12,7 @@ import { g, packages, mixes } from "@/lib/content";
 import MiniPlayer from "@/components/MiniPlayer";
 import Assistant from "@/components/Assistant";
 
-const base = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`;
+const base = (process.env.SITE_URL || `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`).replace(/\/+$/, "");
 const prices = packages.map((p) => p.price);
 const jsonLd = {
   "@context": "https://schema.org",
