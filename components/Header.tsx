@@ -30,6 +30,7 @@ export default function Header() {
           {topNav.map(([l, h]) => <Link key={h} href={h} className="transition hover:text-gold">{l}</Link>)}
         </nav>
         <div className="hidden items-center gap-5 md:flex">
+          <Link href="/booking" className="hidden items-center bg-[#c6a45a] px-4 py-3 text-xs font-semibold tracking-[0.12em] text-black transition hover:bg-white lg:flex">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ</Link>
           <a href={g.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/80 hover:text-gold">{ig}</a>
           <a href={g.tiktok_url} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-white/80 hover:text-gold">{tt}</a>
           <a href={telHref} onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }} className={`flex items-center gap-3 px-5 py-3 text-xs tracking-[0.15em] ${outline}`}>{phoneIcon}{g.phone}</a>
