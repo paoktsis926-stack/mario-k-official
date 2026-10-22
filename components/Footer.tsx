@@ -29,7 +29,7 @@ export default function Footer() {
       </div>
       <p className="mx-auto mt-12 flex max-w-[1500px] flex-col justify-between gap-2 border-t border-white/10 pt-6 text-[11px] tracking-widest text-white/40 md:flex-row">
         <span>© 2026 {g.brand_name} · ALL RIGHTS RESERVED</span>
-        <span><Link href="/blog" className="mr-5 hover:text-gold">ΑΡΘΡΑ</Link><Link href="/privacy" className="hover:text-gold">ΠΟΛΙΤΙΚΗ ΑΠΟΡΡΗΤΟΥ</Link></span>
+        <span><Link href="/blog" className="mr-5 hover:text-gold">ΑΡΘΡΑ</Link><Link href="/privacy" className="hover:text-gold">ΠΟΛΙΤΙΚΗ ΑΠΟΡΡΗΤΟΥ</Link><button type="button" onClick={() => window.dispatchEvent(new Event("mk-open-cookie-settings"))} className="mt-2 text-left hover:text-gold md:mt-0">ΡΥΘΜΙΣΕΙΣ COOKIES</button></span>
       </p>
     </footer>
   );
