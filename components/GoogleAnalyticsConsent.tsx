@@ -13,13 +13,14 @@ export default function GoogleAnalyticsConsent() {
   useEffect(() => {
     const saved = window.localStorage.getItem("ga-consent");
     if (saved === "accepted" || saved === "rejected") setConsent(saved);
+    const openSettings = () => setShowSettings(true);
+    window.addEventListener("mk-open-cookie-settings", openSettings);
+    return () => window.removeEventListener("mk-open-cookie-settings", openSettings);
   }, []);
 
   function choose(value: Exclude<Consent, null>) {
-    if (value === "rejected") {
-      const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
-      gtag?.("consent", "update", { analytics_storage: "denied" });
-    }
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+    gtag?.("consent", "update", { analytics_storage: value === "accepted" ? "granted" : "denied" });
     window.localStorage.setItem("ga-consent", value);
     setConsent(value);
     setShowSettings(false);
@@ -47,42 +48,37 @@ gtag('config', ${JSON.stringify(gaId)});`}
         <section
           role="dialog"
           aria-label="Ρυθμίσεις cookies"
-          className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-2xl border border-white/15 bg-[#111] p-4 text-white shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-5"
+          aria-modal="true"
+          aria-describedby="cookie-consent-description"
+          className="cookie-consent-panel fixed inset-x-2 bottom-2 z-[100] mx-auto w-auto max-w-xl border border-white/15 bg-[#111] p-4 text-white shadow-2xl sm:inset-x-6 sm:bottom-6 sm:p-5"
         >
-          <p className="text-sm font-semibold">Ρυθμίσεις cookies</p>
-          <p className="mt-2 text-xs leading-5 text-white/75">
-            Χρησιμοποιούμε το Google Analytics για στατιστικά επισκεψιμότητας.
-            Το Analytics ενεργοποιείται μόνο αν επιλέξετε αποδοχή. Μπορείτε να
-            αλλάξετε την επιλογή σας από τις ρυθμίσεις cookies.
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-sm font-semibold">Ρυθμίσεις cookies</p>
+            {consent !== null && <button type="button" onClick={() => setShowSettings(false)} aria-label="Κλείσιμο ρυθμίσεων cookies" className="grid h-9 w-9 shrink-0 place-items-center border border-white/20 text-lg leading-none hover:bg-white/10">×</button>}
+          </div>
+          <p id="cookie-consent-description" className="mt-2 text-xs leading-5 text-white/75">
+            Το Google Analytics χρησιμοποιείται μόνο με τη συγκατάθεσή σας για στατιστικά επισκεψιμότητας. Μπορείτε να αλλάξετε την επιλογή σας οποτεδήποτε από το υποσέλιδο.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="cookie-consent-actions mt-4 grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => choose("accepted")}
-              className="bg-[#d7b56d] px-4 py-2 text-xs font-semibold text-black"
+              className="min-h-11 px-3 py-3 text-xs font-semibold text-black" style={{ background: "#d7b56d" }}
             >
               Αποδοχή analytics
             </button>
             <button
               type="button"
               onClick={() => choose("rejected")}
-              className="border border-white/30 px-4 py-2 text-xs text-white"
+              className="min-h-11 border border-white/30 px-3 py-3 text-xs text-white hover:bg-white/10"
             >
-              Απόρριψη
+              Απόρριψη analytics
             </button>
           </div>
         </section>
       )}
 
-      {consent !== null && !showSettings && (
-        <button
-          type="button"
-          onClick={() => setShowSettings(true)}
-          className="fixed bottom-2 left-2 z-[90] bg-black/80 px-2.5 py-1.5 text-[10px] text-white/80"
-        >
-          Ρυθμίσεις cookies
-        </button>
-      )}
+
     </>
   );
 }
