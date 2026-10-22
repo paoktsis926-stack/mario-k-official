@@ -65,7 +65,7 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
       <section className="mx-auto max-w-5xl px-5 py-14 md:py-20">
         <h2 className="text-2xl font-semibold md:text-3xl">Μουσική και τεχνική κάλυψη για την εκδήλωσή σας</h2>
         <p className="mt-5 max-w-3xl text-sm leading-7 text-black/65">{item.localText}</p>
-        <p className="mt-4 max-w-3xl text-sm leading-7 text-black/65">Η μουσική, ο εξοπλισμός και το πρόγραμμα προσαρμόζονται στο είδος της εκδήλωσης, στον χώρο και στις προτιμήσεις σας. Για να ελέγξουμε τη διαθεσιμότητα, στείλτε την ημερομηνία, την τοποθεσία και λίγες πληροφορίες μέσω της φόρμας κράτησης.
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-black/65">Η μουσική, ο εξοπλισμός και το πρόγραμμα προσαρμόζονται στο είδος της εκδήλωσης, στον χώρο και στις προτιμήσεις σας. Για να ελέγξουμε τη διαθεσιμότητα, στείλτε την ημερομηνία, την τοποθεσία και λίγες πληροφορίες μέσω της φόρμας κράτησης.</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/booking?event=wedding" className="border border-black px-5 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white">Γάμος</Link>
           <Link href="/booking?event=baptism" className="border border-black px-5 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white">Βάπτιση</Link>
