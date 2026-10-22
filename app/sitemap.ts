@@ -2,7 +2,7 @@ import { posts } from "@/lib/content";
 import { lpSlugs } from "@/lib/events";
 import type { MetadataRoute } from "next";
 
-const base = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`;
+const base = (process.env.SITE_URL || `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mario-k-official.vercel.app"}`).replace(/\/+$/, "");
 const paths = [
   "",
   "/ypiresies",
