@@ -155,7 +155,7 @@ export default async function Home() {
       {mixes.length > 0 && (
         <section className="reveal home-mixes mx-auto max-w-4xl px-5 py-14 md:py-20">
           <p className="label-caps text-gold">Mixes</p>
-          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Άκου τον ήχο</h2>
+          <h2 className="mt-4 text-2xl font-semibold uppercase tracking-tight md:text-4xl">Ο ήχος κάθε στιγμής</h2>
           <span className="mt-6 block h-px w-14 bg-gold" />
           <div className="mt-10"><MixEmbed url={mixes[0].url} title={mixes[0].title} /></div>
           <Link href="/mixes" className="mt-6 inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Όλα τα mixes ↗</Link>
