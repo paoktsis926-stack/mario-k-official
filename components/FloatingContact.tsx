@@ -15,12 +15,13 @@ export default function FloatingContact() {
       {items.map(([h, d, l]) => {
         const icon = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
         const cls = `flex h-14 w-14 items-center justify-center bg-black/80 ${outline}`;
-        return h.startsWith("/") ? <Link key={l} href={h} aria-label={l} className={cls}>{icon}</Link> : <a key={l} href={h} aria-label={l} className={cls}>{icon}</a>;
+        const track = () => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; if (h === telHref) gtag?.("event", "click_phone", { contact_method: "phone" }); if (h === waHref) gtag?.("event", "click_whatsapp", { contact_method: "whatsapp" }); };
+        return h.startsWith("/") ? <Link key={l} href={h} aria-label={l} className={cls}>{icon}</Link> : <a key={l} href={h} aria-label={l} className={cls} onClick={track}>{icon}</a>;
       })}
     </div>
       <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-white/15 bg-black text-center text-[11px] uppercase tracking-[0.15em] text-white md:hidden">
-        <a href={telHref} className="py-4">Κλήση</a>
-        <a href={waHref} className="border-x border-white/15 py-4">WhatsApp</a>
+        <a href={telHref} className="py-4" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_phone", { contact_method: "phone" }); }}>Κλήση</a>
+        <a href={waHref} className="border-x border-white/15 py-4" onClick={() => { const gtag = (window as Window & { gtag?: (command: string, eventName: string, params?: Record<string, string>) => void }).gtag; gtag?.("event", "click_whatsapp", { contact_method: "whatsapp" }); }}>WhatsApp</a>
         <Link href="/booking" className="bg-gold py-4 font-semibold text-black">Κράτηση</Link>
       </nav>
     </>
