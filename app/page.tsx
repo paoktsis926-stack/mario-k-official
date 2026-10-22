@@ -1,14 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
-import { Suspense } from "react";
-import { site, eventTypes, packages as staticPackages, photos, faq, reviews, mixes, g, media, reels, GOOGLE_REVIEW_URL } from "@/lib/content";
+import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import { getPackages } from "@/lib/hubCatalog";
 import EventHero from "@/components/EventHero";
 import Reels from "@/components/Reels";
-import GoogleReviewsSection from "@/components/GoogleReviewsSection";
 import { slugOf } from "@/lib/events";
 
 export const metadata = {
@@ -137,8 +135,6 @@ export default async function Home() {
           <Points items={h.why_points} dark />
         </div>
       </section>
-
-      <Suspense fallback={null}><GoogleReviewsSection fallbackReviews={reviews} googleReviewUrl={GOOGLE_REVIEW_URL} /></Suspense>
 
       <section className="reveal home-faq mx-auto max-w-4xl px-5 py-14 md:py-20">
         <p className="label-caps text-gold">FAQ</p>
