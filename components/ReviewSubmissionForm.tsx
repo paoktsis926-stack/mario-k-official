@@ -34,6 +34,7 @@ export default function ReviewSubmissionForm() {
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formElement = e.currentTarget;
     setBusy(true);
     setMessage("");
     try {
@@ -49,7 +50,7 @@ export default function ReviewSubmissionForm() {
       setComment("");
       setRating(5);
       setToken("");
-      e.currentTarget.reset();
+      formElement.reset();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Η αποστολή απέτυχε. Δοκιμάστε ξανά.");
     } finally { setBusy(false); }
