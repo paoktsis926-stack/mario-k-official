@@ -8,6 +8,7 @@ import Banner from "@/components/Banner";
 import { Analytics } from "@vercel/analytics/next";
 import SiteChrome from "@/components/SiteChrome";
 import GoogleAnalyticsConsent from "@/components/GoogleAnalyticsConsent";
+import ContactClickTracking from "@/components/ContactClickTracking";
 import { g, packages } from "@/lib/content";
 import Assistant from "@/components/Assistant";
 
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen bg-white text-black">
         <GoogleAnalyticsConsent />
+        <ContactClickTracking />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <script dangerouslySetInnerHTML={{ __html: "try{var q=new URLSearchParams(location.search),r=q.get('ref')||q.get('utm_source');if(r)localStorage.setItem('src',r.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,30));if(location.pathname.startsWith('/dj/')){var e=q.get('event')||location.pathname.split('/')[2];if(e)document.documentElement.dataset.event=e}else{delete document.documentElement.dataset.event}}catch(e){}" }} />
         <SiteChrome header={<><Banner /><Header /></>} footer={<Footer />} floating={<><FloatingContact />{process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}</>}>{children}</SiteChrome>
