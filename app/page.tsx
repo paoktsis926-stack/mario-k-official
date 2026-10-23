@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Image from "next/image";
-import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, media, reels, reviews, GOOGLE_REVIEW_URL, leadFeatures } from "@/lib/content";
+import { site, eventTypes, packages as staticPackages, photos, faq, mixes, g, reels, reviews, GOOGLE_REVIEW_URL, leadFeatures } from "@/lib/content";
 import { Cta, Faqs, Points, outline } from "@/components/Ui";
 import MixEmbed from "@/components/MixEmbed";
 import { getPackages } from "@/lib/hubCatalog";
@@ -23,7 +23,7 @@ export default async function Home() {
   const packages = await getPackages().catch(() => staticPackages);
   return (
     <div className="site-home">
-      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} imageAlt={h.hero_image_alt} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} video={media.hero_video} />
+      <EventHero events={eventTypes} headline={h.hero_headline} text={h.hero_text} image={h.hero_image} imageAlt={h.hero_image_alt} eyebrow={h.hero_eyebrow} cta={h.hero_cta_secondary} wa={g.whatsapp} />
 
       <div className="overflow-x-auto border-y border-black bg-black py-4 text-white">
         <p className="mx-auto flex w-max items-center gap-6 px-6 text-[11px] uppercase tracking-[0.25em] text-white/70">
