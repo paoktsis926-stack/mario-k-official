@@ -14,17 +14,17 @@ const fail = (message: string, status: number, extra: Record<string, unknown> = 
 const hubType: Record<string, { type: string; prefix: string; label: string }> = {
   wedding: { type: "wedding", prefix: "", label: "Γάμος" },
   baptism: { type: "baptism", prefix: "", label: "Βάπτιση" },
-  "private-party": { type: "party", prefix: "", label: "Ιδιωτικό Party" },
+  "private-party": { type: "party", prefix: "", label: "Ιδιωτικό πάρτι" },
   bachelorette: { type: "bachelor", prefix: "", label: "Bachelorette Party" },
-  birthday: { type: "party", prefix: "[Γενέθλια ενηλίκων] ", label: "Γενέθλια" },
-  reunion: { type: "party", prefix: "[Reunion] ", label: "Reunion" },
-  opening: { type: "Εταιρικό", prefix: "[Εγκαίνια] ", label: "Εγκαίνια" },
-  beachbar: { type: "Club", prefix: "[Beach Bar] ", label: "Beach Bar" },
-  "carnival-adult": { type: "party", prefix: "[Αποκριάτικο πάρτι ενηλίκων] ", label: "Party" },
-  "carnival-kids": { type: "party", prefix: "[Παιδικό αποκριάτικο πάρτι] ", label: "Party" },
-  club: { type: "Club", prefix: "[Club / Bar] ", label: "Club / Bar" },
-  corporate: { type: "Εταιρικό", prefix: "", label: "Εταιρική εκδήλωση" },
-  karaoke: { type: "party", prefix: "[Karaoke Party & Games] ", label: "Karaoke" },
+  birthday: { type: "birthday", prefix: "", label: "Γενέθλια ενηλίκων" },
+  reunion: { type: "party", prefix: "", label: "Reunion" },
+  opening: { type: "party", prefix: "", label: "Εγκαίνια" },
+  beachbar: { type: "beachbar", prefix: "", label: "Beach Bar" },
+  "carnival-adult": { type: "party", prefix: "", label: "Αποκριάτικο πάρτι ενηλίκων" },
+  "carnival-kids": { type: "party", prefix: "", label: "Παιδικό αποκριάτικο πάρτι" },
+  club: { type: "beachbar", prefix: "", label: "Club / Bar" },
+  corporate: { type: "party", prefix: "", label: "Εταιρική εκδήλωση" },
+  karaoke: { type: "party", prefix: "", label: "Karaoke Party & Games" },
 };
 
 let catalog: { at: number; list: { package_id: string; name: string }[] } | null = null;
