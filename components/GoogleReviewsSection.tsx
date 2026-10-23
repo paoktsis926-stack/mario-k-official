@@ -4,7 +4,7 @@ import ReviewSubmissionForm from "@/components/ReviewSubmissionForm";
 type ReviewCard = { name: string; stars: number; text: string; date: string };
 type Props = { fallbackReviews: ReviewCard[]; googleReviewUrl: string };
 
-export default async function GoogleReviewsSection({ fallbackReviews, googleReviewUrl }: Props) {
+export default async function GoogleReviewsSection({ googleReviewUrl }: Props) {
   const googleReviews = await getGoogleReviews();
   const displayReviews = googleReviews?.reviews ?? [];
   return (
