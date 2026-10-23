@@ -17,7 +17,7 @@ h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 body { font-family: var(--font-inter), system-ui, sans-serif; }
 h1, h2, h3 { font-family: var(--font-inter), system-ui, sans-serif; }
-.label-caps { font-size: 11px; font-weight: 500; text- letter-spacing: .16em; }
+.label-caps { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; }
 
 @media (max-width: 767px) { body { padding-bottom: 3.25rem; } }
 
