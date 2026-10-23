@@ -14,17 +14,10 @@ const fail = (message: string, status: number, extra: Record<string, unknown> = 
 const hubType: Record<string, { type: string; prefix: string; label: string }> = {
   wedding: { type: "wedding", prefix: "", label: "Γάμος" },
   baptism: { type: "baptism", prefix: "", label: "Βάπτιση" },
-  "private-party": { type: "party", prefix: "", label: "Ιδιωτικό πάρτι" },
-  bachelorette: { type: "bachelor", prefix: "", label: "Bachelorette Party" },
+  "private-party": { type: "party", prefix: "", label: "Πάρτι / Ιδιωτική εκδήλωση" },
+  bachelorette: { type: "bachelor", prefix: "", label: "Bachelor / Bachelorette" },
   birthday: { type: "birthday", prefix: "", label: "Γενέθλια ενηλίκων" },
-  reunion: { type: "party", prefix: "", label: "Reunion" },
-  opening: { type: "party", prefix: "", label: "Εγκαίνια" },
-  beachbar: { type: "beachbar", prefix: "", label: "Beach Bar" },
-  "carnival-adult": { type: "party", prefix: "", label: "Αποκριάτικο πάρτι ενηλίκων" },
-  "carnival-kids": { type: "party", prefix: "", label: "Παιδικό αποκριάτικο πάρτι" },
-  club: { type: "beachbar", prefix: "", label: "Club / Bar" },
-  corporate: { type: "party", prefix: "", label: "Εταιρική εκδήλωση" },
-  karaoke: { type: "party", prefix: "", label: "Karaoke Party & Games" },
+  beachbar: { type: "beachbar", prefix: "", label: "Beach Bar / Club" },
 };
 
 let catalog: { at: number; list: { package_id: string; name: string }[] } | null = null;

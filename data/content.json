@@ -193,13 +193,6 @@
    "image_alt": "MARIO K - Βάφτιση"
   },
   {
-   "id": "6ac5fb9d98941942a43e2a71",
-   "name": "Πάρτι & Ιδιωτική εκδήλωση",
-   "description": "Custom DJ sets για γενέθλια, bachelorette, επέτειους και ιδιωτικά πάρτι. Προσαρμόζουμε τη μουσική στο ύφος που θέλετε (mainstream, dance, retro, ελληνικά) για ασταμάτητο χορό.",
-   "image_url": "/uploads/parti-idiotiki-ekdilosi-ad1eb4a9cc42.png",
-   "image_alt": "MARIO K - Πάρτι & Ιδιωτική εκδήλωση"
-  },
-  {
    "id": "6ac6386661ec272b4b553db5",
    "name": "Bachelor & Bachelorette Party",
    "description": "Δυναμικά DJ sets και προσαρμοσμένες μουσικές επιλογές για ένα αξέχαστο πάρτι πριν τη μεγάλη μέρα.",
@@ -207,25 +200,25 @@
    "image_alt": "MARIO K - Bachelor & Bachelorette Party"
   },
   {
+   "id": "6ac5fb9d98941942a43e2a71",
+   "name": "Πάρτι / Ιδιωτική εκδήλωση",
+   "description": "DJ μουσική κάλυψη για ιδιωτικά πάρτι, reunion, εγκαίνια, εταιρικές εκδηλώσεις, karaoke και θεματικές βραδιές. Το πρόγραμμα προσαρμόζεται στο κοινό και στο ύφος της εκδήλωσης.",
+   "image_url": "/uploads/parti-idiotiki-ekdilosi-ad1eb4a9cc42.png",
+   "image_alt": "MARIO K - Πάρτι & Ιδιωτική εκδήλωση"
+  },
+  {
+   "id": "6ac5fb9d98941942a43e2a75",
+   "name": "Γενέθλια ενηλίκων",
+   "description": "Μουσική κάλυψη για γενέθλια ενηλίκων, με πρόγραμμα προσαρμοσμένο στην παρέα, τον χώρο και το ύφος της βραδιάς.",
+   "image_url": "/uploads/parti-idiotiki-ekdilosi-ad1eb4a9cc42.png",
+   "image_alt": "MARIO K - Γενέθλια ενηλίκων"
+  },
+  {
    "id": "6ac5fb9d98941942a43e2a72",
    "name": "Club / Bar",
    "description": "Δυναμικά DJ sets με τις τελευταίες επιτυχίες, καθαρές μεταβάσεις και σωστή ανάγνωση του κοινού, εξασφαλίζοντας την απόλυτη ατμόσφαιρα διασκέδασης.",
    "image_url": "/uploads/club-bar-380463dfc732.png",
    "image_alt": "MARIO K - Club / Bar"
-  },
-  {
-   "id": "6ac5fb9d98941942a43e2a73",
-   "name": "Εταιρική εκδήλωση",
-   "description": "Επαγγελματική μουσική κάλυψη για εταιρικά πάρτι, κοπή πίτας, εγκαίνια και παρουσιάσεις. Διακριτική μουσική επένδυση ή ανεβαστικό πάρτι, ανάλογα με τον χαρακτήρα της εκδήλωσης.",
-   "image_url": "/uploads/etairiki-ekdilosi-cf29d635daad.png",
-   "image_alt": "MARIO K - Εταιρική εκδήλωση"
-  },
-  {
-   "id": "6ac5fb9d98941942a43e2a74",
-   "name": "Karaoke Party & Games",
-   "description": "Karaoke βραδιές με μεγάλο ρεπερτόριο, για εκδηλώσεις όπου θέλετε όλοι να συμμετέχουν.",
-   "image_url": "/uploads/karaoke-party-games-a652ff9f5125.png",
-   "image_alt": "MARIO K - Karaoke Party & Games"
   }
  ],
  "services": [
@@ -280,8 +273,7 @@
    ],
    "event_types": [
     "6ac5fb9d98941942a43e2a70",
-    "6ac5fb9d98941942a43e2a71",
-    "6ac5fb9d98941942a43e2a73"
+    "6ac5fb9d98941942a43e2a71"
    ],
    "extras": [
     "Επιπλέον ώρα μουσικής",
@@ -309,8 +301,7 @@
    "event_types": [
     "6ac5fb9d98941942a43e2a6f",
     "6ac5fb9d98941942a43e2a71",
-    "6ac5fb9d98941942a43e2a72",
-    "6ac5fb9d98941942a43e2a74"
+    "6ac5fb9d98941942a43e2a72"
    ],
    "extras": [
     "Επιπλέον ώρα μουσικής",
@@ -335,10 +326,9 @@
     "Πλήρης συντονισμός της ροής της εκδήλωσης"
    ],
    "event_types": [
-    "6ac5fb9d98941942a43e2a73",
+    "6ac5fb9d98941942a43e2a71",
     "6ac5fb9d98941942a43e2a6f",
-    "6ac6386661ec272b4b553db5",
-    "6ac5fb9d98941942a43e2a71"
+    "6ac6386661ec272b4b553db5"
    ],
    "extras": [
     "Επιπλέον ώρα μουσικής",

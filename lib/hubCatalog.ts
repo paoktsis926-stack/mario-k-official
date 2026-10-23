@@ -20,16 +20,17 @@ function eventSlugs(eventType: string): string[] {
   return MAP[key] ?? [];
 }
 
-// Τιμοκατάλογος απευθείας από το DJ PRO HUB. Αν το HUB δεν απαντήσει, μένουν τα τελευταία γνωστά πακέτα του site.
+// Ο τιμοκατάλογος προέρχεται από το DJ PRO HUB. Αν δεν είναι διαθέσιμο, δεν εμφανίζουμε παλιές τιμές ως ενεργές.
+const safeFallback = () => fallback.map((p) => ({ ...p, price: 0, price_text: "Κατόπιν προσφοράς" }));
 export async function getPackages(): Promise<Pkg[]> {
   "use cache";
   cacheLife("minutes");
   const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, ""), key = process.env.RAILWAY_API_KEY;
-  if (!base || !key) return fallback;
+  if (!base || !key) return safeFallback();
   try {
     const r = await fetch(`${base}/api/functions/publicCatalog`, { headers: { "x-api-key": key }, signal: AbortSignal.timeout(6000) });
     const j = await r.json();
-    if (!r.ok || !Array.isArray(j.packages) || !j.packages.length) return fallback;
+    if (!r.ok || !Array.isArray(j.packages) || !j.packages.length) return safeFallback();
     const extras: string[] = (j.add_ons || []).slice(0, 8).map((a: { name: string; price: number }) => `${a.name}${a.price ? ` (+${a.price}€)` : ""}`);
     const star = fallback.filter((f) => f.highlight).map((f) => f.name.toLowerCase());
     return j.packages.map((p: { name: string; price: number; price_max: number; duration: string; short_description: string; included_features: string[]; event_type: string }) => ({
@@ -38,6 +39,6 @@ export async function getPackages(): Promise<Pkg[]> {
       highlight: star.some((s) => p.name.toLowerCase().startsWith(s)), slugs: fallback.find((f) => f.name.trim().toLowerCase() === p.name.trim().toLowerCase())?.slugs ?? eventSlugs(p.event_type),
     }));
   } catch {
-    return fallback;
+    return safeFallback();
   }
 }
