@@ -1,4 +1,5 @@
 import { getGoogleReviews } from "@/lib/googleReviews";
+import ReviewSubmissionForm from "@/components/ReviewSubmissionForm";
 
 type ReviewCard = { name: string; stars: number; text: string; date: string };
 type Props = { fallbackReviews: ReviewCard[]; googleReviewUrl: string };
@@ -27,6 +28,7 @@ export default async function GoogleReviewsSection({ fallbackReviews, googleRevi
         <div className="mt-8 flex flex-wrap gap-6">
           <a href={googleReviewUrl} target="_blank" rel="noopener noreferrer" className="inline-block border-b border-gold pb-1 text-xs uppercase tracking-[0.2em]">Γράψτε κι εσείς κριτική στο Google ↗</a>
         </div>
+        <ReviewSubmissionForm />
       </div>
     </section>
   );
