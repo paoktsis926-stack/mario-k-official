@@ -8,18 +8,11 @@ import { applyTheme } from "@/lib/events";
 
 const eventOptions = [
   { value: "wedding", label: "Γάμος", api: "Γάμος" },
-  { value: "baptism", label: "Βάφτιση", api: "Βάπτιση" },
-  { value: "bachelorette", label: "Bachelorette Party", api: "Bachelorette" },
-  { value: "private-party", label: "Ιδιωτικό πάρτι", api: "Ιδιωτικό Party" },
-  { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Γενέθλια" },
-  { value: "reunion", label: "Reunion", api: "Reunion" },
-  { value: "opening", label: "Εγκαίνια", api: "Εγκαίνια" },
-  { value: "beachbar", label: "Beach Bar", api: "Beach Bar" },
-  { value: "carnival-adult", label: "Αποκριάτικο πάρτι ενηλίκων", api: "Αποκριάτικο πάρτι ενηλίκων" },
-  { value: "carnival-kids", label: "Παιδικό αποκριάτικο πάρτι", api: "Παιδικό αποκριάτικο πάρτι" },
-  { value: "club", label: "Club / Bar", api: "Club" },
-  { value: "corporate", label: "Εταιρική εκδήλωση", api: "Εταιρική εκδήλωση" },
-  { value: "karaoke", label: "Karaoke Party & Games", api: "Karaoke" },
+  { value: "baptism", label: "Βάπτιση", api: "Βάπτιση" },
+  { value: "bachelorette", label: "Bachelor / Bachelorette", api: "Bachelor / Bachelorette" },
+  { value: "private-party", label: "Πάρτι / Ιδιωτική εκδήλωση", api: "Πάρτι / Ιδιωτική εκδήλωση" },
+  { value: "birthday", label: "Γενέθλια ενηλίκων", api: "Γενέθλια ενηλίκων" },
+  { value: "beachbar", label: "Beach Bar / Club", api: "Beach Bar / Club" },
 ];
 
 const packageSlugByEvent: Record<string, string> = {
