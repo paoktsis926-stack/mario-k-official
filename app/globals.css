@@ -119,3 +119,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Performance mode: motion and visual effects disabled. */
 html { scroll-behavior: auto !important; }
 *, *::before, *::after { animation: none !important; transition: none !important; transform: none !important; filter: none !important; box-shadow: none !important; scroll-behavior: auto !important; }
+
+/* Keep page controls reachable while the fixed cookie panel is visible on mobile. */
+@media (max-width: 767px) {
+  body:has(.cookie-consent-panel) { padding-bottom: max(16rem, 45vh); }
+  .cookie-consent-panel { max-height: calc(100dvh - 1rem); overflow-y: auto; }
+}
