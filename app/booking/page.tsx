@@ -115,7 +115,7 @@ function BookingForm() {
       .then((r) => { if (!r.ok) throw new Error("Η διαθεσιμότητα δεν είναι διαθέσιμη."); return r.json(); })
       .then((j) => {
         if (!Array.isArray(j.dates) || j.status !== "ok") throw new Error("Μη έγκυρη απάντηση διαθεσιμότητας.");
-        setBookedDates(j.dates.filter((d: unknown) => typeof d === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(d)));
+        setBookedDates(j.dates.filter((d: unknown) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)));
         setBookedDatesStatus("ok");
       })
       .catch(() => { setBookedDates([]); setBookedDatesStatus("unknown"); });
