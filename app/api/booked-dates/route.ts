@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const base = process.env.RAILWAY_API_BASE?.replace(/\/+$/, "");
   const key = process.env.RAILWAY_API_KEY;
-  if (!base || !key) return NextResponse.json({ dates: [] });
+  if (!base || !key) return NextResponse.json({ dates: [], status: "unknown" }, { status: 503, headers: { "Cache-Control": "no-store" } });
 
   try {
     const response = await fetch(`${base}/api/functions/publicSiteData`, {
@@ -16,13 +16,13 @@ export async function GET() {
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
-    if (!response.ok) return NextResponse.json({ dates: [] });
+    if (!response.ok) return NextResponse.json({ dates: [], status: "unknown" }, { status: 503, headers: { "Cache-Control": "no-store" } });
     const data = await response.json().catch(() => ({}));
     const dates = Array.isArray(data.dates)
       ? data.dates.filter((date: unknown) => typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date))
       : [];
-    return NextResponse.json({ dates });
+    return NextResponse.json({ dates, status: "ok" }, { headers: { "Cache-Control": "no-store" } });
   } catch {
-    return NextResponse.json({ dates: [] });
+    return NextResponse.json({ dates: [], status: "unknown" }, { status: 503, headers: { "Cache-Control": "no-store" } });
   }
 }
