@@ -133,7 +133,7 @@ function BookingForm() {
     const wanted = requestedPackage.trim().toLowerCase();
     const match = pkgs.find((p) =>
       packageMatchesEvent(p, event) &&
-      (p.name.toLowerCase() === wanted || p.label.toLowerCase().startsWith(wanted))
+      p.name.trim().toLowerCase() === wanted
     );
     if (match) setForm((previous) => previous.package ? previous : { ...previous, package: match.label });
   }, [event, pkgs, requestedPackage]);
