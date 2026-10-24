@@ -30,7 +30,7 @@ async function findPackageId(base: string, key: string, label: unknown) {
       const j = await r.json();
       catalog = { at: Date.now(), list: Array.isArray(j.packages) ? j.packages : [] };
     }
-    return catalog.list.find((p) => p.name.toLowerCase() === name || p.name.toLowerCase().startsWith(name))?.package_id ?? "";
+    return catalog.list.find((p) => typeof p.name === "string" && p.name.trim().toLowerCase() === name)?.package_id ?? "";
   } catch { return ""; }
 }
 
