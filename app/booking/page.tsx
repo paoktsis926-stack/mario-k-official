@@ -105,15 +105,20 @@ function BookingForm() {
 
   const [avail, setAvail] = useState("");
   const [bookedDates, setBookedDates] = useState<string[]>([]);
+  const [bookedDatesStatus, setBookedDatesStatus] = useState<"loading" | "ok" | "unknown">("loading");
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const base = requestedDate ? new Date(`${requestedDate}T12:00:00`) : new Date();
     return new Date(base.getFullYear(), base.getMonth(), 1);
   });
   useEffect(() => {
     fetch("/api/booked-dates", { cache: "no-store" })
-      .then((r) => r.ok ? r.json() : { dates: [] })
-      .then((j) => setBookedDates(Array.isArray(j.dates) ? j.dates.filter((d: unknown) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) : []))
-      .catch(() => setBookedDates([]));
+      .then((r) => { if (!r.ok) throw new Error("Η διαθεσιμότητα δεν είναι διαθέσιμη."); return r.json(); })
+      .then((j) => {
+        if (!Array.isArray(j.dates) || j.status !== "ok") throw new Error("Μη έγκυρη απάντηση διαθεσιμότητας.");
+        setBookedDates(j.dates.filter((d: unknown) => typeof d === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(d)));
+        setBookedDatesStatus("ok");
+      })
+      .catch(() => { setBookedDates([]); setBookedDatesStatus("unknown"); });
   }, []);
   const [pkgs, setPkgs] = useState<{ label: string; name: string; slugs: string[] }[]>([]);
   useEffect(() => {
@@ -137,8 +142,9 @@ function BookingForm() {
   const idempotencyKey = useRef("");
   useEffect(() => {
     if (!form.date) { setAvail(""); return; }
+    setAvail("unknown");
     const ac = new AbortController();
-    fetch(`/api/availability?date=${form.date}`, { signal: ac.signal }).then((r) => r.json()).then((j) => setAvail(j.status || "")).catch(() => {});
+    fetch(`/api/availability?date=${form.date}`, { signal: ac.signal, cache: "no-store" }).then((r) => r.json()).then((j) => setAvail(["available", "pending", "unavailable"].includes(j.status) ? j.status : "unknown")).catch(() => setAvail("unknown"));
     return () => ac.abort();
   }, [form.date]);
 
@@ -163,6 +169,12 @@ function BookingForm() {
     try {
       if (!selectedEvent) {
         throw new Error("Επιλέξτε τύπο εκδήλωσης.");
+      }
+      if (!form.date || avail === "" || avail === "unknown") {
+        throw new Error("Δεν ήταν δυνατή η επιβεβαίωση διαθεσιμότητας για την ημερομηνία. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας τηλεφωνικά.");
+      }
+      if (avail === "unavailable" && !wl.current) {
+        throw new Error("Η ημερομηνία φαίνεται κλεισμένη. Επιλέξτε άλλη ημερομηνία ή χρησιμοποιήστε τη λίστα αναμονής.");
       }
       if (turnstileSiteKey && !turnstileToken) {
         throw new Error("Ολοκληρώστε τον έλεγχο προστασίας πριν από την αποστολή.");
@@ -379,6 +391,7 @@ function BookingForm() {
                   <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 bg-red-100 ring-1 ring-red-200" /> Κλεισμένη</span>
                 </div>
               </div>
+              {bookedDatesStatus === "unknown" && <p role="status" className="mb-3 border border-amber-300 bg-amber-50 p-3 text-xs leading-5 text-amber-900">Δεν φορτώθηκε το ημερολόγιο κρατήσεων. Οι ημερομηνίες δεν πρέπει να θεωρηθούν ελεύθερες· θα ελέγξουμε τη διαθεσιμότητα πριν γίνει δεκτό το αίτημα.</p>}
               <input
                 required
                 type="date"
