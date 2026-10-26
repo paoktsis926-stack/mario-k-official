@@ -338,3 +338,63 @@ header details summary:focus-visible { outline: 2px solid var(--mk-gold); outlin
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+
+/* Readability correction: reduce the feeling of a text-heavy homepage without deleting content or changing functionality. */
+.site-home section h2 {
+  font-size: clamp(1.55rem, 3.2vw, 2.45rem);
+  line-height: 1.12;
+  letter-spacing: -.025em;
+}
+.site-home section > p:not(.label-caps),
+.site-home section > div > p:not(.label-caps) {
+  max-width: 58ch;
+  line-height: 1.65;
+}
+.site-home .home-events,
+.site-home .home-about,
+.site-home .home-packages,
+.site-home .home-highlights,
+.site-home .home-reviews,
+.site-home .home-process,
+.site-home .home-reels,
+.site-home .home-mixes,
+.site-home .home-faq {
+  padding-top: clamp(2.75rem, 5vw, 4.25rem);
+  padding-bottom: clamp(2.75rem, 5vw, 4.25rem);
+}
+.site-home .home-events .mt-12,
+.site-home .home-packages .mt-12,
+.site-home .home-highlights .mt-12 {
+  margin-top: 2rem;
+}
+.site-home .event-card h3 { font-size: clamp(1.2rem, 1.7vw, 1.55rem); }
+.site-home .event-card p { font-size: .75rem; line-height: 1.45; }
+.site-home .package-card { min-height: 0; padding: clamp(1.2rem, 2vw, 1.7rem); }
+.site-home .package-card > h3 { font-size: 1.35rem; }
+.site-home .package-card > p:nth-of-type(2) { font-size: 1.7rem; }
+.site-home .home-about { gap: clamp(1.75rem, 4vw, 3.5rem); }
+.site-home .home-process ol { margin-top: 2rem; }
+.site-home .home-process li { padding: 1.15rem; }
+.site-home .home-process li > span { font-size: 1.65rem; }
+.site-home .home-reviews article { min-height: 0; padding: clamp(1.25rem, 3vw, 2rem); }
+.site-home .home-reviews blockquote { margin-top: 1rem; font-size: .95rem; line-height: 1.65; }
+.site-home .home-faq h2 { max-width: 18ch; }
+@media (max-width: 767px) {
+  .site-home section h2 { font-size: clamp(1.45rem, 6.5vw, 1.9rem); }
+  .site-home .home-events,
+  .site-home .home-about,
+  .site-home .home-packages,
+  .site-home .home-highlights,
+  .site-home .home-reviews,
+  .site-home .home-process,
+  .site-home .home-reels,
+  .site-home .home-mixes,
+  .site-home .home-faq {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .site-home .event-card > div:last-child { padding: 1rem; }
+  .site-home .package-card { padding: 1.15rem; }
+  .site-home .home-about img { max-height: 28rem; }
+}
