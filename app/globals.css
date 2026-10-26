@@ -205,7 +205,7 @@ body { background: var(--mk-paper); color: var(--mk-ink); }
   line-height: .94;
   text-wrap: balance;
 }
-.site-hero .hero-copy > p:not(.text-\\[11px\\]) { max-width: 38rem; }
+.site-hero .hero-copy > p { max-width: 38rem; }
 .site-hero .hero-primary-cta {
   display: inline-flex;
   align-items: center;
