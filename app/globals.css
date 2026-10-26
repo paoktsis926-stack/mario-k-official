@@ -173,3 +173,168 @@ button:active, a:active { transform: translateY(1px); }
   body:has(.cookie-consent-panel) { padding-bottom: max(16rem, 45vh); }
   .cookie-consent-panel { max-height: calc(100dvh - 1rem); overflow-y: auto; }
 }
+
+
+/* MARIO K Official — polished visual refresh (CSS only; no routes, data or behavior changed) */
+:root {
+  --mk-ink: #11100e;
+  --mk-paper: #f5f2eb;
+  --mk-paper-deep: #eae4d8;
+  --mk-gold: #c6a45a;
+  --mk-line: rgb(17 16 14 / 14%);
+}
+html { scroll-padding-top: 6rem; }
+body { background: var(--mk-paper); color: var(--mk-ink); }
+::selection { background: var(--mk-gold); color: var(--mk-ink); }
+
+/* Cinematic hero */
+.site-hero {
+  isolation: isolate;
+  background: #090908;
+  min-height: min(880px, calc(100svh - 4.5rem));
+}
+.site-hero > div:first-child img {
+  object-position: center 28%;
+  filter: saturate(.86) contrast(1.04);
+}
+.site-hero .hero-copy { max-width: 680px; }
+.site-hero .hero-title {
+  font-family: var(--font-cormorant), Georgia, serif !important;
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: .94;
+  text-wrap: balance;
+}
+.site-hero .hero-copy > p { max-width: 38rem; }
+.site-hero .hero-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding-inline: 1.65rem;
+  border: 1px solid var(--mk-gold);
+  transition: background-color 220ms ease, color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+.site-hero .hero-primary-cta:hover {
+  background: #f2e6c8;
+  box-shadow: 0 8px 28px rgb(198 164 90 / 18%);
+  transform: translateY(-2px);
+}
+.site-hero .hero-title { text-shadow: 0 3px 28px rgb(0 0 0 / 25%); }
+.site-hero .hero-copy > div a:not(.hero-primary-cta) { text-underline-offset: 6px; }
+.site-hero button { min-height: 36px; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+
+/* A consistent editorial rhythm throughout the homepage */
+.site-home section { scroll-margin-top: 5.5rem; }
+.site-home section h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -.035em;
+  line-height: 1.04;
+}
+.site-home .label-caps { color: #8a6c2e; font-size: 10px; letter-spacing: .24em; }
+.site-home .home-events,
+.site-home .home-about,
+.site-home .home-highlights,
+.site-home .home-reels,
+.site-home .home-mixes,
+.site-home .home-faq { background-color: var(--mk-paper); }
+.site-home .home-packages,
+.site-home .home-process,
+.site-home .home-reviews { background-color: var(--mk-paper-deep); }
+
+/* Image-led event cards */
+.site-home .event-card {
+  isolation: isolate;
+  border: 1px solid rgb(198 164 90 / 22%);
+  background: #171512;
+  box-shadow: 0 8px 26px rgb(17 16 14 / 5%);
+}
+.site-home .event-card img {
+  transition: transform 650ms cubic-bezier(.2,.7,.2,1), opacity 350ms ease;
+}
+.site-home .event-card:hover { border-color: rgb(198 164 90 / 78%); }
+.site-home .event-card:hover img { transform: scale(1.045); opacity: 1; }
+.site-home .event-card h3 { font-family: var(--font-cormorant), Georgia, serif; font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 500; letter-spacing: .01em; }
+.site-home .event-card p { max-width: 36ch; }
+
+/* Refined portrait and package hierarchy */
+.site-home .about-portrait {
+  background: #e5ded1;
+  box-shadow: 18px 18px 0 rgb(198 164 90 / 12%);
+}
+.site-home .package-card {
+  border-color: var(--mk-line);
+  background: rgb(255 255 255 / 72%);
+  box-shadow: 0 1px 0 rgb(17 16 14 / 3%);
+  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease, background-color 240ms ease;
+}
+.site-home .package-card:hover {
+  transform: translateY(-4px);
+  border-color: rgb(198 164 90 / 72%);
+  box-shadow: 0 18px 44px rgb(17 16 14 / 9%);
+}
+.site-home .package-card[class*="border-gold"] {
+  border-color: var(--mk-gold);
+  background: #171512;
+  color: #fff;
+  box-shadow: 0 12px 34px rgb(17 16 14 / 12%);
+}
+.site-home .package-card[class*="border-gold"] a {
+  background: var(--mk-gold);
+  border-color: var(--mk-gold);
+  color: #11100e;
+}
+.site-home .package-card[class*="border-gold"] a:hover {
+  background: #f5f2eb;
+  border-color: #f5f2eb;
+}
+.site-home .home-process li,
+.site-home .home-reviews article {
+  border-color: var(--mk-line);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+.site-home .home-process li:hover {
+  transform: translateY(-3px);
+  border-color: var(--mk-gold);
+}
+.site-home .home-reviews article:hover { border-color: rgb(198 164 90 / 72%); }
+.site-home .home-highlights img {
+  transition: transform 350ms ease, filter 350ms ease;
+}
+.site-home .home-highlights img:hover { transform: scale(1.018); filter: saturate(1.05); }
+
+/* Header and menu: clearer hierarchy without changing any destinations */
+header { border-color: rgb(255 255 255 / 12%); }
+header nav a,
+header summary,
+header > div > div a { text-underline-offset: 5px; }
+header details > div { border-color: rgb(198 164 90 / 25%); backdrop-filter: blur(18px); }
+header details > div a { transition: background-color 180ms ease, color 180ms ease; }
+header details > div a:hover { background: rgb(255 255 255 / 8%); color: var(--mk-gold); }
+header details summary:focus-visible { outline: 2px solid var(--mk-gold); outline-offset: 4px; }
+
+/* Keep touch targets comfortable and the hero composed on small screens */
+@media (max-width: 767px) {
+  .site-hero { min-height: min(780px, calc(100svh - 4rem)); }
+  .site-hero > div:first-child img { object-position: center 25%; }
+  .site-hero .hero-title { max-width: 11ch; font-size: clamp(2.8rem, 12vw, 4.2rem); }
+  .site-hero .hero-copy { padding-top: 2.5rem; }
+  .site-hero .hero-copy > div { gap: 1rem 1.25rem; }
+  .site-home .home-events,
+  .site-home .home-about,
+  .site-home .home-packages,
+  .site-home .home-highlights { padding-top: 3.75rem; padding-bottom: 3.75rem; }
+  .site-home .event-card { min-height: 0; }
+  .site-home .event-card > div:last-child { padding: 1.1rem; }
+  .site-home .package-card { min-height: 0; padding: 1.4rem; }
+  .site-home .package-card:hover,
+  .site-home .home-process li:hover,
+  .site-home .home-highlights img:hover { transform: none; }
+  .site-home .about-portrait { box-shadow: 10px 10px 0 rgb(198 164 90 / 12%); }
+  header details > div { max-height: min(75svh, 36rem); overscroll-behavior: contain; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
